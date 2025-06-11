@@ -257,7 +257,7 @@ const DTDT = () => {
                       <th
                         scope="col"
                         className="text-wrap col-tong-luancanh bg-warning">
-                        Tổng luân canh
+                        Cộng
                       </th>
                     </tr>
                   </thead>
@@ -268,26 +268,36 @@ const DTDT = () => {
                           {row.stt}
                         </th>
                         <td className="text-center">{row.nongtruong}</td>
-                        <td className="text-end">{row.sxkd_01012025}</td>
+                        <td className="text-end fw-bold">
+                          {row.sxkd_01012025}
+                        </td>
                         <td className="text-end">{row.mocao_2025}</td>
                         <td className="text-end">{row.sxkd_thanhlytc}</td>
                         <td className="text-end">{row.sxkd_thanhlygdp}</td>
-                        <td className="text-end">{row.sxkd_31122025}</td>
-                        <td className="text-end">{row.ktcb_01012025}</td>
+                        <td className="text-end fw-bold">
+                          {row.sxkd_31122025}
+                        </td>
+                        <td className="text-end fw-bold">
+                          {row.ktcb_01012025}
+                        </td>
                         <td className="text-end">{row.ktcb_mocao_2025}</td>
                         <td className="text-end">{row.ktcb_thanhlygdp}</td>
-                        <td className="text-end">{row.ktcb_31122025}</td>
+                        <td className="text-end fw-bold">
+                          {row.ktcb_31122025}
+                        </td>
                         <td className="text-end">{row.kh_tctm_2025}</td>
                         <td className="text-end">{row.luancanh_2021}</td>
                         <td className="text-end">{row.luancanh_2022}</td>
                         <td className="text-end">{row.luancanh_2023}</td>
-                        <td className="text-end">{row.tong_luancanh}</td>
+                        <td className="text-end fw-bold">
+                          {row.tong_luancanh}
+                        </td>
                         <td className="text-end">{row.fsc}</td>
                         <td className="text-end">{row.vg_vn}</td>
                         <td className="text-end">{row.cho_gdp}</td>
                         <td className="text-end">{row.dt_chuyentc}</td>
                         <td className="text-end">{row.thanhly_goivu}</td>
-                        <td className="text-end">{row.tong_dt_vuon}</td>
+                        <td className="text-end fw-bold">{row.tong_dt_vuon}</td>
                       </tr>
                     ))}
                     <tr className="table-active fw-bold">
