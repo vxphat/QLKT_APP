@@ -76,7 +76,11 @@ const DTDT = () => {
       0
     ),
     tong_luancanh: data_DTDT.reduce(
-      (sum, row) => sum + parseNumber(row.tong_luancanh),
+      (sum, row) =>
+        sum +
+        parseNumber(row.luancanh_2023) +
+        parseNumber(row.luancanh_2022) +
+        parseNumber(row.luancanh_2021),
       0
     ),
     fsc: data_DTDT.reduce((sum, row) => sum + parseNumber(row.fsc), 0),
@@ -107,7 +111,7 @@ const DTDT = () => {
 
   return (
     <Fragment>
-      <Pageheader title="Tables" heading="Tables" active="Tables" />
+      <Pageheader title="Năm 2025" heading="Tables" active="Tables" />
       <Row>
         <Col xl={12}>
           <Card className="custom-card">
@@ -122,13 +126,13 @@ const DTDT = () => {
                       <th
                         scope="col"
                         className="text-wrap col-stt bg-light"
-                        rowSpan={2}>
+                        rowSpan={3}>
                         STT
                       </th>
                       <th
                         scope="col"
                         className="text-wrap col-nongtruong bg-light"
-                        rowSpan={2}>
+                        rowSpan={3}>
                         Nông trường
                       </th>
                       <th
@@ -146,118 +150,193 @@ const DTDT = () => {
                       <th
                         scope="col"
                         className="text-wrap col-kh-tctm-2025 bg-light"
-                        rowSpan={2}>
+                        rowSpan={3}>
                         KH TCTM 2025
                       </th>
                       <th
                         scope="col"
                         className="text-wrap col-nongtruong bg-warning"
-                        colSpan={4}>
+                        colSpan={12}>
                         LUÂN CANH
                       </th>
                       <th
                         scope="col"
                         className="text-wrap col-fsc bg-light"
-                        rowSpan={2}>
+                        rowSpan={3}>
                         FSC
                       </th>
                       <th
                         scope="col"
                         className="text-wrap col-vg-vn bg-light"
-                        rowSpan={2}>
+                        rowSpan={3}>
                         VG, VN
                       </th>
                       <th
                         scope="col"
                         className="text-wrap col-cho-gdp bg-light"
-                        rowSpan={2}>
+                        rowSpan={3}>
                         Chờ GĐP
                       </th>
                       <th
                         scope="col"
                         className="text-wrap col-dt-chuyentc bg-light"
-                        rowSpan={2}>
+                        rowSpan={3}>
                         DT chuyển TC
                       </th>
                       <th
                         scope="col"
                         className="text-wrap col-thanhly-goivu bg-light"
-                        rowSpan={2}>
+                        rowSpan={3}>
                         Thanh lý gối vụ
                       </th>
                       <th
                         scope="col"
                         className="text-wrap col-tong-dt-vuon bg-danger"
-                        rowSpan={2}>
+                        rowSpan={3}>
                         Tổng DT vườn cây
                       </th>
                     </tr>
                     <tr>
                       <th
                         scope="col"
-                        className="text-wrap col-sxkd-01012025 bg-secondary">
+                        className="text-wrap col-sxkd-01012025 bg-secondary"
+                        rowSpan={2}>
                         01.01.2025
                       </th>
                       <th
                         scope="col"
-                        className="text-wrap col-mocao-2025 bg-secondary">
+                        className="text-wrap col-mocao-2025 bg-secondary"
+                        rowSpan={2}>
                         Mở cạo 2025
                       </th>
                       <th
                         scope="col"
-                        className="text-wrap col-sxkd-thanhlytc bg-secondary">
+                        className="text-wrap col-sxkd-thanhlytc bg-secondary"
+                        rowSpan={2}>
                         Thanh lý TC
                       </th>
                       <th
                         scope="col"
-                        className="text-wrap col-sxkd-thanhlygdp bg-secondary">
+                        className="text-wrap col-sxkd-thanhlygdp bg-secondary"
+                        rowSpan={2}>
                         Thanh lý GĐP
                       </th>
                       <th
                         scope="col"
-                        className="text-wrap col-sxkd-31122025 bg-secondary">
+                        className="text-wrap col-sxkd-31122025 bg-secondary"
+                        rowSpan={2}>
                         31.12.2025
                       </th>
                       <th
                         scope="col"
-                        className="text-wrap col-ktcb-01012025 bg-success">
+                        className="text-wrap col-ktcb-01012025 bg-success"
+                        rowSpan={2}>
                         01.01.2025
                       </th>
                       <th
                         scope="col"
-                        className="text-wrap col-ktcb-mocao-2025 bg-success">
+                        className="text-wrap col-ktcb-mocao-2025 bg-success"
+                        rowSpan={2}>
                         Mở cạo 2025
                       </th>
                       <th
                         scope="col"
-                        className="text-wrap col-ktcb-thanhlygdp bg-success">
+                        className="text-wrap col-ktcb-thanhlygdp bg-success"
+                        rowSpan={2}>
                         Thanh lý GĐP
                       </th>
                       <th
                         scope="col"
-                        className="text-wrap col-ktcb-31122025 bg-success">
+                        className="text-wrap col-ktcb-31122025 bg-success"
+                        rowSpan={2}>
                         31.12.2025
                       </th>
 
                       <th
                         scope="col"
-                        className="text-wrap col-luancanh-2021 bg-warning">
+                        className="text-wrap col-luancanh-2021 bg-warning"
+                        colSpan={3}>
                         2021
                       </th>
                       <th
                         scope="col"
-                        className="text-wrap col-luancanh-2022 bg-warning">
+                        className="text-wrap col-luancanh-2022 bg-warning"
+                        colSpan={3}>
                         2022
                       </th>
                       <th
                         scope="col"
-                        className="text-wrap col-luancanh-2023 bg-warning">
+                        className="text-wrap col-luancanh-2023 bg-warning"
+                        colSpan={3}>
                         2023
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-wrap col-tong-luancanh bg-warning"
+                        colSpan={3}>
+                        Cộng
+                      </th>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="col"
+                        className="text-wrap col-tong-luancanh bg-warning">
+                        Cao su
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-wrap col-tong-luancanh bg-warning">
+                        Keo lai
                       </th>
                       <th
                         scope="col"
                         className="text-wrap col-tong-luancanh bg-warning">
                         Cộng
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-wrap col-tong-luancanh bg-warning">
+                        Cao su
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-wrap col-tong-luancanh bg-warning">
+                        Keo lai
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-wrap col-tong-luancanh bg-warning">
+                        Cộng
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-wrap col-tong-luancanh bg-warning">
+                        Cao su
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-wrap col-tong-luancanh bg-warning">
+                        Keo lai
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-wrap col-tong-luancanh bg-warning">
+                        Cộng
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-wrap col-tong-luancanh bg-warning">
+                        Cao su
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-wrap col-tong-luancanh bg-warning">
+                        Keo lai
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-wrap col-tong-luancanh bg-warning">
+                        Tổng
                       </th>
                     </tr>
                   </thead>
