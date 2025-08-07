@@ -63,24 +63,64 @@ const DTDT = () => {
       (sum, row) => sum + parseNumber(row.kh_tctm_2025),
       0
     ),
-    luancanh_2021: data_DTDT.reduce(
-      (sum, row) => sum + parseNumber(row.luancanh_2021),
+    lccs_2021: data_DTDT.reduce(
+      (sum, row) => sum + parseNumber(row.lccs_2021),
       0
     ),
-    luancanh_2022: data_DTDT.reduce(
-      (sum, row) => sum + parseNumber(row.luancanh_2022),
+    lckl_2021: data_DTDT.reduce(
+      (sum, row) => sum + parseNumber(row.lckl_2021),
       0
     ),
-    luancanh_2023: data_DTDT.reduce(
-      (sum, row) => sum + parseNumber(row.luancanh_2023),
+    conglc_2021: data_DTDT.reduce(
+      (sum, row) => sum + parseNumber(row.conglc_2021),
+      0
+    ),
+    lccs_2022: data_DTDT.reduce(
+      (sum, row) => sum + parseNumber(row.lccs_2022),
+      0
+    ),
+    lckl_2022: data_DTDT.reduce(
+      (sum, row) => sum + parseNumber(row.lckl_2022),
+      0
+    ),
+    conglc_2022: data_DTDT.reduce(
+      (sum, row) => sum + parseNumber(row.conglc_2022),
+      0
+    ),
+    lccs_2023: data_DTDT.reduce(
+      (sum, row) => sum + parseNumber(row.lccs_2023),
+      0
+    ),
+    lckl_2023: data_DTDT.reduce(
+      (sum, row) => sum + parseNumber(row.lckl_2023),
+      0
+    ),
+    conglc_2023: data_DTDT.reduce(
+      (sum, row) => sum + parseNumber(row.conglc_2023),
+      0
+    ),
+    tonglccs: data_DTDT.reduce(
+      (sum, row) =>
+        sum +
+        parseNumber(row.lccs_2021) +
+        parseNumber(row.lccs_2022) +
+        parseNumber(row.lccs_2023),
+      0
+    ),
+    tonglckl: data_DTDT.reduce(
+      (sum, row) =>
+        sum +
+        parseNumber(row.lckl_2021) +
+        parseNumber(row.lckl_2022) +
+        parseNumber(row.lckl_2023),
       0
     ),
     tong_luancanh: data_DTDT.reduce(
       (sum, row) =>
         sum +
-        parseNumber(row.luancanh_2023) +
-        parseNumber(row.luancanh_2022) +
-        parseNumber(row.luancanh_2021),
+        parseNumber(row.conglc_2021) +
+        parseNumber(row.conglc_2022) +
+        parseNumber(row.conglc_2023),
       0
     ),
     fsc: data_DTDT.reduce((sum, row) => sum + parseNumber(row.fsc), 0),
@@ -102,7 +142,8 @@ const DTDT = () => {
 
   // Hàm định dạng số về chuỗi với dấu phẩy
   const formatNumber = (num) => {
-    if (num === 0) return "-";
+    if (num === 0 || num === "-" || num === "" || isNaN(num) || num === null)
+      return "-";
     return num
       .toFixed(2)
       .replace(".", ",")
@@ -365,9 +406,17 @@ const DTDT = () => {
                           {row.ktcb_31122025}
                         </td>
                         <td className="text-end">{row.kh_tctm_2025}</td>
-                        <td className="text-end">{row.luancanh_2021}</td>
-                        <td className="text-end">{row.luancanh_2022}</td>
-                        <td className="text-end">{row.luancanh_2023}</td>
+                        <td className="text-end">{row.lccs_2021}</td>
+                        <td className="text-end">{row.lckl_2021}</td>
+                        <td className="text-end fw-bold">{row.conglc_2021}</td>
+                        <td className="text-end">{row.lccs_2022}</td>
+                        <td className="text-end">{row.lckl_2022}</td>
+                        <td className="text-end fw-bold">{row.conglc_2022}</td>
+                        <td className="text-end">{row.lccs_2023}</td>
+                        <td className="text-end">{row.lckl_2023}</td>
+                        <td className="text-end fw-bold">{row.conglc_2023}</td>
+                        <td className="text-end fw-bold">{row.tonglccs}</td>
+                        <td className="text-end fw-bold">{row.tonglckl}</td>
                         <td className="text-end fw-bold">
                           {row.tong_luancanh}
                         </td>
@@ -417,13 +466,37 @@ const DTDT = () => {
                         {formatNumber(totals.kh_tctm_2025)}
                       </td>
                       <td className="text-end fw-bold">
-                        {formatNumber(totals.luancanh_2021)}
+                        {formatNumber(totals.lccs_2021)}
                       </td>
                       <td className="text-end fw-bold">
-                        {formatNumber(totals.luancanh_2022)}
+                        {formatNumber(totals.lckl_2021)}
                       </td>
                       <td className="text-end fw-bold">
-                        {formatNumber(totals.luancanh_2023)}
+                        {formatNumber(totals.conglc_2021)}
+                      </td>
+                      <td className="text-end fw-bold">
+                        {formatNumber(totals.lccs_2022)}
+                      </td>
+                      <td className="text-end fw-bold">
+                        {formatNumber(totals.lckl_2022)}
+                      </td>
+                      <td className="text-end fw-bold">
+                        {formatNumber(totals.conglc_2022)}
+                      </td>
+                      <td className="text-end fw-bold">
+                        {formatNumber(totals.lccs_2023)}
+                      </td>
+                      <td className="text-end fw-bold">
+                        {formatNumber(totals.lckl_2023)}
+                      </td>
+                      <td className="text-end fw-bold">
+                        {formatNumber(totals.conglc_2023)}
+                      </td>
+                      <td className="text-end fw-bold">
+                        {formatNumber(totals.tonglccs)}
+                      </td>
+                      <td className="text-end fw-bold">
+                        {formatNumber(totals.tonglckl)}
                       </td>
                       <td className="text-end fw-bold">
                         {formatNumber(totals.tong_luancanh)}
