@@ -182,6 +182,7 @@ import Radarcharts from "./container/charts/apexcharts/radarcharts/radarcharts.j
 import Loader from "./components/common/loader/loader.jsx";
 import KiemKe0gio from "./container/database/kk0gio/kk0gio.jsx";
 import DTDT from "./container/database/DTDT/DTDT.jsx";
+import NhapMuTuoi from "./container/qlsl/nhapmutuoi/nhapmutuoi.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.Fragment>
@@ -212,6 +213,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               path={`${import.meta.env.BASE_URL}database/DTDT`}
               element={<DTDT />}
             />
+
+            <Route
+              path={`${import.meta.env.BASE_URL}qlsl/nhapmutuoi`}
+              element={<NhapMuTuoi />}
+            />
+
             <Route
               path={`${import.meta.env.BASE_URL}dashboards/ecommerce`}
               element={<Ecommerce />}
