@@ -11,6 +11,7 @@ import {
   Table,
 } from "react-bootstrap";
 import Pageheader from "../../../components/pageheader/pageheader";
+
 import { Link } from "react-router-dom";
 // import { data_DTDT, data_dungTuoi, data_KTCB } from "../DTDT/DTDTdata";
 
@@ -33,18 +34,103 @@ const NhapMuTuoi = () => {
             </Card.Header>
             <Card.Body>
               <div className="row gy-4">
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-date">Ngày nhập mủ</Form.Label>
+                <Col xl={3} lg={6} md={6} sm={12}>
+                  <Form.Label htmlFor="input-date" className="fw-bold">
+                    Ngày nhập mủ
+                  </Form.Label>
                   <Form.Control type="date" id="input-date" />
                 </Col>
-
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-label">
-                    Form Input With Label
+                <Col xl={3}>
+                  <Form.Label htmlFor="input-date" className="fw-bold">
+                    Năm DSCN
                   </Form.Label>
-                  <Form.Control type="text" id="input-label" />
+                  <Form.Select aria-label="Default select example">
+                    <option>Chọn năm</option>
+                    <option value="1">2025</option>
+                    <option value="2">2024</option>
+                    <option value="3">2023</option>
+                    <option value="4">2022</option>
+                    <option value="5">2021</option>
+                    <option value="6">2020</option>
+                  </Form.Select>
                 </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
+                <Col xl={3}>
+                  <Form.Label htmlFor="input-date" className="fw-bold">
+                    Tổ/nhóm
+                  </Form.Label>
+                  <Form.Select aria-label="Default select example">
+                    <option>Chọn tổ/nhóm</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </Form.Select>
+                </Col>
+                <Col xl={3}>
+                  <Form.Label htmlFor="input-date" className="fw-bold">
+                    Phiên cạo
+                  </Form.Label>
+                  <Form.Select aria-label="Default select example">
+                    <option>Chọn phiên cạo</option>
+                    <option value="1">A</option>
+                    <option value="2">B</option>
+                    <option value="3">C</option>
+                    <option value="4">D</option>
+                  </Form.Select>
+                </Col>
+
+                <Col xl={3}>
+                  <Form.Label htmlFor="input-date" className="fw-bold">
+                    Nhịp độ cạo
+                  </Form.Label>
+                  <Form.Select aria-label="Default select example">
+                    <option>Chọn nhịp độ cạo</option>
+                    <option value="1">d3</option>
+                    <option value="2">d4</option>
+                  </Form.Select>
+                </Col>
+
+                <Col xl={3}>
+                  <div className="ps-0">
+                    <p className="mb-3 px-0 fw-bold">Chuyển HT thu mủ</p>
+                    <Form.Check
+                      className="ms-2"
+                      type="checkbox"
+                      defaultValue=""
+                      // defaultChecked
+                    />
+                  </div>
+                </Col>
+
+                <Col xl={3}>
+                  <div className="ps-0">
+                    <p className="mb-3 px-0 fw-bold">Bất thường khác phiên</p>
+                    <Form.Check
+                      className="ms-2"
+                      type="checkbox"
+                      defaultValue=""
+                      // defaultChecked
+                    />
+                  </div>
+                </Col>
+
+                <Col xl={3} lg={6} md={6} sm={12}>
+                  {/* <Form.Label htmlFor="input-button">Type Button</Form.Label> */}
+                  <Form.Control
+                    type="button"
+                    className="form-control btn btn-primary"
+                    id="input-button"
+                    defaultValue="Submit"
+                  />
+                </Col>
+
+                {/* <Col xl={4} lg={6} md={6} sm={12}>
                   <Form.Label htmlFor="input-placeholder">
                     Form Input With Placeholder
                   </Form.Label>
@@ -62,74 +148,7 @@ const NhapMuTuoi = () => {
                     placeholder="Text"
                   />
                 </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-number">Type Number</Form.Label>
-                  <Form.Control
-                    type="number"
-                    id="input-number"
-                    placeholder="Number"
-                  />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-password">
-                    Type Password
-                  </Form.Label>
-                  <Form.Control
-                    type="password"
-                    id="input-password"
-                    placeholder="Password"
-                  />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-email">Type Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    id="input-email"
-                    placeholder="Email@xyz.com"
-                  />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-tel">Type Tel</Form.Label>
-                  <Form.Control
-                    type="tel"
-                    id="input-tel"
-                    placeholder="+1100-2031-1233"
-                  />
-                </Col>
 
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-week">Type Week</Form.Label>
-                  <Form.Control
-                    type="week"
-                    className="form-control"
-                    id="input-week"
-                  />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-month">Type Month</Form.Label>
-                  <Form.Control type="month" id="input-month" />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-time">Type Time</Form.Label>
-                  <Form.Control type="time" id="input-time" />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-datetime-local">
-                    Type datetime-local
-                  </Form.Label>
-                  <Form.Control
-                    type="datetime-local"
-                    id="input-datetime-local"
-                  />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-search">Type Search</Form.Label>
-                  <Form.Control
-                    type="search"
-                    id="input-search"
-                    placeholder="Search"
-                  />
-                </Col>
                 <Col xl={4} lg={6} md={6} sm={12}>
                   <Form.Label htmlFor="input-submit">Type Submit</Form.Label>
                   <Form.Control
@@ -138,40 +157,9 @@ const NhapMuTuoi = () => {
                     defaultValue="Submit"
                   />
                 </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-reset">Type Reset</Form.Label>
-                  <Form.Control type="reset" id="input-reset" />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-button">Type Button</Form.Label>
-                  <Form.Control
-                    type="button"
-                    className="form-control btn btn-primary"
-                    id="input-button"
-                    defaultValue="Button"
-                  />
-                </Col>
+
                 <Col xl={4} lg={6} md={6} sm={12}>
                   <Row>
-                    <Col xl={3}>
-                      <Form.Label>Type Color</Form.Label>
-                      <Form.Control
-                        className="form-control form-input-color"
-                        type="color"
-                        defaultValue="#136bd0"
-                      />
-                    </Col>
-                    <Col xl={5}>
-                      <div className="ps-0">
-                        <p className="mb-3 px-0 text-muted">Type Checkbox</p>
-                        <Form.Check
-                          className="ms-2"
-                          type="checkbox"
-                          defaultValue=""
-                          defaultChecked
-                        />
-                      </div>
-                    </Col>
                     <Col xl={4}>
                       <div className="ps-0">
                         <p className="mb-3 px-0 text-muted">Type Radio</p>
@@ -183,85 +171,7 @@ const NhapMuTuoi = () => {
                       </div>
                     </Col>
                   </Row>
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-file">Type File</Form.Label>
-                  <Form.Control type="file" id="input-file" />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label>Type Url</Form.Label>
-                  <Form.Control
-                    type="url"
-                    name="website"
-                    placeholder="http://example.com"
-                  />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-disabled">
-                    Type Disabled
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    id="input-disabled"
-                    placeholder="Disabled input"
-                    disabled
-                  />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-readonlytext">
-                    Input Readonly Text
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    readOnly
-                    className="form-control-plaintext"
-                    id="input-readonlytext"
-                    defaultValue="email@example.com"
-                  />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="disabled-readonlytext">
-                    Disabled Readonly Input
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    defaultValue="Disabled readonly input"
-                    id="disabled-readonlytext"
-                    aria-label="Disabled input example"
-                    disabled
-                    readOnly
-                  />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label>Type Readonly Input</Form.Label>
-                  <Form.Control
-                    type="text"
-                    defaultValue="Readonly input here..."
-                    aria-label="readonly input example"
-                    readOnly
-                  />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="text-area">Textarea</Form.Label>
-                  <Form.Control as="textarea" id="text-area" rows={1} />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-DataList">
-                    Datalist example
-                  </Form.Label>
-                  <Form.Control
-                    list="datalistOptions"
-                    id="input-DataList"
-                    placeholder="Type to search..."
-                  />
-                  <datalist id="datalistOptions">
-                    <option defaultValue="San Francisco"></option>
-                    <option defaultValue="New York"></option>
-                    <option defaultValue="Seattle"></option>
-                    <option defaultValue="Los Angeles"></option>
-                    <option defaultValue="Chicago"></option>
-                  </datalist>
-                </Col>
+                </Col> */}
               </div>
             </Card.Body>
           </Card>
