@@ -13,11 +13,17 @@ import {
 import Pageheader from "../../../components/pageheader/pageheader";
 
 import { Link } from "react-router-dom";
-// import { data_DTDT, data_dungTuoi, data_KTCB } from "../DTDT/DTDTdata";
+import { danhMucCN } from "./data";
 
 const NhapMuTuoi = () => {
   //collapse1
   const [open1, setOpen1] = useState(false);
+
+  const [danhSachCN, setDanhSachCN] = useState(danhMucCN);
+
+  function loadDanhSachCN() {
+    setDanhSachCN(danhMucCN); // Cập nhật state để render lại bảng
+  }
 
   return (
     <Fragment>
@@ -127,51 +133,81 @@ const NhapMuTuoi = () => {
                     className="form-control btn btn-primary"
                     id="input-button"
                     defaultValue="Submit"
+                    onClick={loadDanhSachCN}
                   />
                 </Col>
-
-                {/* <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-placeholder">
-                    Form Input With Placeholder
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    id="input-placeholder"
-                    placeholder="Placeholder"
-                  />
-                </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-text">Type Text</Form.Label>
-                  <Form.Control
-                    type="text"
-                    id="input-text"
-                    placeholder="Text"
-                  />
-                </Col>
-
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Form.Label htmlFor="input-submit">Type Submit</Form.Label>
-                  <Form.Control
-                    type="submit"
-                    id="input-submit"
-                    defaultValue="Submit"
-                  />
-                </Col>
-
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Row>
-                    <Col xl={4}>
-                      <div className="ps-0">
-                        <p className="mb-3 px-0 text-muted">Type Radio</p>
-                        <Form.Check
-                          className="ms-2"
-                          type="radio"
-                          defaultChecked
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                </Col> */}
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col xl={12}>
+          <Card className="custom-card">
+            <Card.Header className="card-header justify-content-between">
+              <Card.Title>Thông tin chi tiết</Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <div className="table-responsive">
+                <Table className="table text-nowrap" id="bangNhap">
+                  <thead className="sticky-header">
+                    <tr>
+                      <th className="text-wrap bg-light">STT</th>
+                      <th className="text-wrap bg-light">STT PC</th>
+                      <th className="col-maCN text-center bg-light text-al">
+                        Mã CN
+                      </th>
+                      <th className="col-tenCN text-center bg-light">
+                        Tên công nhân
+                      </th>
+                      <th className="text-wrap bg-light">Mủ HA</th>
+                      <th className="text-wrap bg-light">Dầu kích thích</th>
+                      <th className="col-HTPC text-wrap bg-light">
+                        Hiện trạng PC
+                      </th>
+                      <th className="text-wrap bg-light">Cốm L1</th>
+                      <th className="text-wrap bg-light">DRC</th>
+                      <th className="text-wrap bg-light">Cốm L2</th>
+                      <th className="text-wrap bg-light">DRC</th>
+                      <th className="text-wrap bg-light">Latex L1</th>
+                      <th className="text-wrap bg-light">DRC</th>
+                      <th className="text-wrap bg-light">Latex L2</th>
+                      <th className="text-wrap bg-light">DRC</th>
+                      <th className="text-wrap bg-light">Đông L1</th>
+                      <th className="text-wrap bg-light">Đông L2</th>
+                      <th className="text-wrap bg-light">Dây L1</th>
+                      <th className="text-wrap bg-light">Dây L2</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {danhSachCN.map((cn) => (
+                      <tr key={cn.sttCN}>
+                        <td>{cn.sttCN}</td>
+                        <td>{cn.sttPC}</td>
+                        <td>{cn.maCN}</td>
+                        <td>{cn.tenCN}</td>
+                        <td>
+                          <Form.Check type="checkbox" />
+                        </td>
+                        <td>
+                          <Form.Check type="checkbox" />
+                        </td>
+                        <td>
+                          <Form.Select aria-label="Hiện trạng PC">
+                            <option value=""></option>
+                            <option value="BC">BC</option>
+                            <option value="CH">CH</option>
+                          </Form.Select>
+                        </td>
+                        {Array(12)
+                          .fill(0)
+                          .map((_, index) => (
+                            <td key={index}>
+                              <Form.Control type="text" />
+                            </td>
+                          ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
               </div>
             </Card.Body>
           </Card>
@@ -183,7 +219,17 @@ const NhapMuTuoi = () => {
         .table-responsive {
           overflow-x: auto;
           -webkit-overflow-scrolling: touch;
+          max-height: 660px;
+          overflow-y: auto;
         }
+
+        .sticky-header {
+          position: sticky;
+          top: 0;
+          z-index: 10; /* Đảm bảo tiêu đề nằm trên nội dung bảng */
+          background-color: inherit; /* Giữ màu nền của tiêu đề */
+        }
+
         .table th.text-wrap,
         .table td {
           white-space: normal !important;
@@ -191,11 +237,14 @@ const NhapMuTuoi = () => {
           vertical-align: middle;
           text-align: center;
         }
-        .table th.col-stt {
-          width: 50px;
+        .table th.col-HTPC {
+          width: 100px;
         }
-        .table th.col-nongtruong {
-          width: 80px;
+        .table th.col-tenCN {
+          width: 200px;
+        }
+        .table th.col-maCN {
+          width: 120px;
         }
         .table th.col-sxkd-01012025,
         .table th.col-mocao-2025,
