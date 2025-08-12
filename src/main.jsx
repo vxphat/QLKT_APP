@@ -183,9 +183,10 @@ import Loader from "./components/common/loader/loader.jsx";
 import KiemKe0gio from "./container/database/kk0gio/kk0gio.jsx";
 import DTDT from "./container/database/DTDT/DTDT.jsx";
 import NhapMuTuoi from "./container/qlsl/nhapmutuoi/nhapmutuoi.jsx";
-import NhapMuChen from "./container/qlsl/nhapmuchen/nhapmuchen.jsx";
-import nhapMuKhoNM_Nuoc from "./container/qlsl/nhapMuKhoNM_Nuoc/nhapMuKhoNM_Nuoc.jsx";
+import NhapMuChen from "./container/qlsl/nhapMuChen/nhapmuchen.jsx";
 import NhapMuKhoNM_Nuoc from "./container/qlsl/nhapMuKhoNM_Nuoc/nhapMuKhoNM_Nuoc.jsx";
+import DanhSachCN from "./container/qlsl/danhSachCN/danhSachCN.jsx";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.Fragment>
     <BrowserRouter>
@@ -217,18 +218,23 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             />
 
             <Route
-              path={`${import.meta.env.BASE_URL}qlsl/nhapmutuoi`}
+              path={`${import.meta.env.BASE_URL}qlsl/nhapMuTuoi`}
               element={<NhapMuTuoi />}
             />
 
             <Route
-              path={`${import.meta.env.BASE_URL}qlsl/nhapmuchen`}
+              path={`${import.meta.env.BASE_URL}qlsl/nhapMuChen`}
               element={<NhapMuChen />}
             />
 
             <Route
               path={`${import.meta.env.BASE_URL}qlsl/nhapMuKhoNM_Nuoc`}
               element={<NhapMuKhoNM_Nuoc />}
+            />
+
+            <Route
+              path={`${import.meta.env.BASE_URL}qlsl/danhSachCN`}
+              element={<DanhSachCN />}
             />
 
             <Route

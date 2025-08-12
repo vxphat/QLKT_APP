@@ -13,7 +13,7 @@ import {
 import Pageheader from "../../../components/pageheader/pageheader";
 
 import { Link } from "react-router-dom";
-import { danhMucCN } from "../nhapmuchen/data";
+import { danhMucCN } from "./data";
 
 const NhapMuChen = () => {
   //collapse1
