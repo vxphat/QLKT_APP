@@ -166,15 +166,15 @@ export const MENUITEMS = [
             selected: false,
           },
           {
-            path: `${import.meta.env.BASE_URL}qlsl/nhapmutuoi`,
+            path: `${import.meta.env.BASE_URL}qlsl/nhapmuchen`,
             title: "Nhập mủ chén",
             type: "link",
             active: false,
             selected: false,
           },
           {
-            path: `${import.meta.env.BASE_URL}database/kk0gio`,
-            title: "Nhập mủ khô NM",
+            path: `${import.meta.env.BASE_URL}qlsl/nhapMuKhoNM_Nuoc`,
+            title: "Nhập mủ khô NM_Nước",
             type: "link",
             active: false,
             selected: false,
