@@ -532,7 +532,274 @@ export const MENUITEMS = [
       },
     ],
   },
-
+  {
+    menutitle: "KIỂM TRA QUÝ III",
+    Items: [
+      {
+        icon: <i className="side-menu__icon bx bx-home"></i>,
+        type: "sub",
+        Name: "",
+        active: false,
+        selected: false,
+        title: "Phiếu dã ngoại",
+        badge: "",
+        badgetxt: "",
+        class: "badge bg-warning-transparent ms-2",
+        children: [
+          {
+            type: "sub",
+            active: false,
+            selected: false,
+            title: "Diễn tiến diện tích",
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/DTDT`,
+                title: "Năm 2025",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+          {
+            title: "Kiểm kê 0 giờ",
+            type: "sub",
+            active: false,
+            selected: false,
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "01.01.2025",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        icon: <i className="side-menu__icon bx bx-home"></i>,
+        type: "sub",
+        Name: "",
+        active: false,
+        selected: false,
+        title: "Tổng hợp KQ",
+        badge: "",
+        badgetxt: "",
+        class: "badge bg-warning-transparent ms-2",
+        children: [
+          {
+            type: "sub",
+            active: false,
+            selected: false,
+            title: "Diễn tiến diện tích",
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/DTDT`,
+                title: "Năm 2025",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+          {
+            title: "Kiểm kê 0 giờ",
+            type: "sub",
+            active: false,
+            selected: false,
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "01.01.2025",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        icon: <i className="side-menu__icon bx bx-home"></i>,
+        type: "sub",
+        Name: "",
+        active: false,
+        selected: false,
+        title: "Danh mục",
+        badge: "",
+        badgetxt: "",
+        class: "badge bg-warning-transparent ms-2",
+        children: [
+          {
+            type: "sub",
+            active: false,
+            selected: false,
+            title: "Diễn tiến diện tích",
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/DTDT`,
+                title: "Năm 2025",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+          {
+            title: "Kiểm kê 0 giờ",
+            type: "sub",
+            active: false,
+            selected: false,
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "01.01.2025",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    menutitle: "KIỂM TRA CUỐI NĂM",
+    Items: [
+      {
+        icon: <i className="side-menu__icon bx bx-home"></i>,
+        type: "sub",
+        Name: "",
+        active: false,
+        selected: false,
+        title: "Phiếu dã ngoại",
+        badge: "",
+        badgetxt: "",
+        class: "badge bg-warning-transparent ms-2",
+        children: [
+          {
+            type: "sub",
+            active: false,
+            selected: false,
+            title: "Diễn tiến diện tích",
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/DTDT`,
+                title: "Năm 2025",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+          {
+            title: "Kiểm kê 0 giờ",
+            type: "sub",
+            active: false,
+            selected: false,
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "01.01.2025",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        icon: <i className="side-menu__icon bx bx-home"></i>,
+        type: "sub",
+        Name: "",
+        active: false,
+        selected: false,
+        title: "Tổng hợp KQ",
+        badge: "",
+        badgetxt: "",
+        class: "badge bg-warning-transparent ms-2",
+        children: [
+          {
+            type: "sub",
+            active: false,
+            selected: false,
+            title: "Diễn tiến diện tích",
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/DTDT`,
+                title: "Năm 2025",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+          {
+            title: "Kiểm kê 0 giờ",
+            type: "sub",
+            active: false,
+            selected: false,
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "01.01.2025",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        icon: <i className="side-menu__icon bx bx-home"></i>,
+        type: "sub",
+        Name: "",
+        active: false,
+        selected: false,
+        title: "Danh mục",
+        badge: "",
+        badgetxt: "",
+        class: "badge bg-warning-transparent ms-2",
+        children: [
+          {
+            type: "sub",
+            active: false,
+            selected: false,
+            title: "Diễn tiến diện tích",
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/DTDT`,
+                title: "Năm 2025",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+          {
+            title: "Kiểm kê 0 giờ",
+            type: "sub",
+            active: false,
+            selected: false,
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "01.01.2025",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   {
     menutitle: "MAIN",
     Items: [
