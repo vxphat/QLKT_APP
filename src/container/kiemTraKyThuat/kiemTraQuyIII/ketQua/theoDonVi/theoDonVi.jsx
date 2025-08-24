@@ -9,14 +9,14 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
-import Pageheader from "../../../components/pageheader/pageheader";
-import { danhMucCN } from "../danhSachCN/danhSachCNdata";
+import Pageheader from "../../../../../components/pageheader/pageheader";
+// import { danhMucCN } from "../danhSachCN/danhSachCNdata";
 
 const API_URL =
   "https://script.google.com/macros/s/AKfycbxFOlMtnfIJBHmQalX1szMymurvXoO1u-3kvgBH4kS1zdZc1UdDfWBe-0R_a5uTjXNy/exec"; // URL web app của bạn
 const TOKEN = "vxphat1994@";
 
-const DanhSachCN = () => {
+const KQtheoDonVi = () => {
   const [danhSachCN, setDanhSachCN] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -45,7 +45,7 @@ const DanhSachCN = () => {
   return (
     <Fragment>
       <Pageheader
-        title="Danh sách công nhân"
+        title="Kết Quả Theo Đơn Vị"
         heading="Tables"
         active="Tables"
       />
@@ -210,4 +210,4 @@ const DanhSachCN = () => {
   );
 };
 
-export default DanhSachCN;
+export default KQtheoDonVi;

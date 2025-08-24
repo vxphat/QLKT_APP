@@ -533,7 +533,7 @@ export const MENUITEMS = [
     ],
   },
   {
-    menutitle: "KIỂM TRA QUÝ III",
+    menutitle: "KIỂM TRA KỸ THUẬT",
     Items: [
       {
         icon: <i className="side-menu__icon bx bx-home"></i>,
@@ -541,20 +541,34 @@ export const MENUITEMS = [
         Name: "",
         active: false,
         selected: false,
-        title: "Phiếu dã ngoại",
+        title: "Kiểm tra 6 tháng",
         badge: "",
         badgetxt: "",
         class: "badge bg-warning-transparent ms-2",
         children: [
           {
+            path: `${import.meta.env.BASE_URL}qlsl/nhapMuTuoi`,
+            title: "Phiếu dã ngoại",
+            type: "link",
+            active: false,
+            selected: false,
+          },
+          {
+            title: "Kết quả",
             type: "sub",
             active: false,
             selected: false,
-            title: "Diễn tiến diện tích",
             children: [
               {
-                path: `${import.meta.env.BASE_URL}database/DTDT`,
-                title: "Năm 2025",
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "Theo đơn vị",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "Tổng Công ty",
                 type: "link",
                 active: false,
                 selected: false,
@@ -562,14 +576,21 @@ export const MENUITEMS = [
             ],
           },
           {
-            title: "Kiểm kê 0 giờ",
+            title: "Danh mục",
             type: "sub",
             active: false,
             selected: false,
             children: [
               {
                 path: `${import.meta.env.BASE_URL}database/kk0gio`,
-                title: "01.01.2025",
+                title: "Danh sách lô",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "Danh sách tổ",
                 type: "link",
                 active: false,
                 selected: false,
@@ -584,20 +605,40 @@ export const MENUITEMS = [
         Name: "",
         active: false,
         selected: false,
-        title: "Tổng hợp KQ",
+        title: "Kiểm tra quý III",
         badge: "",
         badgetxt: "",
         class: "badge bg-warning-transparent ms-2",
         children: [
           {
+            path: `${
+              import.meta.env.BASE_URL
+            }kiemTraKyThuat/kiemTraQuyIII/phieuDaNgoai`,
+            title: "Phiếu dã ngoại",
+            type: "link",
+            active: false,
+            selected: false,
+          },
+          {
+            title: "Kết quả",
             type: "sub",
             active: false,
             selected: false,
-            title: "Diễn tiến diện tích",
             children: [
               {
-                path: `${import.meta.env.BASE_URL}database/DTDT`,
-                title: "Năm 2025",
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraQuyIII/ketQua/theoDonVi`,
+                title: "Theo đơn vị",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraQuyIII/ketQua/tongCongTy`,
+                title: "Tổng Công ty",
                 type: "link",
                 active: false,
                 selected: false,
@@ -605,14 +646,25 @@ export const MENUITEMS = [
             ],
           },
           {
-            title: "Kiểm kê 0 giờ",
+            title: "Danh mục",
             type: "sub",
             active: false,
             selected: false,
             children: [
               {
-                path: `${import.meta.env.BASE_URL}database/kk0gio`,
-                title: "01.01.2025",
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraQuyIII/danhMuc/danhSachLo`,
+                title: "Danh sách lô",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraQuyIII/danhMuc/dinhMuc`,
+                title: "Định mức",
                 type: "link",
                 active: false,
                 selected: false,
@@ -627,68 +679,34 @@ export const MENUITEMS = [
         Name: "",
         active: false,
         selected: false,
-        title: "Danh mục",
+        title: "Kiểm tra cuối năm",
         badge: "",
         badgetxt: "",
         class: "badge bg-warning-transparent ms-2",
         children: [
           {
-            type: "sub",
+            path: `${import.meta.env.BASE_URL}qlsl/nhapMuTuoi`,
+            title: "Phiếu dã ngoại",
+            type: "link",
             active: false,
             selected: false,
-            title: "Diễn tiến diện tích",
-            children: [
-              {
-                path: `${import.meta.env.BASE_URL}database/DTDT`,
-                title: "Năm 2025",
-                type: "link",
-                active: false,
-                selected: false,
-              },
-            ],
           },
           {
-            title: "Kiểm kê 0 giờ",
+            title: "Kết quả",
             type: "sub",
             active: false,
             selected: false,
             children: [
               {
                 path: `${import.meta.env.BASE_URL}database/kk0gio`,
-                title: "01.01.2025",
+                title: "Theo đơn vị",
                 type: "link",
                 active: false,
                 selected: false,
               },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    menutitle: "KIỂM TRA CUỐI NĂM",
-    Items: [
-      {
-        icon: <i className="side-menu__icon bx bx-home"></i>,
-        type: "sub",
-        Name: "",
-        active: false,
-        selected: false,
-        title: "Phiếu dã ngoại",
-        badge: "",
-        badgetxt: "",
-        class: "badge bg-warning-transparent ms-2",
-        children: [
-          {
-            type: "sub",
-            active: false,
-            selected: false,
-            title: "Diễn tiến diện tích",
-            children: [
               {
-                path: `${import.meta.env.BASE_URL}database/DTDT`,
-                title: "Năm 2025",
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "Tổng Công ty",
                 type: "link",
                 active: false,
                 selected: false,
@@ -696,100 +714,21 @@ export const MENUITEMS = [
             ],
           },
           {
-            title: "Kiểm kê 0 giờ",
+            title: "Danh mục",
             type: "sub",
             active: false,
             selected: false,
             children: [
               {
                 path: `${import.meta.env.BASE_URL}database/kk0gio`,
-                title: "01.01.2025",
+                title: "Danh sách lô",
                 type: "link",
                 active: false,
                 selected: false,
               },
-            ],
-          },
-        ],
-      },
-      {
-        icon: <i className="side-menu__icon bx bx-home"></i>,
-        type: "sub",
-        Name: "",
-        active: false,
-        selected: false,
-        title: "Tổng hợp KQ",
-        badge: "",
-        badgetxt: "",
-        class: "badge bg-warning-transparent ms-2",
-        children: [
-          {
-            type: "sub",
-            active: false,
-            selected: false,
-            title: "Diễn tiến diện tích",
-            children: [
-              {
-                path: `${import.meta.env.BASE_URL}database/DTDT`,
-                title: "Năm 2025",
-                type: "link",
-                active: false,
-                selected: false,
-              },
-            ],
-          },
-          {
-            title: "Kiểm kê 0 giờ",
-            type: "sub",
-            active: false,
-            selected: false,
-            children: [
               {
                 path: `${import.meta.env.BASE_URL}database/kk0gio`,
-                title: "01.01.2025",
-                type: "link",
-                active: false,
-                selected: false,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        icon: <i className="side-menu__icon bx bx-home"></i>,
-        type: "sub",
-        Name: "",
-        active: false,
-        selected: false,
-        title: "Danh mục",
-        badge: "",
-        badgetxt: "",
-        class: "badge bg-warning-transparent ms-2",
-        children: [
-          {
-            type: "sub",
-            active: false,
-            selected: false,
-            title: "Diễn tiến diện tích",
-            children: [
-              {
-                path: `${import.meta.env.BASE_URL}database/DTDT`,
-                title: "Năm 2025",
-                type: "link",
-                active: false,
-                selected: false,
-              },
-            ],
-          },
-          {
-            title: "Kiểm kê 0 giờ",
-            type: "sub",
-            active: false,
-            selected: false,
-            children: [
-              {
-                path: `${import.meta.env.BASE_URL}database/kk0gio`,
-                title: "01.01.2025",
+                title: "Danh sách tổ",
                 type: "link",
                 active: false,
                 selected: false,

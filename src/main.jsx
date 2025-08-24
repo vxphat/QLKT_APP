@@ -186,6 +186,11 @@ import NhapMuTuoi from "./container/qlsl/nhapmutuoi/nhapmutuoi.jsx";
 import NhapMuChen from "./container/qlsl/nhapMuChen/nhapmuchen.jsx";
 import NhapMuKhoNM_Nuoc from "./container/qlsl/nhapMuKhoNM_Nuoc/nhapMuKhoNM_Nuoc.jsx";
 import DanhSachCN from "./container/qlsl/danhSachCN/danhSachCN.jsx";
+import DanhSachLo from "./container/kiemTraKyThuat/kiemTraQuyIII/danhMuc/danhSachLo/danhSachLo.jsx";
+import DinhMuc from "./container/kiemTraKyThuat/kiemTraQuyIII/danhMuc/dinhMuc/dinhMuc.jsx";
+import KQtheoDonVi from "./container/kiemTraKyThuat/kiemTraQuyIII/ketQua/theoDonVi/theoDonVi.jsx";
+import KQtongCongTy from "./container/kiemTraKyThuat/kiemTraQuyIII/ketQua/tongCongTy/tongCongTy.jsx";
+import PhieuDaNgoai from "./container/kiemTraKyThuat/kiemTraQuyIII/phieuDaNgoai/phieuDaNgoai.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.Fragment>
@@ -235,6 +240,41 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route
               path={`${import.meta.env.BASE_URL}qlsl/danhSachCN`}
               element={<DanhSachCN />}
+            />
+
+            <Route
+              path={`${
+                import.meta.env.BASE_URL
+              }kiemTraKyThuat/kiemTraQuyIII/danhMuc/danhSachLo`}
+              element={<DanhSachLo />}
+            />
+
+            <Route
+              path={`${
+                import.meta.env.BASE_URL
+              }kiemTraKyThuat/kiemTraQuyIII/danhMuc/dinhMuc`}
+              element={<DinhMuc />}
+            />
+
+            <Route
+              path={`${
+                import.meta.env.BASE_URL
+              }kiemTraKyThuat/kiemTraQuyIII/ketQua/theoDonVi`}
+              element={<KQtheoDonVi />}
+            />
+
+            <Route
+              path={`${
+                import.meta.env.BASE_URL
+              }kiemTraKyThuat/kiemTraQuyIII/ketQua/tongCongTy`}
+              element={<KQtongCongTy />}
+            />
+
+            <Route
+              path={`${
+                import.meta.env.BASE_URL
+              }kiemTraKyThuat/kiemTraQuyIII/phieuDaNgoai`}
+              element={<PhieuDaNgoai />}
             />
 
             <Route
