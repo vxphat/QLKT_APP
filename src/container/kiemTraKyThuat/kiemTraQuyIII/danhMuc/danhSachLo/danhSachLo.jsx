@@ -13,15 +13,15 @@ import Pageheader from "../../../../../components/pageheader/pageheader";
 // import { danhMucCN } from "../danhSachCN/danhSachCNdata";
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbxFOlMtnfIJBHmQalX1szMymurvXoO1u-3kvgBH4kS1zdZc1UdDfWBe-0R_a5uTjXNy/exec"; // URL web app của bạn
+  "https://script.google.com/macros/s/AKfycbxgIjtPLhCcv8nNWavOsMcTCObTUaQdMT_AvBVjHtB5e1FwEKCShO5EL3IWKW_ydBWo/exec";
 const TOKEN = "vxphat1994@";
 
 const DanhSachLo = () => {
-  const [danhSachCN, setDanhSachCN] = useState([]);
+  const [dataLo, setDataLo] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
 
-  async function loadDanhSachCN(query = "") {
+  async function loadDataLo(query = "") {
     setLoading(true);
     try {
       const url = new URL(API_URL);
@@ -30,7 +30,7 @@ const DanhSachLo = () => {
       console.log("Fetching:", url.toString());
       const res = await fetch(url.toString(), { method: "GET" });
       const json = await res.json();
-      setDanhSachCN(json.data ?? []);
+      setDataLo(json.data ?? []);
     } catch (err) {
       console.error(err);
     } finally {
@@ -39,41 +39,51 @@ const DanhSachLo = () => {
   }
 
   useEffect(() => {
-    loadDanhSachCN();
+    loadDataLo();
   }, []);
 
   return (
     <Fragment>
-      <Pageheader title="Danh sách lô" heading="Tables" active="Tables" />
+      <Pageheader
+        title="Kết Quả Theo Đơn Vị"
+        heading="Tables"
+        active="Tables"
+      />
       <Row>
         <Col xl={12}>
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
-              <Card.Title>Thông tin chi tiết</Card.Title>
+              <Card.Title>
+                CHI TIẾT XÉT THƯỞNG VƯỜN CÂY MỞ CẠO NĂM 2025
+              </Card.Title>
             </Card.Header>
             <Card.Body>
               <Row className="mb-3">
-                <Col xl={3} lg={6} md={6} sm={12}>
-                  {/* <Form.Label htmlFor="input-search">Type Search</Form.Label> */}
-                  <Form.Control
-                    type="search"
-                    id="input-search"
-                    placeholder="Tìm tên công nhân"
-                    value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
-                  />
+                <Col xl={4} lg={6} md={6} sm={12}>
+                  <Row>
+                    <Col xl={6}>
+                      <Form.Control
+                        type="search"
+                        id="input-search"
+                        placeholder="Tìm tên công nhân"
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
+                      />
+                    </Col>
+                    <Col xl={6} lg={6} md={6} sm={12}>
+                      <Button
+                        className="btn btn-primary label-btn"
+                        onClick={() => loadDataLo(keyword)}
+                        disabled={loading}>
+                        <i className="bi bi-search label-btn-icon me-2"></i>
+                        {loading ? "Đang tải..." : "Tìm kiếm"}
+                      </Button>
+                    </Col>
+                  </Row>
                 </Col>
-                <Col xl={3} lg={6} md={6} sm={12}>
-                  <Button
-                    className="btn btn-primary label-btn"
-                    onClick={() => loadDanhSachCN(keyword)}
-                    disabled={loading}>
-                    <i className="bi bi-search label-btn-icon me-2"></i>
-                    {loading ? "Đang tải..." : "Tìm kiếm"}
-                  </Button>
-                </Col>
-                <Col xl={3} lg={6} md={6} sm={12}></Col>
-                <Col xl={3} lg={6} md={6} sm={12} className="d-flex">
+
+                <Col xl={4} lg={6} md={6} sm={12}></Col>
+                <Col xl={4} lg={6} md={6} sm={12} className="d-flex">
                   <Button className="btn btn-secondary label-btn ms-auto">
                     <i className="bi bi-plus-lg label-btn-icon me-2"></i>
                     Thêm CN
@@ -85,39 +95,27 @@ const DanhSachLo = () => {
                 <Table className="table text-nowrap" id="bangNhap">
                   <thead className="sticky-header">
                     <tr>
-                      <th className="text-wrap ">Năm DSCN</th>
-                      <th className="text-wrap ">HT thu</th>
-                      <th className="text-center">Đội</th>
-                      <th className="text-center ">Tổ</th>
-                      <th className="text-wrap ">STT CN</th>
-                      <th className="text-wrap ">STT phần cây</th>
-                      <th className="text-wrap ">Mã CN</th>
-                      <th className="text-wrap ">Tên CN</th>
-                      <th className="text-wrap ">Mã lô</th>
-                      <th className="text-wrap ">Tên lô</th>
-                      <th className="text-wrap ">Nhịp độ cạo</th>
-                      <th className="text-wrap ">Phiên cạo</th>
-                      <th className="text-wrap ">Số cây cạo</th>
-                      <th className="text-wrap ">HT phần cây</th>
+                      <th className="text-wrap ">STT</th>
+                      <th className="text-wrap ">Đội</th>
+                      <th className="text-center">Tên lô</th>
+                      <th className="text-center ">Năm trồng</th>
+                      <th className="text-wrap ">Hạng đất</th>
+                      <th className="text-wrap ">Giống</th>
+                      <th className="text-wrap ">Diện tích KK</th>
+                      <th className="text-wrap ">Diện tích MC</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {danhSachCN.map((cn, idx) => (
+                    {dataLo.map((cn, idx) => (
                       <tr key={idx}>
-                        <td>{cn.namDSCN}</td>
-                        <td>{cn.htThu}</td>
+                        <td>{cn.stt}</td>
                         <td>{cn.doi}</td>
-                        <td>{cn.to}</td>
-                        <td>{cn.sttCN}</td>
-                        <td>{cn.sttPC}</td>
-                        <td>{cn.maCN}</td>
-                        <td>{cn.tenCN}</td>
-                        <td>{cn.maLo}</td>
                         <td>{cn.tenLo}</td>
-                        <td>{cn.nhipDoCao}</td>
-                        <td>{cn.phienCao}</td>
-                        <td>{cn.soCayCao}</td>
-                        <td>{cn.htPhanCay}</td>
+                        <td>{cn.namTrong}</td>
+                        <td>{cn.hangDat}</td>
+                        <td>{cn.giong}</td>
+                        <td>{cn.dienTichKK}</td>
+                        <td>{cn.dienTichMC}</td>
                       </tr>
                     ))}
                   </tbody>

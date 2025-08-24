@@ -38,36 +38,44 @@ const KQtongCongTy = () => {
     }
   }
 
-  useEffect(() => {
-    loadDanhSachCN();
-  }, []);
+  // useEffect(() => {
+  //   loadDanhSachCN();
+  // }, []);
 
   return (
     <Fragment>
-      <Pageheader
+      {/* <Pageheader
         title="Kết Quả Theo Tổng Công Ty"
         heading="Tables"
         active="Tables"
-      />
-      <Row>
+      /> */}
+      <Row className="mt-3">
         <Col xl={12}>
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
-              <Card.Title>Thông tin chi tiết</Card.Title>
+              <Card.Title>
+                TỔNG HỢP KẾT QUẢ KIỂM TRA VƯỜN CÂY MỞ CẠO NĂM 2025
+              </Card.Title>
             </Card.Header>
             <Card.Body>
               <Row className="mb-3">
-                <Col xl={3} lg={6} md={6} sm={12}>
-                  {/* <Form.Label htmlFor="input-search">Type Search</Form.Label> */}
-                  <Form.Control
-                    type="search"
-                    id="input-search"
-                    placeholder="Tìm tên công nhân"
-                    value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
-                  />
+                <Col xl={2} lg={6} md={6} sm={12}>
+                  {/* <Form.Label htmlFor="input-date" className="fw-bold">
+                    Nhịp độ cạo
+                  </Form.Label> */}
+                  <Form.Select aria-label="Default select example">
+                    <option>Chọn năm</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2024">2025</option>
+                    <option value="2025">2026</option>
+                    <option value="2026">2027</option>
+                    <option value="2027">2028</option>
+                    <option value="2028">2029</option>
+                    <option value="2029">2030</option>
+                  </Form.Select>
                 </Col>
-                <Col xl={3} lg={6} md={6} sm={12}>
+                <Col xl={2} lg={6} md={6} sm={12}>
                   <Button
                     className="btn btn-primary label-btn"
                     onClick={() => loadDanhSachCN(keyword)}
@@ -77,32 +85,58 @@ const KQtongCongTy = () => {
                   </Button>
                 </Col>
                 <Col xl={3} lg={6} md={6} sm={12}></Col>
-                <Col xl={3} lg={6} md={6} sm={12} className="d-flex">
-                  <Button className="btn btn-secondary label-btn ms-auto">
-                    <i className="bi bi-plus-lg label-btn-icon me-2"></i>
-                    Thêm CN
-                  </Button>
-                </Col>
               </Row>
 
               <div className="table-responsive">
                 <Table className="table text-nowrap" id="bangNhap">
                   <thead className="sticky-header">
                     <tr>
-                      <th className="text-wrap ">Năm DSCN</th>
-                      <th className="text-wrap ">HT thu</th>
-                      <th className="text-center">Đội</th>
-                      <th className="text-center ">Tổ</th>
-                      <th className="text-wrap ">STT CN</th>
-                      <th className="text-wrap ">STT phần cây</th>
-                      <th className="text-wrap ">Mã CN</th>
-                      <th className="text-wrap ">Tên CN</th>
-                      <th className="text-wrap ">Mã lô</th>
-                      <th className="text-wrap ">Tên lô</th>
-                      <th className="text-wrap ">Nhịp độ cạo</th>
-                      <th className="text-wrap ">Phiên cạo</th>
-                      <th className="text-wrap ">Số cây cạo</th>
-                      <th className="text-wrap ">HT phần cây</th>
+                      <th className="text-wrap " rowSpan={3}>
+                        STT
+                      </th>
+                      <th className="text-wrap " rowSpan={3}>
+                        Đội
+                      </th>
+                      <th className="text-center" rowSpan={3}>
+                        Diện tích MC
+                      </th>
+                      <th className="text-center " rowSpan={3}>
+                        Diện tích KT
+                      </th>
+                      <th className="text-wrap " rowSpan={3}>
+                        Tỷ lệ cây đạt vanh(%)
+                      </th>
+                      <th className="text-wrap " colSpan={4}>
+                        Diện tích có tỷ lệ vanh ≥75% (ha)
+                      </th>
+                      <th className="text-wrap " rowSpan={3}>
+                        Diện tích có tỷ lệ đạt vanh dưới 75% (ha)
+                      </th>
+                      <th className="text-wrap " rowSpan={3}>
+                        Diện tích mở cạo cây dưới 50 cm (ha)
+                      </th>
+                      <th className="text-wrap " rowSpan={3}>
+                        Điểm trừ
+                      </th>
+                      <th className="text-wrap " rowSpan={3}>
+                        Điểm xếp hạng
+                      </th>
+                      <th className="text-wrap " rowSpan={3}>
+                        Ghi chú
+                      </th>
+                    </tr>
+                    <tr>
+                      <th className="text-wrap " colSpan={3}>
+                        Theo điểm
+                      </th>
+                      <th className="text-wrap " rowSpan={2}>
+                        Cộng
+                      </th>
+                    </tr>
+                    <tr>
+                      <th>8</th>
+                      <th>9</th>
+                      <th>10</th>
                     </tr>
                   </thead>
                   <tbody>

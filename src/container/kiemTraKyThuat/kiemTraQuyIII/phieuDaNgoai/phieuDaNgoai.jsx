@@ -10,18 +10,24 @@ import {
   Table,
 } from "react-bootstrap";
 import Pageheader from "../../../../components/pageheader/pageheader";
-// import { danhMucCN } from "../danhSachCN/danhSachCNdata";
+import { donVidata } from "../../kiemTraQuyIII/danhMuc/dinhMuc/dinhMucData";
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbxFOlMtnfIJBHmQalX1szMymurvXoO1u-3kvgBH4kS1zdZc1UdDfWBe-0R_a5uTjXNy/exec"; // URL web app của bạn
+  "https://script.google.com/macros/s/AKfycbwZM002-mVfsGaQeGlEt9qLnTK4Ef41VWhDFHlAeuH6XF_Xo9Lsiv194etMJCpzNbhiwA/exec"; // URL web app của bạn
 const TOKEN = "vxphat1994@";
+
+const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
 const PhieuDaNgoai = () => {
   const [danhSachCN, setDanhSachCN] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
 
-  async function loadDanhSachCN(query = "") {
+  const [nam, setNam] = useState("");
+  const [maDonVi, setMaDonVi] = useState("");
+  const [tenLo, setTenLo] = useState("");
+
+  async function loadKQKT(query = "") {
     setLoading(true);
     try {
       const url = new URL(API_URL);
@@ -30,7 +36,7 @@ const PhieuDaNgoai = () => {
       console.log("Fetching:", url.toString());
       const res = await fetch(url.toString(), { method: "GET" });
       const json = await res.json();
-      setDanhSachCN(json.data ?? []);
+      loadKQKT(json.data ?? []);
     } catch (err) {
       console.error(err);
     } finally {
@@ -38,67 +44,146 @@ const PhieuDaNgoai = () => {
     }
   }
 
-  useEffect(() => {
-    loadDanhSachCN();
-  }, []);
+  // useEffect(() => {
+  //   loadKQKT();
+  // }, []);
 
   return (
     <Fragment>
-      <Pageheader title="Phiếu Dã Ngoại" heading="Tables" active="Tables" />
-      <Row>
+      {/* <Pageheader title="Phiếu Dã Ngoại" heading="Tables" active="Tables" /> */}
+      <Row className="mt-3">
         <Col xl={12}>
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
-              <Card.Title>Thông tin chi tiết</Card.Title>
+              <Card.Title>
+                PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY MỞ CẠO NĂM 2024
+              </Card.Title>
             </Card.Header>
             <Card.Body>
               <Row className="mb-3">
-                <Col xl={3} lg={6} md={6} sm={12}>
-                  {/* <Form.Label htmlFor="input-search">Type Search</Form.Label> */}
-                  <Form.Control
-                    type="search"
-                    id="input-search"
-                    placeholder="Tìm tên công nhân"
-                    value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
-                  />
+                <Col xl={2} lg={6} md={6} sm={12}>
+                  <Form.Select
+                    aria-label="Chọn năm"
+                    value={nam}
+                    onChange={(e) => setNam(e.target.value)}>
+                    <option value="">Chọn năm</option>
+                    {YEARS.map((y) => (
+                      <option key={y} value={y}>
+                        {y}
+                      </option>
+                    ))}
+                  </Form.Select>
                 </Col>
-                <Col xl={3} lg={6} md={6} sm={12}>
+
+                <Col xl={2} lg={6} md={6} sm={12}>
+                  <Form.Select
+                    aria-label="Chọn đơn vị"
+                    value={maDonVi}
+                    onChange={(e) => setMaDonVi(e.target.value)}>
+                    <option value="">Chọn đơn vị</option>
+                    {donVidata.map((dv) => (
+                      <option key={dv.id} value={dv.maDonVi}>
+                        {dv.maDonVi} - {dv.donVi}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Col>
+                <Col xl={2} lg={6} md={6} sm={12}>
+                  <Form.Select
+                    aria-label="Chọn lô"
+                    value={maDonVi}
+                    onChange={(e) => setMaDonVi(e.target.value)}>
+                    <option value="">Chọn lô</option>
+                    {donVidata.map((dv) => (
+                      <option key={dv.id} value={dv.maDonVi}>
+                        {dv.maDonVi} - {dv.donVi}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Col>
+                <Col xl={4} lg={6} md={6} sm={12}>
                   <Button
                     className="btn btn-primary label-btn"
-                    onClick={() => loadDanhSachCN(keyword)}
+                    onClick={() => loadKQKT(keyword)}
                     disabled={loading}>
                     <i className="bi bi-search label-btn-icon me-2"></i>
                     {loading ? "Đang tải..." : "Tìm kiếm"}
                   </Button>
                 </Col>
-                <Col xl={3} lg={6} md={6} sm={12}></Col>
-                <Col xl={3} lg={6} md={6} sm={12} className="d-flex">
-                  <Button className="btn btn-secondary label-btn ms-auto">
-                    <i className="bi bi-plus-lg label-btn-icon me-2"></i>
-                    Thêm CN
-                  </Button>
+              </Row>
+
+              <Row className="mt-5">
+                <Col xl={3}>
+                  <p>
+                    <b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b>
+                  </p>
+                  <p>
+                    {" "}
+                    <b>Đội:</b>
+                  </p>
+                  <p>
+                    {" "}
+                    <b>Ngày kiểm tra:</b>{" "}
+                  </p>
                 </Col>
               </Row>
 
-              <div className="table-responsive">
+              <div className="d-flex justify-content-center">
+                <h4>PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY MỞ CẠO NĂM 2024</h4>
+              </div>
+
+              <div className="table-responsive mt-4">
                 <Table className="table text-nowrap" id="bangNhap">
-                  <thead className="sticky-header">
+                  <thead className="sticky-header ">
+                    <tr className="border">
+                      <th className="text-wrap border" rowSpan={5}>
+                        STT
+                      </th>
+                      <th className="text-center border" colSpan={8}>
+                        Lô:........Năm trồng:.........
+                      </th>
+                    </tr>
+
                     <tr>
-                      <th className="text-wrap ">Năm DSCN</th>
-                      <th className="text-wrap ">HT thu</th>
-                      <th className="text-center">Đội</th>
-                      <th className="text-center ">Tổ</th>
-                      <th className="text-wrap ">STT CN</th>
-                      <th className="text-wrap ">STT phần cây</th>
-                      <th className="text-wrap ">Mã CN</th>
-                      <th className="text-wrap ">Tên CN</th>
-                      <th className="text-wrap ">Mã lô</th>
-                      <th className="text-wrap ">Tên lô</th>
-                      <th className="text-wrap ">Nhịp độ cạo</th>
-                      <th className="text-wrap ">Phiên cạo</th>
-                      <th className="text-wrap ">Số cây cạo</th>
-                      <th className="text-wrap ">HT phần cây</th>
+                      <th className="text-center border" colSpan={8}>
+                        Tọa độ cây thứ I: Hàng:.....Cây:....
+                      </th>
+                    </tr>
+                    <tr>
+                      <th className="text-center border" rowSpan={3}>
+                        HT
+                      </th>
+                      <td className="text-center border" colSpan={4}>
+                        Vanh
+                      </td>
+                      <td className="text-center border" colSpan={3}>
+                        Nấm hồng
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-center border" colSpan={2}>
+                        Cây cạo
+                      </td>
+                      <td className="text-center border" colSpan={2}>
+                        Cây chưa cạo
+                      </td>
+                      <td className="text-center border" rowSpan={2}>
+                        C, C1
+                      </td>
+                      <td className="text-center border" rowSpan={2}>
+                        C2+
+                      </td>
+                      <td className="text-center border" rowSpan={2}>
+                        Cụt đọt
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="border col-narrow dotted-right">
+                        Trên 50
+                      </td>
+                      <td>Dưới 50</td>
+                      <td>Trên 50</td>
+                      <td>Dưới 50</td>
                     </tr>
                   </thead>
                   <tbody>

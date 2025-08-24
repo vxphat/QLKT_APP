@@ -10,18 +10,23 @@ import {
   Table,
 } from "react-bootstrap";
 import Pageheader from "../../../../../components/pageheader/pageheader";
-// import { danhMucCN } from "../danhSachCN/danhSachCNdata";
+import { donVidata } from "../../danhMuc/dinhMuc/dinhMucData";
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbxFOlMtnfIJBHmQalX1szMymurvXoO1u-3kvgBH4kS1zdZc1UdDfWBe-0R_a5uTjXNy/exec"; // URL web app của bạn
+  "https://script.google.com/macros/s/AKfycbxgIjtPLhCcv8nNWavOsMcTCObTUaQdMT_AvBVjHtB5e1FwEKCShO5EL3IWKW_ydBWo/exec";
 const TOKEN = "vxphat1994@";
 
+const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
+
 const KQtheoDonVi = () => {
-  const [danhSachCN, setDanhSachCN] = useState([]);
+  const [dataLo, setDataLo] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
 
-  async function loadDanhSachCN(query = "") {
+  const [nam, setNam] = useState("");
+  const [maDonVi, setMaDonVi] = useState("");
+
+  async function loadKQKT(query = "") {
     setLoading(true);
     try {
       const url = new URL(API_URL);
@@ -30,7 +35,7 @@ const KQtheoDonVi = () => {
       console.log("Fetching:", url.toString());
       const res = await fetch(url.toString(), { method: "GET" });
       const json = await res.json();
-      setDanhSachCN(json.data ?? []);
+      loadKQKT(json.data ?? []);
     } catch (err) {
       console.error(err);
     } finally {
@@ -39,48 +44,70 @@ const KQtheoDonVi = () => {
   }
 
   useEffect(() => {
-    loadDanhSachCN();
+    loadKQKT();
   }, []);
 
   return (
     <Fragment>
-      <Pageheader
+      {/* <Pageheader
         title="Kết Quả Theo Đơn Vị"
         heading="Tables"
         active="Tables"
-      />
-      <Row>
+      /> */}
+      <Row className="mt-3">
         <Col xl={12}>
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
-              <Card.Title>Thông tin chi tiết</Card.Title>
+              <Card.Title>
+                CHI TIẾT XÉT THƯỞNG VƯỜN CÂY MỞ CẠO
+                {nam && <> NĂM {nam}</>}
+                {maDonVi && (
+                  <>
+                    {" "}
+                    -{" ĐỘI "}
+                    {donVidata
+                      .find((dv) => dv.maDonVi === maDonVi)
+                      ?.donVi.toLocaleUpperCase()}
+                  </>
+                )}
+              </Card.Title>
             </Card.Header>
             <Card.Body>
               <Row className="mb-3">
-                <Col xl={3} lg={6} md={6} sm={12}>
-                  {/* <Form.Label htmlFor="input-search">Type Search</Form.Label> */}
-                  <Form.Control
-                    type="search"
-                    id="input-search"
-                    placeholder="Tìm tên công nhân"
-                    value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
-                  />
+                <Col xl={2} lg={6} md={6} sm={12}>
+                  <Form.Select
+                    aria-label="Chọn năm"
+                    value={nam}
+                    onChange={(e) => setNam(e.target.value)}>
+                    <option value="">Chọn năm</option>
+                    {YEARS.map((y) => (
+                      <option key={y} value={y}>
+                        {y}
+                      </option>
+                    ))}
+                  </Form.Select>
                 </Col>
-                <Col xl={3} lg={6} md={6} sm={12}>
+
+                <Col xl={2} lg={6} md={6} sm={12}>
+                  <Form.Select
+                    aria-label="Chọn đơn vị"
+                    value={maDonVi}
+                    onChange={(e) => setMaDonVi(e.target.value)}>
+                    <option value="">Chọn đơn vị</option>
+                    {donVidata.map((dv) => (
+                      <option key={dv.id} value={dv.maDonVi}>
+                        {dv.maDonVi} - {dv.donVi}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Col>
+                <Col xl={4} lg={6} md={6} sm={12}>
                   <Button
                     className="btn btn-primary label-btn"
-                    onClick={() => loadDanhSachCN(keyword)}
+                    onClick={() => loadKQKT(keyword)}
                     disabled={loading}>
                     <i className="bi bi-search label-btn-icon me-2"></i>
                     {loading ? "Đang tải..." : "Tìm kiếm"}
-                  </Button>
-                </Col>
-                <Col xl={3} lg={6} md={6} sm={12}></Col>
-                <Col xl={3} lg={6} md={6} sm={12} className="d-flex">
-                  <Button className="btn btn-secondary label-btn ms-auto">
-                    <i className="bi bi-plus-lg label-btn-icon me-2"></i>
-                    Thêm CN
                   </Button>
                 </Col>
               </Row>
@@ -89,39 +116,74 @@ const KQtheoDonVi = () => {
                 <Table className="table text-nowrap" id="bangNhap">
                   <thead className="sticky-header">
                     <tr>
-                      <th className="text-wrap ">Năm DSCN</th>
-                      <th className="text-wrap ">HT thu</th>
-                      <th className="text-center">Đội</th>
-                      <th className="text-center ">Tổ</th>
-                      <th className="text-wrap ">STT CN</th>
-                      <th className="text-wrap ">STT phần cây</th>
-                      <th className="text-wrap ">Mã CN</th>
-                      <th className="text-wrap ">Tên CN</th>
-                      <th className="text-wrap ">Mã lô</th>
-                      <th className="text-wrap ">Tên lô</th>
-                      <th className="text-wrap ">Nhịp độ cạo</th>
-                      <th className="text-wrap ">Phiên cạo</th>
-                      <th className="text-wrap ">Số cây cạo</th>
-                      <th className="text-wrap ">HT phần cây</th>
+                      <th className="text-wrap" rowSpan={2}>
+                        STT
+                      </th>
+                      <th className="text-wrap" rowSpan={2}>
+                        Đội
+                      </th>
+                      <th className="text-center" rowSpan={2}>
+                        Tên lô
+                      </th>
+                      <th className="text-center" rowSpan={2}>
+                        Năm trồng
+                      </th>
+                      <th className="text-wrap " rowSpan={2}>
+                        Hạng đất
+                      </th>
+                      <th className="text-wrap " rowSpan={2}>
+                        Giống
+                      </th>
+                      <th className="text-wrap " rowSpan={2}>
+                        Diện tích KK
+                      </th>
+                      <th className="text-wrap " rowSpan={2}>
+                        Diện tích MC
+                      </th>
+                      <th className="text-wrap " rowSpan={2}>
+                        Tổng số hố KT
+                      </th>
+                      <th className="text-wrap " rowSpan={2}>
+                        Hố trống
+                      </th>
+                      <th className="text-wrap " colSpan={3}>
+                        Cây chưa cạo
+                      </th>
+                      <th className="text-wrap " colSpan={3}>
+                        Cây cạo
+                      </th>
+                      <th className="text-wrap " colSpan={2}>
+                        Kết quả
+                      </th>
+                      <th className="text-wrap " rowSpan={2}>
+                        Tỷ lệ vi phạm (%)
+                      </th>
+                      <th className="text-wrap " rowSpan={2}>
+                        DT xét thưởng
+                      </th>
+                    </tr>
+                    <tr>
+                      <th>&ge; 50</th>
+                      <th>&lt; 50</th>
+                      <th>Tổng</th>
+                      <th>&ge; 50</th>
+                      <th>&lt; 50</th>
+                      <th>Tổng</th>
+                      <th className="text-wrap ">Tỷ lệ cây đạt vanh (%)</th>
+                      <th>Điểm</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {danhSachCN.map((cn, idx) => (
+                    {dataLo.map((cn, idx) => (
                       <tr key={idx}>
-                        <td>{cn.namDSCN}</td>
-                        <td>{cn.htThu}</td>
+                        <td>{cn.stt}</td>
                         <td>{cn.doi}</td>
-                        <td>{cn.to}</td>
-                        <td>{cn.sttCN}</td>
-                        <td>{cn.sttPC}</td>
-                        <td>{cn.maCN}</td>
-                        <td>{cn.tenCN}</td>
-                        <td>{cn.maLo}</td>
                         <td>{cn.tenLo}</td>
-                        <td>{cn.nhipDoCao}</td>
-                        <td>{cn.phienCao}</td>
-                        <td>{cn.soCayCao}</td>
-                        <td>{cn.htPhanCay}</td>
+                        <td>{cn.namTrong}</td>
+                        <td>{cn.hangDat}</td>
+                        <td>{cn.giong}</td>
+                        <td>{cn.dienTichKK}</td>
+                        <td>{cn.dienTichMC}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -164,28 +226,7 @@ const KQtheoDonVi = () => {
         .table th.col-maCN {
           width: 120px;
         }
-        .table th.col-sxkd-01012025,
-        .table th.col-mocao-2025,
-        .table th.col-sxkd-thanhlytc,
-        .table th.col-sxkd-thanhlygdp,
-        .table th.col-sxkd-31122025,
-        .table th.col-ktcb-01012025,
-        .table th.col-ktcb-mocao-2025,
-        .table th.col-ktcb-thanhlygdp,
-        .table th.col-ktcb-31122025,
-        .table th.col-kh-tctm-2025,
-        .table th.col-luancanh-2021,
-        .table th.col-luancanh-2022,
-        .table th.col-luancanh-2023,
-        .table th.col-tong-luancanh,
-        .table th.col-fsc,
-        .table th.col-vg-vn,
-        .table th.col-cho-gdp,
-        .table th.col-dt-chuyentc,
-        .table th.col-thanhly-goivu,
-        .table th.col-tong-dt-vuon {
-          width: 120px;
-        }
+
         .table tr.table-active {
           font-weight: bold;
           background-color: #f1f1f1;
