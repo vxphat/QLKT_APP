@@ -187,24 +187,31 @@ const PhieuDaNgoai = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {danhSachCN.map((cn, idx) => (
-                      <tr key={idx}>
-                        <td>{cn.namDSCN}</td>
-                        <td>{cn.htThu}</td>
-                        <td>{cn.doi}</td>
-                        <td>{cn.to}</td>
-                        <td>{cn.sttCN}</td>
-                        <td>{cn.sttPC}</td>
-                        <td>{cn.maCN}</td>
-                        <td>{cn.tenCN}</td>
-                        <td>{cn.maLo}</td>
-                        <td>{cn.tenLo}</td>
-                        <td>{cn.nhipDoCao}</td>
-                        <td>{cn.phienCao}</td>
-                        <td>{cn.soCayCao}</td>
-                        <td>{cn.htPhanCay}</td>
+                    {Array.from({ length: 20 }, (_, i) => (
+                      <tr key={i}>
+                        <td>{i + 1}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                       </tr>
                     ))}
+                    <tr>
+                      <td colSpan="2">
+                        <b>Cộng</b>
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
                   </tbody>
                 </Table>
               </div>
