@@ -26,17 +26,18 @@ const PhieuDaNgoai = () => {
   const [nam, setNam] = useState("");
   const [maDonVi, setMaDonVi] = useState("");
   const [tenLo, setTenLo] = useState("");
+  const [kqktData, setKqktData] = useState([]);
+  const [filteredLo, setFilteredLo] = useState([]);
 
-  async function loadKQKT(query = "") {
+  async function loadKQKT() {
     setLoading(true);
     try {
       const url = new URL(API_URL);
       url.searchParams.set("token", TOKEN);
-      if (query) url.searchParams.set("q", query);
       console.log("Fetching:", url.toString());
       const res = await fetch(url.toString(), { method: "GET" });
       const json = await res.json();
-      loadKQKT(json.data ?? []);
+      setKqktData(json.data ?? []);
     } catch (err) {
       console.error(err);
     } finally {
@@ -44,9 +45,26 @@ const PhieuDaNgoai = () => {
     }
   }
 
-  // useEffect(() => {
-  //   loadKQKT();
-  // }, []);
+  useEffect(() => {
+    loadKQKT();
+  }, []);
+
+  useEffect(() => {
+    console.log("Filtering data:", { nam, maDonVi, kqktData });
+    if (nam && maDonVi) {
+      const filteredData = kqktData.filter(
+        (item) => item.nam.toString() === nam && item.doi === maDonVi
+      );
+      console.log("Filtered data:", filteredData);
+      const uniqueLo = [...new Set(filteredData.map((item) => item.tenlo))];
+      console.log("Unique lots:", uniqueLo); // Log unique lots
+      setFilteredLo(uniqueLo);
+      console.log("Filtered lots state updated:", filteredLo); // Log the updated state
+    } else {
+      setFilteredLo([]);
+    }
+    setTenLo(""); // Reset tenLo when nam or maDonVi changes
+  }, [nam, maDonVi, kqktData]);
 
   return (
     <Fragment>
@@ -91,12 +109,13 @@ const PhieuDaNgoai = () => {
                 <Col xl={2} lg={6} md={6} sm={12}>
                   <Form.Select
                     aria-label="Chọn lô"
-                    value={maDonVi}
-                    onChange={(e) => setMaDonVi(e.target.value)}>
+                    value={tenLo}
+                    onChange={(e) => setTenLo(e.target.value)}
+                    disabled={!nam || !maDonVi}>
                     <option value="">Chọn lô</option>
-                    {donVidata.map((dv) => (
-                      <option key={dv.id} value={dv.maDonVi}>
-                        {dv.maDonVi} - {dv.donVi}
+                    {filteredLo.map((lo, index) => (
+                      <option key={index} value={lo}>
+                        {lo}
                       </option>
                     ))}
                   </Form.Select>
@@ -153,64 +172,62 @@ const PhieuDaNgoai = () => {
                       <th className="text-center border" rowSpan={3}>
                         HT
                       </th>
-                      <td className="text-center border" colSpan={4}>
+                      <th className="text-center border" colSpan={4}>
                         Vanh
-                      </td>
-                      <td className="text-center border" colSpan={3}>
+                      </th>
+                      <th className="text-center border" colSpan={3}>
                         Nấm hồng
-                      </td>
+                      </th>
                     </tr>
                     <tr>
-                      <td className="text-center border" colSpan={2}>
+                      <th className="text-center border" colSpan={2}>
                         Cây cạo
-                      </td>
-                      <td className="text-center border" colSpan={2}>
+                      </th>
+                      <th className="text-center border" colSpan={2}>
                         Cây chưa cạo
-                      </td>
-                      <td className="text-center border" rowSpan={2}>
+                      </th>
+                      <th className="text-center border" rowSpan={2}>
                         C, C1
-                      </td>
-                      <td className="text-center border" rowSpan={2}>
+                      </th>
+                      <th className="text-center border" rowSpan={2}>
                         C2+
-                      </td>
-                      <td className="text-center border" rowSpan={2}>
+                      </th>
+                      <th className="text-center border" rowSpan={2}>
                         Cụt đọt
-                      </td>
+                      </th>
                     </tr>
                     <tr>
-                      <td className="border col-narrow dotted-right">
-                        Trên 50
-                      </td>
-                      <td>Dưới 50</td>
-                      <td>Trên 50</td>
-                      <td>Dưới 50</td>
+                      <th className="text-center border">Trên 50</th>
+                      <th className="text-center border">Dưới 50</th>
+                      <th className="text-center border">Trên 50</th>
+                      <th className="text-center border">Dưới 50</th>
                     </tr>
                   </thead>
                   <tbody>
                     {Array.from({ length: 20 }, (_, i) => (
                       <tr key={i}>
-                        <td>{i + 1}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td className="text-center border">{i + 1}</td>
+                        <td className="text-center border"></td>
+                        <td className="text-center border"></td>
+                        <td className="text-center border"></td>
+                        <td className="text-center border"></td>
+                        <td className="text-center border"></td>
+                        <td className="text-center border"></td>
+                        <td className="text-center border"></td>
+                        <td className="text-center border"></td>
                       </tr>
                     ))}
                     <tr>
                       <td colSpan="2">
                         <b>Cộng</b>
                       </td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
+                      <td className="text-center border fw-bold">123</td>
+                      <td className="text-center border fw-bold">123</td>
+                      <td className="text-center border fw-bold"></td>
+                      <td className="text-center border fw-bold"></td>
+                      <td className="text-center border fw-bold"></td>
+                      <td className="text-center border fw-bold"></td>
+                      <td className="text-center border fw-bold"></td>
                     </tr>
                   </tbody>
                 </Table>
