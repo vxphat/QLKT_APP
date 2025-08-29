@@ -16,11 +16,18 @@ const API_URL =
   "https://script.google.com/macros/s/AKfycbwZM002-mVfsGaQeGlEt9qLnTK4Ef41VWhDFHlAeuH6XF_Xo9Lsiv194etMJCpzNbhiwA/exec";
 const TOKEN = "vxphat1994@";
 
+// API for danhSachLo data
+const API_URL_DANH_SACH_LO =
+  "https://script.google.com/macros/s/AKfycbxgIjtPLhCcv8nNWavOsMcTCObTUaQdMT_AvBVjHtB5e1FwEKCShO5EL3IWKW_ydBWo/exec";
+const TOKEN_DANH_SACH_LO = "vxphat1994@";
+
 const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
 const KQtheoDonVi = () => {
   const [dataLo, setDataLo] = useState([]);
+  const [danhSachLoData, setDanhSachLoData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingDanhSachLo, setLoadingDanhSachLo] = useState(false);
 
   const [nam, setNam] = useState("");
   const [maDonVi, setMaDonVi] = useState("");
@@ -50,6 +57,9 @@ const KQtheoDonVi = () => {
       }
 
       setDataLo(filteredData);
+
+      // After loading main data, load danhSachLo data and merge
+      await loadDanhSachLoData(filteredData);
     } catch (err) {
       console.error(err);
       setDataLo([]);
@@ -57,6 +67,137 @@ const KQtheoDonVi = () => {
       setLoading(false);
     }
   }
+
+  async function loadDanhSachLoData(mainData) {
+    setLoadingDanhSachLo(true);
+    try {
+      const url = new URL(API_URL_DANH_SACH_LO);
+      url.searchParams.set("token", TOKEN_DANH_SACH_LO);
+      console.log("Fetching danhSachLo:", url.toString());
+      const res = await fetch(url.toString(), { method: "GET" });
+      const json = await res.json();
+      const danhSachLo = json.data ?? [];
+
+      setDanhSachLoData(danhSachLo);
+
+      // Merge danhSachLo data into mainData by idLo
+      const danhSachLoMap = new Map();
+      danhSachLo.forEach((item) => {
+        if (item.idLo) {
+          danhSachLoMap.set(item.idLo, item);
+        }
+      });
+
+      const mergedData = mainData.map((item) => {
+        const loData = danhSachLoMap.get(item.idLo);
+        if (loData) {
+          return {
+            ...item,
+            hangDat: loData.hangDat ?? item.hangDat,
+            dienTichKK: loData.dienTichKK ?? item.dienTichKK,
+            dienTichMC: loData.dienTichMC ?? item.dienTichMC,
+          };
+        }
+        return item;
+      });
+
+      setDataLo(mergedData);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingDanhSachLo(false);
+    }
+  }
+
+  // Function to print the table
+  const printTable = () => {
+    if (dataLo.length === 0) {
+      alert("Không có dữ liệu để in!");
+      return;
+    }
+
+    const printWindow = window.open("", "_blank");
+    const tableElement = document.getElementById("bangNhap");
+
+    if (!tableElement) {
+      alert("Không tìm thấy bảng dữ liệu!");
+      return;
+    }
+
+    // Clone the table to avoid modifying the original
+    const tableClone = tableElement.cloneNode(true);
+
+    // Create print-friendly HTML
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Báo cáo kết quả kiểm tra mở cạo</title>
+        <style>
+          body {
+            font-family: "Times New Roman", Times, serif;
+            margin: 2px;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+          }
+          th, td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+          }
+          th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+          }
+          .table-active {
+            font-weight: bold;
+            background-color: #f1f1f1;
+          }
+          .text-wrap {
+            white-space: normal !important;
+          }
+          @media print {
+            body { margin: 40px; }
+            table { page-break-inside: auto; }
+            tr { page-break-inside: avoid; page-break-after: auto; }
+            @page {
+              margin: 2px;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <h2 style="text-align: center; margin-bottom: 10px;">
+          CHI TIẾT XÉT THƯỞNG VƯỜN CÂY MỞ CẠO
+          ${nam && ` NĂM ${nam}`}
+          ${
+            maDonVi &&
+            ` - ĐỘI ${donVidata
+              .find((dv) => dv.maDonVi === maDonVi)
+              ?.donVi.toLocaleUpperCase()}`
+          }
+        </h2>
+        ${tableClone.outerHTML}
+        <p style="text-align: right; margin-top: 10px; font-style: italic;">
+          In ngày: ${new Date().toLocaleDateString("vi-VN")}
+        </p>
+      </body>
+      </html>
+    `;
+
+    printWindow.document.write(printContent);
+    printWindow.document.close();
+
+    // Wait for content to load before printing
+    printWindow.onload = function () {
+      printWindow.print();
+      printWindow.close();
+    };
+  };
 
   useEffect(() => {
     loadKQKT();
@@ -116,13 +257,22 @@ const KQtheoDonVi = () => {
                     ))}
                   </Form.Select>
                 </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
+                <Col xl={2} lg={6} md={6} sm={12}>
                   <Button
                     className="btn btn-primary label-btn"
                     onClick={loadKQKT}
                     disabled={loading || !nam || !maDonVi}>
                     <i className="bi bi-search label-btn-icon me-2"></i>
                     {loading ? "Đang tải..." : "Tải dữ liệu"}
+                  </Button>
+                </Col>
+                <Col xl={2} lg={6} md={6} sm={12}>
+                  <Button
+                    className="btn btn-success label-btn"
+                    onClick={printTable}
+                    disabled={dataLo.length === 0}>
+                    <i className="bi bi-printer label-btn-icon me-2"></i>
+                    In báo cáo
                   </Button>
                 </Col>
               </Row>
@@ -155,7 +305,7 @@ const KQtheoDonVi = () => {
                       <th className="text-wrap border" rowSpan={2}>
                         Diện tích MC
                       </th>
-                      <th className="text-wrap border" rowSpan={2}>
+                      <th className="text-wrap border col-HT" rowSpan={2}>
                         Tổng số hố KT
                       </th>
                       <th className="text-wrap border" rowSpan={2}>
@@ -170,7 +320,7 @@ const KQtheoDonVi = () => {
                       <th className="text-wrap border" colSpan={2}>
                         Kết quả
                       </th>
-                      <th className="text-wrap border" rowSpan={2}>
+                      <th className="text-wrap border col-TLVP" rowSpan={2}>
                         Tỷ lệ vi phạm (%)
                       </th>
                       <th className="text-wrap border" rowSpan={2}>
@@ -184,7 +334,7 @@ const KQtheoDonVi = () => {
                       <th className="text-wrap border">&ge; 50</th>
                       <th className="text-wrap border">&lt; 50</th>
                       <th className="text-wrap border">Tổng</th>
-                      <th className="text-wrap border">
+                      <th className="text-wrap border col-TLDV">
                         Tỷ lệ cây đạt vanh (%)
                       </th>
                       <th>Điểm</th>
@@ -220,7 +370,12 @@ const KQtheoDonVi = () => {
                         (cn.cayCaoD50 / cn.tongHoKT) *
                         100
                       ).toFixed(1);
-                      const dtXetThuong = cn.dtXetThuong || 0;
+
+                      // Calculate dtXetThuong: if violation rate = 0, use dienTichMC, otherwise use current value
+                      const dtXetThuong =
+                        parseFloat(tyLeViPham) === 0
+                          ? cn.dienTichMC || 0
+                          : cn.dtXetThuong || 0;
 
                       return (
                         <tr key={idx}>
@@ -249,8 +404,26 @@ const KQtheoDonVi = () => {
                     })}
                     {dataLo.length > 0 && (
                       <tr className="table-active ">
-                        <td colSpan="8">
+                        <td colSpan="6">
                           <strong>CỘNG</strong>
+                        </td>
+                        <td>
+                          {" "}
+                          <strong>
+                            {dataLo.reduce(
+                              (sum, item) => sum + (item.dienTichKK || 0),
+                              0
+                            )}
+                          </strong>
+                        </td>
+                        <td>
+                          {" "}
+                          <strong>
+                            {dataLo.reduce(
+                              (sum, item) => sum + (item.dienTichMC || 0),
+                              0
+                            )}
+                          </strong>
                         </td>
                         <td>
                           <strong>
@@ -373,10 +546,21 @@ const KQtheoDonVi = () => {
                         </td>
                         <td>
                           <strong>
-                            {dataLo.reduce(
-                              (sum, item) => sum + (item.dtXetThuong || 0),
-                              0
-                            )}
+                            {dataLo.reduce((sum, item) => {
+                              // Calculate violation rate for this item
+                              const tyLeViPham =
+                                item.tongHoKT > 0
+                                  ? (item.cayCaoD50 / item.tongHoKT) * 100
+                                  : 0;
+
+                              // Use the same logic as individual rows: if violation rate = 0, use dienTichMC, otherwise use dtXetThuong
+                              const dtXetThuong =
+                                parseFloat(tyLeViPham) === 0
+                                  ? parseFloat(item.dienTichMC || 0)
+                                  : parseFloat(item.dtXetThuong || 0);
+
+                              return sum + dtXetThuong;
+                            }, 0)}
                           </strong>
                         </td>
                       </tr>
@@ -420,6 +604,12 @@ const KQtheoDonVi = () => {
         }
         .table th.col-maCN {
           width: 120px;
+        }
+
+        .table th.col-TLDV,
+        .table th.col-TLVP,
+        .table th.col-HT {
+          width: 80px;
         }
 
         .table tr.table-active {

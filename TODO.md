@@ -1,19 +1,14 @@
-# TODO - TheoDonVi Implementation
+# TODO - Add Missing Columns to theoDonVi Table
 
 ## Steps to Complete:
 
-1. [ ] Fix API call function to remove recursive bug
-2. [ ] Add year and unit filtering to API call
-3. [ ] Implement calculation functions for all required columns
-4. [ ] Update table to display calculated columns
-5. [ ] Add useEffect to trigger API call when year or unit changes
+- [ ] Add danhSachLo API URL and TOKEN constants to theoDonVi.jsx
+- [ ] Create state to store danhSachLo data in theoDonVi.jsx
+- [ ] Implement function to fetch danhSachLo data in theoDonVi.jsx
+- [ ] Implement data merging logic to combine data from both APIs by idLo
+- [ ] Update table rendering to use merged data for missing columns
+- [ ] Test the implementation
 
-## Required Calculations:
+## Current Status:
 
-- Hố trống = hoTrong
-- Cây chưa cao trên 50 = cayChuaCaoT50
-- Cây chưa cao dưới 50 = cayChuaCaoD50
-- Tổng cây chưa cạo = cayChuaCaoT50 + cayChuaCaoD50
-- Cây cạo trên 50 = cayCaoT50
-- Cây cạo dưới 50 = cayCaoD50
-- Tổng cây cạo = cayCaoT50 + cayCaoD50
+Working on step 1 - Adding danhSachLo API constants
