@@ -66,6 +66,123 @@ const PhieuDaNgoai = () => {
     setTenLo(""); // Reset tenLo when nam or maDonVi changes
   }, [nam, maDonVi, kqktData]);
 
+  const printTable = () => {
+    // if (dataLo.length === 0) {
+    //   alert("Không có dữ liệu để in!");
+    //   return;
+    // }
+
+    const printWindow = window.open("", "_blank");
+    const tableElement = document.getElementById("bangNhap");
+
+    if (!tableElement) {
+      alert("Không tìm thấy bảng dữ liệu!");
+      return;
+    }
+
+    // Clone the table to avoid modifying the original
+    const tableClone = tableElement.cloneNode(true);
+
+    // Create print-friendly HTML
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Phiếu dã ngoại</title>
+        <style>
+          body {
+            font-family: "Times New Roman", Times, serif;
+            margin: 2px;
+            font-size: 16px;
+          }
+
+
+
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+          }
+          th, td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+          }
+          th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+          }
+          .table-active {
+            font-weight: bold;
+            background-color: #f1f1f1;
+          }
+          .text-wrap {
+            white-space: normal !important;
+          }
+          @media print {
+            body { margin: 40px; }
+            table { page-break-inside: auto; }
+            tr { page-break-inside: avoid; page-break-after: auto; }
+            @page {
+              margin: 2px;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div>
+        <p><b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b></p>
+        <p><b>Đội:</b> ${
+          maDonVi &&
+          ` ${donVidata
+            .find((dv) => dv.maDonVi === maDonVi)
+            ?.donVi.toLocaleUpperCase()}`
+        }</p>
+        <p><b>Ngày kiểm tra: </b> ${new Date().toLocaleDateString("vi-VN")}</p>
+        </div>
+        <h2 style="text-align: center; margin-bottom: 20px;">
+          PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY MỞ CẠO 
+          ${nam && ` NĂM ${nam}`}
+        </h2>
+        ${tableClone.outerHTML}
+
+        <div style="display: grid; grid-template-columns: auto auto auto; justify-content: center; gap: 0px">
+            <p></p>
+            <p style=" border: 1px solid #000; padding: 10px 30px; text-align: center">Trước</p>
+            <p></p>
+            <p style=" border: 1px solid #000; padding: 10px 30px; text-align: center">Trái</p>
+            <p style=" border: 1px solid #000; padding: 10px 30px; text-align: center">5</p>
+            <p style=" border: 1px solid #000; padding: 10px 30px; text-align: center">Phải</p>
+            <p></p>
+            <p style=" border: 1px solid #000; padding: 10px 30px; text-align: center">Sau</p>
+            <p></p>
+        
+        </div>
+
+        <div style="display: flex; flex-direction: row; justify-content: space-around; margin-top: 30px">
+          <p style="text-align: right; margin-top: 10px; font-weight: bold; font-size: 20px">
+            ĐẠI DIỆN ĐỘI
+          </p>
+          <p style="text-align: right; margin-top: 10px; font-weight: bold; font-size: 20px">
+            NGƯỜI KIỂM TRA
+          </p>
+        </div>
+        
+      </body>
+      </html>
+    `;
+
+    printWindow.document.write(printContent);
+    printWindow.document.close();
+
+    // Wait for content to load before printing
+    printWindow.onload = function () {
+      printWindow.print();
+      printWindow.close();
+    };
+  };
+
   return (
     <Fragment>
       {/* <Pageheader title="Phiếu Dã Ngoại" heading="Tables" active="Tables" /> */}
@@ -127,6 +244,12 @@ const PhieuDaNgoai = () => {
                     disabled={loading}>
                     <i className="bi bi-search label-btn-icon me-2"></i>
                     {loading ? "Đang tải..." : "Tìm kiếm"}
+                  </Button>
+                  <Button
+                    className="btn btn-success label-btn ms-5"
+                    onClick={printTable}>
+                    <i className="bi bi-printer label-btn-icon me-2"></i>
+                    In phiếu
                   </Button>
                 </Col>
               </Row>
