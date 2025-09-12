@@ -191,6 +191,13 @@ import DinhMuc from "./container/kiemTraKyThuat/kiemTraQuyIII/danhMuc/dinhMuc/di
 import KQtheoDonVi from "./container/kiemTraKyThuat/kiemTraQuyIII/ketQua/theoDonVi/theoDonVi.jsx";
 import KQtongCongTy from "./container/kiemTraKyThuat/kiemTraQuyIII/ketQua/tongCongTy/tongCongTy.jsx";
 import PhieuDaNgoai from "./container/kiemTraKyThuat/kiemTraQuyIII/phieuDaNgoai/phieuDaNgoai.jsx";
+import PhieuDaNgoai_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/phieuDaNgoai_TCTM/phieuDaNgoai_TCTM.jsx";
+import KetQuaDonVi_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaDonVi_TCTM/ketQuaDonVi_TCTM.jsx";
+import KetQuaTCT_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTCT_TCTM/ketQuaTCT_TCTM.jsx";
+import KetQuaTheoDiem_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTheoDiem_TCTM/ketQuaTheoDiem_TCTM.jsx";
+import KetQuaXetThuong_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaXetThuong_TCTM/ketQuaXetThuong_TCTM.jsx";
+import DanhSachLoTCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/danhSachLoTCTM/danhSachLoTCTM.jsx";
+import DinhMuc_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/dinhMuc_TCTM/dinhMuc_TCTM.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.Fragment>
@@ -276,6 +283,58 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               }kiemTraKyThuat/kiemTraQuyIII/phieuDaNgoai`}
               element={<PhieuDaNgoai />}
             />
+
+            {/* ----------TCTM---------- */}
+            <Route
+              path={`${
+                import.meta.env.BASE_URL
+              }kiemTraKyThuat/kiemTraCuoiNam/TCTM/phieuDaNgoai_TCTM`}
+              element={<PhieuDaNgoai_TCTM />}
+            />
+
+            <Route
+              path={`${
+                import.meta.env.BASE_URL
+              }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaDonVi_TCTM`}
+              element={<KetQuaDonVi_TCTM />}
+            />
+
+            <Route
+              path={`${
+                import.meta.env.BASE_URL
+              }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTCT_TCTM`}
+              element={<KetQuaTCT_TCTM />}
+            />
+
+            <Route
+              path={`${
+                import.meta.env.BASE_URL
+              }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTheoDiem_TCTM`}
+              element={<KetQuaTheoDiem_TCTM />}
+            />
+
+            <Route
+              path={`${
+                import.meta.env.BASE_URL
+              }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaXetThuong_TCTM`}
+              element={<KetQuaXetThuong_TCTM />}
+            />
+
+            <Route
+              path={`${
+                import.meta.env.BASE_URL
+              }kiemTraKyThuat/kiemTraCuoiNam/TCTM/danhSachLoTCTM`}
+              element={<DanhSachLoTCTM />}
+            />
+
+            <Route
+              path={`${
+                import.meta.env.BASE_URL
+              }kiemTraKyThuat/kiemTraCuoiNam/TCTM/dinhMuc_TCTM`}
+              element={<DinhMuc_TCTM />}
+            />
+
+            {/* ---------------TCTM END------ */}
 
             <Route
               path={`${import.meta.env.BASE_URL}dashboards/ecommerce`}

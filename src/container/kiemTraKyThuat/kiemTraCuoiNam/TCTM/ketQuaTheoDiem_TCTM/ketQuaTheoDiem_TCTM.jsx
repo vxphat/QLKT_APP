@@ -9,8 +9,8 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
-import Pageheader from "../../../../components/pageheader/pageheader";
-import { donVidata } from "../../kiemTraQuyIII/danhMuc/dinhMuc/dinhMucData";
+import Pageheader from "../../../../../components/pageheader/pageheader";
+import { donVidata } from "../../../kiemTraQuyIII/danhMuc/dinhMuc/dinhMucData";
 
 const API_URL =
   "https://script.google.com/macros/s/AKfycbwZM002-mVfsGaQeGlEt9qLnTK4Ef41VWhDFHlAeuH6XF_Xo9Lsiv194etMJCpzNbhiwA/exec"; // URL web app của bạn
@@ -18,7 +18,7 @@ const TOKEN = "vxphat1994@";
 
 const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
-const PhieuDaNgoai = () => {
+const KetQuaTheoDiem_TCTM = () => {
   const [danhSachCN, setDanhSachCN] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -487,4 +487,4 @@ const PhieuDaNgoai = () => {
   );
 };
 
-export default PhieuDaNgoai;
+export default KetQuaTheoDiem_TCTM;

@@ -685,28 +685,65 @@ export const MENUITEMS = [
         class: "badge bg-warning-transparent ms-2",
         children: [
           {
-            path: `${import.meta.env.BASE_URL}qlsl/nhapMuTuoi`,
-            title: "Phiếu dã ngoại",
-            type: "link",
-            active: false,
-            selected: false,
-          },
-          {
-            title: "Kết quả",
+            title: "TCTM",
             type: "sub",
             active: false,
             selected: false,
             children: [
               {
-                path: `${import.meta.env.BASE_URL}database/kk0gio`,
-                title: "Theo đơn vị",
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/phieuDaNgoai_TCTM`,
+                title: "Phiếu dã ngoại",
                 type: "link",
                 active: false,
                 selected: false,
               },
               {
-                path: `${import.meta.env.BASE_URL}database/kk0gio`,
-                title: "Tổng Công ty",
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaDonVi_TCTM`,
+                title: "KQ đơn vị",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+
+              {
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTCT_TCTM`,
+                title: "KQ Tổng Công ty",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTheoDiem_TCTM`,
+                title: "KQ theo điểm",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${import.meta.env.BASE_URL}kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTheoDiem_TCTM`,
+                title: "KQ xét thưởng",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${import.meta.env.BASE_URL}kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTheoDiem_TCTM`,
+                title: "Danh sách lô",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${import.meta.env.BASE_URL}kiemTraKyThuat/kiemTraCuoiNam/TCTM/dinhMuc_TCTM`,
+                title: "Định mức",
                 type: "link",
                 active: false,
                 selected: false,
@@ -714,7 +751,65 @@ export const MENUITEMS = [
             ],
           },
           {
-            title: "Danh mục",
+            title: "KTCB",
+            type: "sub",
+            active: false,
+            selected: false,
+            children: [
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "Phiếu dã ngoại",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "KQ theo năm",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "TH năm trồng",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "KQ Tổng Công ty",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "KQ xét thưởng",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "Danh sách lô",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
+                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                title: "Định mức",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+            ],
+          },
+          {
+            title: "SXKD",
             type: "sub",
             active: false,
             selected: false,
