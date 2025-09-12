@@ -40,7 +40,7 @@ const KQtheoDonVi = () => {
       console.log("Fetching:", url.toString());
       const res = await fetch(url.toString(), { method: "GET" });
       const json = await res.json();
-
+      console.log("Data:", json);
       // Filter data based on selected year and unit
       let filteredData = json.data ?? [];
 

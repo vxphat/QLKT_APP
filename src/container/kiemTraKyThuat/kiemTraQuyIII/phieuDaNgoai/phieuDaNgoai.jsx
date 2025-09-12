@@ -88,6 +88,10 @@ const PhieuDaNgoai = () => {
       <!DOCTYPE html>
       <html>
       <head>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
         <title>Phiếu dã ngoại</title>
         <style>
           body {
@@ -95,9 +99,6 @@ const PhieuDaNgoai = () => {
             margin: 2px;
             font-size: 16px;
           }
-
-
-
           table {
             width: 100%;
             border-collapse: collapse;
@@ -147,17 +148,16 @@ const PhieuDaNgoai = () => {
         </h2>
         ${tableClone.outerHTML}
 
-        <div style="display: grid; grid-template-columns: auto auto auto; justify-content: center; gap: 0px">
-            <p></p>
-            <p style=" border: 1px solid #000; padding: 10px 30px; text-align: center">Trước</p>
-            <p></p>
-            <p style=" border: 1px solid #000; padding: 10px 30px; text-align: center">Trái</p>
-            <p style=" border: 1px solid #000; padding: 10px 30px; text-align: center">5</p>
-            <p style=" border: 1px solid #000; padding: 10px 30px; text-align: center">Phải</p>
-            <p></p>
-            <p style=" border: 1px solid #000; padding: 10px 30px; text-align: center">Sau</p>
-            <p></p>
-        
+        <div style="display: grid; grid-template-columns: auto auto auto; justify-content: center; margin-top: 10px">
+            <p style="text-align: center; display: flex; align-items: center; justify-content: center;"><i class="bi bi-arrow-down-right"></i></p>
+            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin-bottom: 0">Trước</p>
+            <p style="text-align: center; display: flex; align-items: center; justify-content: center;"><i class="bi bi-arrow-down-left"></i></p>
+            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">Trái</p>
+            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">5</p>
+            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">Phải</p>
+            <p style="text-align: center; margin: 0; display: flex; align-items: center; justify-content: center;"><i class="bi bi-arrow-up-right"></i></p>
+            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">Sau</p>
+            <p style="text-align: center; margin: 0; display: flex; align-items: center; justify-content: center;"><i class="bi bi-arrow-up-left"></i></p>
         </div>
 
         <div style="display: flex; flex-direction: row; justify-content: space-around; margin-top: 30px">
