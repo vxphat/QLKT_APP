@@ -8,9 +8,11 @@ import { donVidata } from "../../danhMuc/dinhMuc/dinhMucData";
 const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
 const apiService = {
-  getKetQuaTheoDonVi: async () => {
+  getKetQuaTheoDonVi: async (year, maDonVi) => {
     try {
       const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/ket-qua/theo-don-vi`);
+      url.searchParams.append('year', year);
+      url.searchParams.append('maDonVi', maDonVi);
       const response = await axios.get(url.toString());
       return response.data;
     } catch (error) {
@@ -33,7 +35,7 @@ const KQtheoDonVi = () => {
   const [dataLo, setDataLo] = useState([]);
   const [dinhMuc, setDinhMuc] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [nam, setNam] = useState("");
+  const [nam, setNam] = useState(new Date().getFullYear());
   const [maDonVi, setMaDonVi] = useState("");
 
 
@@ -74,13 +76,14 @@ const KQtheoDonVi = () => {
           }
           th, td {
             border: 1px solid #000;
-            padding: 6px;
+            padding: 3px;
             text-align: center;
             vertical-align: middle;
           }
           th {
             background-color: #f0f0f0;
             font-weight: bold;
+            height:10px;
           }
           .table-active {
             font-weight: bold;
@@ -130,12 +133,13 @@ const KQtheoDonVi = () => {
 
 
   useEffect(() => {
-    getKetQuaQuyIIITheoDonVi()
     getDinhMuc()
+    getKetQuaQuyIIITheoDonVi()
   }, []);
 
   const getKetQuaQuyIIITheoDonVi = async () => {
-    const result = await apiService.getKetQuaTheoDonVi();
+
+    const result = await apiService.getKetQuaTheoDonVi(nam, maDonVi);
     if (result) {
       setDataLo(result.data)
     }
@@ -149,7 +153,7 @@ const KQtheoDonVi = () => {
   }
 
   function tinhDiem(tyLeNumber) {
-    if(!dinhMuc) return;
+    if (!dinhMuc) return;
     for (const rule of dinhMuc) {
       const { tyLe, diem } = rule;
 
@@ -173,6 +177,78 @@ const KQtheoDonVi = () => {
 
     return null; // nếu không match rule nào
   }
+
+  // Gom tất cả reduce vào một chỗ
+  const totals = dataLo.reduce(
+    (acc, item) => {
+      const hoTrong = item.soHoTrong || 0;
+      const cayChuaCaoT50 = item.soCayChuaCaoTren50 || 0;
+      const cayChuaCaoD50 = item.soCayChuaCaoDuoi50 || 0;
+      const tongCayChuaCao = cayChuaCaoT50 + cayChuaCaoD50;
+      const cayCaoT50 = item.soCayCaoTren50 || 0;
+      const cayCaoD50 = item.soCayCaoDuoi50 || 0;
+      const tongCayCao = cayCaoT50 + cayCaoD50;
+      const denominator = hoTrong + tongCayChuaCao + tongCayCao;
+
+      // Tỷ lệ cây đạt vanh
+      const tyLeCayDatVanh =
+        denominator > 0 ? (tongCayCao / denominator) * 100 : 0;
+
+      // Điểm
+      const diem = tinhDiem(tyLeCayDatVanh);
+
+      // Tỷ lệ vi phạm
+      const tyLeViPham =
+        denominator > 0 ? (cayCaoD50 / denominator) * 100 : 0;
+
+      // Diện tích xét thưởng
+      const dtXetThuong = diem >= 8 ? (parseFloat(tyLeViPham) === 0
+        ? parseFloat(item.dienTichMC || 0)
+        : parseFloat(item.dtXetThuong || 0)) : 0;
+
+      // Cộng dồn
+      acc.dienTich += Number(item.dienTich) || 0;
+      acc.dienTichMC += Number(item.dienTichMC) || 0;
+      acc.tongHoKT += denominator;
+      acc.hoTrong += hoTrong;
+      acc.cayChuaCaoT50 += cayChuaCaoT50;
+      acc.cayChuaCaoD50 += cayChuaCaoD50;
+      acc.tongCayChuaCao += tongCayChuaCao;
+      acc.cayCaoT50 += cayCaoT50;
+      acc.cayCaoD50 += cayCaoD50;
+      acc.tongCayCao += tongCayCao;
+      acc.diem += diem;
+      acc.tyLeCayDatVanh.push(tyLeCayDatVanh);
+      acc.tyLeViPham.push(tyLeViPham);
+      acc.dtXetThuong += dtXetThuong;
+
+      return acc;
+    },
+    {
+      dienTich: 0,
+      dienTichMC: 0,
+      tongHoKT: 0,
+      hoTrong: 0,
+      cayChuaCaoT50: 0,
+      cayChuaCaoD50: 0,
+      tongCayChuaCao: 0,
+      cayCaoT50: 0,
+      cayCaoD50: 0,
+      tongCayCao: 0,
+      diem: 0,
+      tyLeCayDatVanh: [],
+      tyLeViPham: [],
+      dtXetThuong: 0,
+    }
+  );
+
+  // Tính trung bình điểm & tỷ lệ
+  const avgDiem = dataLo.length > 0 ? (totals.diem / dataLo.length).toFixed(1) : "0.0";
+  const avgTyLeCayDatVanh =
+    totals.tongHoKT > 0 ? ((totals.tongCayCao / totals.tongHoKT) * 100).toFixed(1) : "0.0";
+  const avgTyLeViPham =
+    totals.tongHoKT > 0 ? ((totals.cayCaoD50 / totals.tongHoKT) * 100).toFixed(1) : "0.0";
+
 
 
   return (
@@ -228,13 +304,13 @@ const KQtheoDonVi = () => {
                 <Col xl={2} lg={6} md={6} sm={12}>
                   <Button
                     className="btn btn-primary label-btn"
-                    // onClick={loadKQKT}
-                    disabled={loading || !nam || !maDonVi}>
+                    onClick={getKetQuaQuyIIITheoDonVi}
+                  >
                     <i className="bi bi-search label-btn-icon me-2"></i>
                     {loading ? "Đang tải..." : "Tải dữ liệu"}
                   </Button>
                 </Col>
-                <Col xl={2} lg={6} md={6} sm={12}>
+                <Col className="d-flex align-items-center justify-content-end">
                   <Button
                     className="btn btn-success label-btn"
                     onClick={printTable}
@@ -310,7 +386,6 @@ const KQtheoDonVi = () => {
                   </thead>
                   <tbody>
                     {dataLo.map((cn, idx) => {
-                      // Calculate values
                       const hoTrong = cn.soHoTrong || 0;
                       const cayChuaCaoT50 = cn.soCayChuaCaoTren50 || 0;
                       const cayChuaCaoD50 = cn.soCayChuaCaoDuoi50 || 0;
@@ -318,224 +393,74 @@ const KQtheoDonVi = () => {
                       const cayCaoT50 = cn.soCayCaoTren50 || 0;
                       const cayCaoD50 = cn.soCayCaoDuoi50 || 0;
                       const tongCayCao = cayCaoT50 + cayCaoD50;
+                      const tongHoKT = hoTrong + tongCayChuaCao + tongCayCao;
 
-                      // Calculate result columns
                       const tyLeCayDatVanh =
-                        (hoTrong + tongCayChuaCao + tongCayCao) > 0
-                          ? ((tongCayCao / (hoTrong + tongCayChuaCao + tongCayCao)) * 100).toFixed(1)
-                          : "0.0";
+                        tongHoKT > 0 ? ((tongCayCao / tongHoKT) * 100).toFixed(1) : "0.0";
 
-                      // Calculate điểm based on TLMoCao table
                       const tyLeNumber = parseFloat(tyLeCayDatVanh);
                       let diem = 0;
-
                       if (tyLeNumber > 90) diem = 10;
                       else if (tyLeNumber > 80) diem = 9;
                       else if (tyLeNumber >= 75) diem = 8;
                       else if (tyLeNumber < 75) diem = 6;
 
-                      const tyLeViPham = (
-                        (cn.soCayCaoDuoi50 / (cn.soHoTrong + (cayChuaCaoT50 + cayChuaCaoD50) + (cayCaoT50 + cayCaoD50))) *
-                        100
-                      ).toFixed(1);
+                      const tyLeViPham =
+                        tongHoKT > 0
+                          ? ((cayCaoD50 / tongHoKT) * 100).toFixed(1)
+                          : "0.0";
 
-                      // Calculate dtXetThuong: if violation rate = 0, use dienTichMC, otherwise use current value
-                      const dtXetThuong =
-                        parseFloat(tyLeViPham) === 0
-                          ? cn.dienTichMC || 0
-                          : cn.dtXetThuong || 0;
+
+                      const dtXetThuong = diem >= 8 ? (parseFloat(tyLeViPham) === 0
+                        ? parseFloat(cn.dienTichMC || 0)
+                        : parseFloat(cn.dtXetThuong || 0)) : 0;
 
                       return (
                         <tr key={idx}>
-                          <td className="text-wrap border">{idx + 1}</td>
-                          <td className="text-wrap border">{cn.nongTruong}</td>
-                          <td className="text-wrap border">{cn.tenLo}</td>
-                          <td className="text-wrap border">{cn.namTrong}</td>
-                          <td className="text-wrap border">{cn.hangDat}</td>
-                          <td className="text-wrap border">{cn.giongCay}</td>
-                          <td className="text-wrap border">
-                            {cn.dienTich != null ? Number(cn.dienTich).toFixed(2) : ""}
-                          </td>
-
-                          <td className="text-wrap border">{cn.dienTichMC}</td>
-                          <td className="text-wrap border">{hoTrong + tongCayChuaCao + tongCayCao}</td>
-                          <td className="text-wrap border">{hoTrong}</td>
-                          <td className="text-wrap border">{cn.soCayChuaCaoTren50}</td>
-                          <td className="text-wrap border">{cn.soCayChuaCaoDuoi50}</td>
-                          <td className="text-wrap border">{tongCayChuaCao}</td>
-                          <td className="text-wrap border">{cn.soCayCaoTren50}</td>
-                          <td className="text-wrap border">{cn.soCayCaoDuoi50}</td>
-                          <td className="text-wrap border">{tongCayCao}</td>
-                          <td className="text-wrap border">{tyLeNumber}</td>
-                          <td className="text-wrap border">{tinhDiem(tyLeNumber)}</td>
-                          <td className="text-wrap border">{tyLeViPham}</td>
-                          <td className="text-wrap border">{dtXetThuong}</td>
+                          <td>{idx + 1}</td>
+                          <td>{cn.nongTruong}</td>
+                          <td>{cn.tenLo}</td>
+                          <td>{cn.namTrong}</td>
+                          <td>{cn.hangDat}</td>
+                          <td>{cn.giongCay}</td>
+                          <td>{cn.dienTich != null ? Number(cn.dienTich).toFixed(4) : ""}</td>
+                          <td>{cn.dienTichMC}</td>
+                          <td>{tongHoKT}</td>
+                          <td>{hoTrong}</td>
+                          <td>{cn.soCayChuaCaoTren50}</td>
+                          <td>{cn.soCayChuaCaoDuoi50}</td>
+                          <td>{tongCayChuaCao}</td>
+                          <td>{cn.soCayCaoTren50}</td>
+                          <td>{cn.soCayCaoDuoi50}</td>
+                          <td>{tongCayCao}</td>
+                          <td>{tyLeNumber}</td>
+                          <td>{diem}</td>
+                          <td>{tyLeViPham}</td>
+                          <td>{dtXetThuong}</td>
                         </tr>
                       );
                     })}
+
                     {dataLo.length > 0 && (
-                      <tr className="table-active ">
-                        <td colSpan="6">
-                          <strong>CỘNG</strong>
-                        </td>
-                        <td>
-                          {" "}
-                          <strong>
-                            {dataLo.reduce(
-                              (sum, item) => sum + (Number(item.dienTich).toFixed(2) || 0),
-                              0
-                            )}
-                          </strong>
-                        </td>
-                        <td>
-                          {" "}
-                          <strong>
-                            {dataLo.reduce(
-                              (sum, item) => sum + (item.dienTichMC || 0),
-                              0
-                            )}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {dataLo.reduce(
-                              (sum, item) => sum + (item.tongHoKT || 0),
-                              0
-                            )}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {dataLo.reduce(
-                              (sum, item) => sum + (item.hoTrong || 0),
-                              0
-                            )}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {dataLo.reduce(
-                              (sum, item) => sum + (item.cayChuaCaoT50 || 0),
-                              0
-                            )}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {dataLo.reduce(
-                              (sum, item) => sum + (item.cayChuaCaoD50 || 0),
-                              0
-                            )}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {dataLo.reduce(
-                              (sum, item) =>
-                                sum +
-                                ((item.cayChuaCaoT50 || 0) +
-                                  (item.cayChuaCaoD50 || 0)),
-                              0
-                            )}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {dataLo.reduce(
-                              (sum, item) => sum + (item.cayCaoT50 || 0),
-                              0
-                            )}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {dataLo.reduce(
-                              (sum, item) => sum + (item.cayCaoD50 || 0),
-                              0
-                            )}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {dataLo.reduce(
-                              (sum, item) =>
-                                sum +
-                                ((item.cayCaoT50 || 0) + (item.cayCaoD50 || 0)),
-                              0
-                            )}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {dataLo.reduce((sum, item) => {
-                              const tongCayCao =
-                                (item.cayCaoT50 || 0) + (item.cayCaoD50 || 0);
-                              return item.tongHoKT > 0
-                                ? ((tongCayCao / item.tongHoKT) * 100).toFixed(
-                                  1
-                                )
-                                : "0.00";
-                            }, 0)}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {dataLo.length > 0
-                              ? (
-                                dataLo.reduce((sum, item) => {
-                                  const tongCayCao =
-                                    (item.cayCaoT50 || 0) +
-                                    (item.cayCaoD50 || 0);
-                                  const tyLeCayDatVanh =
-                                    item.tongHoKT > 0
-                                      ? (tongCayCao / item.tongHoKT) * 100
-                                      : 0;
-
-                                  let diem = 0;
-                                  if (tyLeCayDatVanh > 90) diem = 10;
-                                  else if (tyLeCayDatVanh > 80) diem = 9;
-                                  else if (tyLeCayDatVanh >= 75) diem = 8;
-                                  else if (tyLeCayDatVanh < 75) diem = 6;
-
-                                  return sum + diem;
-                                }, 0) / dataLo.length
-                              ).toFixed(1)
-                              : "0.0"}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {dataLo.reduce((sum, item) => {
-                              return item.tongHoKT > 0
-                                ? (
-                                  (item.cayCaoD50 / item.tongHoKT) *
-                                  100
-                                ).toFixed(1)
-                                : "0.0";
-                            }, 0)}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {dataLo.reduce((sum, item) => {
-                              // Calculate violation rate for this item
-                              const tyLeViPham =
-                                item.tongHoKT > 0
-                                  ? (item.cayCaoD50 / item.tongHoKT) * 100
-                                  : 0;
-
-                              // Use the same logic as individual rows: if violation rate = 0, use dienTichMC, otherwise use dtXetThuong
-                              const dtXetThuong =
-                                parseFloat(tyLeViPham) === 0
-                                  ? parseFloat(item.dienTichMC || 0)
-                                  : parseFloat(item.dtXetThuong || 0);
-
-                              return sum + dtXetThuong;
-                            }, 0)}
-                          </strong>
-                        </td>
+                      <tr className="table-active">
+                        <td colSpan="6"><strong>CỘNG</strong></td>
+                        <td><strong>{totals.dienTich.toFixed(4)}</strong></td>
+                        <td><strong>{totals.dienTichMC.toFixed(4)}</strong></td>
+                        <td><strong>{totals.tongHoKT}</strong></td>
+                        <td><strong>{totals.hoTrong}</strong></td>
+                        <td><strong>{totals.cayChuaCaoT50}</strong></td>
+                        <td><strong>{totals.cayChuaCaoD50}</strong></td>
+                        <td><strong>{totals.tongCayChuaCao}</strong></td>
+                        <td><strong>{totals.cayCaoT50}</strong></td>
+                        <td><strong>{totals.cayCaoD50}</strong></td>
+                        <td><strong>{totals.tongCayCao}</strong></td>
+                        <td><strong>{avgTyLeCayDatVanh}</strong></td>
+                        <td><strong>{avgDiem}</strong></td>
+                        <td><strong>{avgTyLeViPham}</strong></td>
+                        <td><strong>{totals.dtXetThuong.toFixed(4)}</strong></td>
                       </tr>
                     )}
+
                   </tbody>
                 </Table>
               </div>
