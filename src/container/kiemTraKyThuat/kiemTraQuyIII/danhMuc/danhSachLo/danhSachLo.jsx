@@ -9,6 +9,7 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 import Pageheader from "../../../../../components/pageheader/pageheader";
 // import { danhMucCN } from "../danhSachCN/danhSachCNdata";
 
@@ -83,11 +84,15 @@ const DanhSachLo = () => {
                 </Col>
 
                 <Col xl={4} lg={6} md={6} sm={12}></Col>
-                <Col xl={4} lg={6} md={6} sm={12} className="d-flex">
-                  <Button className="btn btn-secondary label-btn ms-auto">
-                    <i className="bi bi-plus-lg label-btn-icon me-2"></i>
-                    Thêm CN
-                  </Button>
+                <Col xl={4} lg={6} md={6} sm={12} className="d-flex align-items-center justify-content-end">
+                  <Link to={`/kiemTraKyThuat/kiemTraQuyIII/danhMuc/danhSachLo/import`} >
+                    <Button className="btn btn-secondary label-btn ms-auto">
+                      <i className="bi bi-plus-lg label-btn-icon me-2"></i>
+                      Import dữ liệu
+                    </Button>
+                  </Link>
+
+
                 </Col>
               </Row>
 

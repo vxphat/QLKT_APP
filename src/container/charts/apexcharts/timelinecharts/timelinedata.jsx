@@ -1,6 +1,6 @@
 import  { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
+
 import moment from "moment";
 // 
 export class Basictimeline extends Component {

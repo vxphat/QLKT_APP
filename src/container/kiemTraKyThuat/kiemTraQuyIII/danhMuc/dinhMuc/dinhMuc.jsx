@@ -1,18 +1,30 @@
 import { FC, Fragment, useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Collapse,
-  Form,
-  ProgressBar,
-  Row,
-  Table,
-  Modal,
-} from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button, Card, Col, Form, Row, Table, Modal, } from "react-bootstrap";
 import Pageheader from "../../../../../components/pageheader/pageheader";
 import { donVidata, hinhThuc, TLMoCao } from "./dinhMucData";
+import axios from "axios";
+
+const apiService = {
+  postLuuDinhMuc: async (values) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}dinh-muc/luu-dinh-muc`,
+        values,
+      );
+
+      return {
+        status: response.data.status,
+        msg: response.data.msg,
+      };
+    } catch (error) {
+      return {
+        status: error.response?.status || 500,
+        data: null,
+        error: error.response?.data || 'Đã có lỗi xảy ra'
+      };
+    }
+  },
+};
 
 const DinhMuc = () => {
   // Load từ localStorage một lần khi mount
@@ -55,8 +67,7 @@ const DinhMuc = () => {
   };
 
   // nút “Cập nhật” trong modal
-  const handleCapNhat = () => {
-    // nếu ô nào bỏ trống / không hợp lệ thì giữ nguyên điểm cũ
+  const handleCapNhat = async () => {
     const old = Object.fromEntries(tyLeMoCao.map((i) => [i.tyLe, i.diem]));
     const updated = [
       { tyLe: ">90", diem: toNum(formDiem.gt90) ?? old[">90"] },
@@ -64,8 +75,12 @@ const DinhMuc = () => {
       { tyLe: ">=75", diem: toNum(formDiem.ge75) ?? old[">=75"] },
       { tyLe: "<75", diem: toNum(formDiem.lt75) ?? old["<75"] },
     ];
-    setTyLeMoCao(updated);
-    setModalShow1(false);
+    const value = { DinhMuc: updated, TuKhoa: 'KiemTraQuyIII' }
+    const result = await apiService.postLuuDinhMuc(value)
+    if (result.status == true) {
+      setModalShow1(false);
+    }
+
   };
 
   return (
@@ -76,7 +91,7 @@ const DinhMuc = () => {
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
               <Card.Title>Điểm tỷ lệ cây mở cạo</Card.Title>
-              <Col xl={3} lg={6} md={6} sm={12} className="d-flex">
+              <Col xl={6} lg={6} md={6} sm={12} className="d-flex">
                 <Button
                   className="btn btn-secondary label-btn ms-auto"
                   variant="primary"
@@ -210,7 +225,7 @@ const DinhMuc = () => {
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
               <Card.Title>Tỷ lệ cây cạo trên 50 cm</Card.Title>
-              <Col xl={3} lg={6} md={6} sm={12} className="d-flex">
+              <Col xl={6} lg={6} md={6} sm={12} className="d-flex">
                 <Button className="btn btn-secondary label-btn ms-auto">
                   <i className="bi bi-pencil label-btn-icon me-2"></i>
                   Cập nhật
@@ -246,7 +261,7 @@ const DinhMuc = () => {
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
               <Card.Title>Đơn vị</Card.Title>
-              <Col xl={3} lg={6} md={6} sm={12} className="d-flex">
+              <Col xl={6} lg={6} md={6} sm={12} className="d-flex">
                 <Button className="btn btn-secondary label-btn ms-auto">
                   <i className="bi bi-pencil label-btn-icon me-2"></i>
                   Cập nhật

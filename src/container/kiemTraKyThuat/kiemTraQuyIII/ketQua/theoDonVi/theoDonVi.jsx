@@ -1,113 +1,42 @@
-import { FC, Fragment, useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Collapse,
-  Form,
-  ProgressBar,
-  Row,
-  Table,
-} from "react-bootstrap";
-import Pageheader from "../../../../../components/pageheader/pageheader";
-import { donVidata, TLMoCao } from "../../danhMuc/dinhMuc/dinhMucData";
+import { Fragment, useEffect, useState } from "react";
+import axios from "axios";
+import { Button, Card, Col, Form, Row, Table, } from "react-bootstrap";
+import { donVidata } from "../../danhMuc/dinhMuc/dinhMucData";
 
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbwZM002-mVfsGaQeGlEt9qLnTK4Ef41VWhDFHlAeuH6XF_Xo9Lsiv194etMJCpzNbhiwA/exec";
-const TOKEN = "vxphat1994@";
 
-// API for danhSachLo data
-const API_URL_DANH_SACH_LO =
-  "https://script.google.com/macros/s/AKfycbxgIjtPLhCcv8nNWavOsMcTCObTUaQdMT_AvBVjHtB5e1FwEKCShO5EL3IWKW_ydBWo/exec";
-const TOKEN_DANH_SACH_LO = "vxphat1994@";
 
 const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
+const apiService = {
+  getKetQuaTheoDonVi: async () => {
+    try {
+      const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/ket-qua/theo-don-vi`);
+      const response = await axios.get(url.toString());
+      return response.data;
+    } catch (error) {
+      return null;
+    }
+  },
+  getDinhMuc: async () => {
+    try {
+      const url = new URL(`${import.meta.env.VITE_API_URL}dinh-muc`);
+      url.searchParams.append('TuKhoa', 'KiemTraQuyIII');
+      const response = await axios.get(url.toString());
+      return response.data;
+    } catch (error) {
+      return null;
+    }
+  },
+};
+
 const KQtheoDonVi = () => {
   const [dataLo, setDataLo] = useState([]);
-  const [danhSachLoData, setDanhSachLoData] = useState([]);
+  const [dinhMuc, setDinhMuc] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [loadingDanhSachLo, setLoadingDanhSachLo] = useState(false);
-
   const [nam, setNam] = useState("");
   const [maDonVi, setMaDonVi] = useState("");
 
-  async function loadKQKT() {
-    setLoading(true);
-    try {
-      const url = new URL(API_URL);
-      url.searchParams.set("token", TOKEN);
-      console.log("Fetching:", url.toString());
-      const res = await fetch(url.toString(), { method: "GET" });
-      const json = await res.json();
-      console.log("Data:", json);
-      // Filter data based on selected year and unit
-      let filteredData = json.data ?? [];
 
-      if (nam) {
-        filteredData = filteredData.filter(
-          (item) => item.nam && item.nam.toString() === nam
-        );
-      }
-
-      if (maDonVi) {
-        filteredData = filteredData.filter(
-          (item) => item.doi && item.doi.toString() === maDonVi
-        );
-      }
-
-      setDataLo(filteredData);
-
-      // After loading main data, load danhSachLo data and merge
-      await loadDanhSachLoData(filteredData);
-    } catch (err) {
-      console.error(err);
-      setDataLo([]);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function loadDanhSachLoData(mainData) {
-    setLoadingDanhSachLo(true);
-    try {
-      const url = new URL(API_URL_DANH_SACH_LO);
-      url.searchParams.set("token", TOKEN_DANH_SACH_LO);
-      console.log("Fetching danhSachLo:", url.toString());
-      const res = await fetch(url.toString(), { method: "GET" });
-      const json = await res.json();
-      const danhSachLo = json.data ?? [];
-
-      setDanhSachLoData(danhSachLo);
-
-      // Merge danhSachLo data into mainData by idLo
-      const danhSachLoMap = new Map();
-      danhSachLo.forEach((item) => {
-        if (item.idLo) {
-          danhSachLoMap.set(item.idLo, item);
-        }
-      });
-
-      const mergedData = mainData.map((item) => {
-        const loData = danhSachLoMap.get(item.idLo);
-        if (loData) {
-          return {
-            ...item,
-            hangDat: loData.hangDat ?? item.hangDat,
-            dienTichKK: loData.dienTichKK ?? item.dienTichKK,
-            dienTichMC: loData.dienTichMC ?? item.dienTichMC,
-          };
-        }
-        return item;
-      });
-
-      setDataLo(mergedData);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoadingDanhSachLo(false);
-    }
-  }
 
   // Function to print the table
   const printTable = () => {
@@ -174,12 +103,11 @@ const KQtheoDonVi = () => {
         <h2 style="text-align: center; margin-bottom: 10px;">
           CHI TIẾT XÉT THƯỞNG VƯỜN CÂY MỞ CẠO
           ${nam && ` NĂM ${nam}`}
-          ${
-            maDonVi &&
-            ` - ĐỘI ${donVidata
-              .find((dv) => dv.maDonVi === maDonVi)
-              ?.donVi.toLocaleUpperCase()}`
-          }
+          ${maDonVi &&
+      ` - ĐỘI ${donVidata
+        .find((dv) => dv.maDonVi === maDonVi)
+        ?.donVi.toLocaleUpperCase()}`
+      }
         </h2>
         ${tableClone.outerHTML}
         <p style="text-align: right; margin-top: 10px; font-style: italic;">
@@ -199,17 +127,57 @@ const KQtheoDonVi = () => {
     };
   };
 
+
+
   useEffect(() => {
-    loadKQKT();
-  }, [nam, maDonVi]);
+    getKetQuaQuyIIITheoDonVi()
+    getDinhMuc()
+  }, []);
+
+  const getKetQuaQuyIIITheoDonVi = async () => {
+    const result = await apiService.getKetQuaTheoDonVi();
+    if (result) {
+      setDataLo(result.data)
+    }
+  }
+
+  const getDinhMuc = async () => {
+    const result = await apiService.getDinhMuc();
+    if (result) {
+      setDinhMuc(JSON.parse(result.data.DinhMuc))
+    }
+  }
+
+  function tinhDiem(tyLeNumber) {
+    if(!dinhMuc) return;
+    for (const rule of dinhMuc) {
+      const { tyLe, diem } = rule;
+
+      if (tyLe.startsWith(">=")) {
+        const value = parseFloat(tyLe.replace(">=", ""));
+        if (tyLeNumber >= value) return diem;
+      } else if (tyLe.startsWith(">")) {
+        const value = parseFloat(tyLe.replace(">", ""));
+        if (tyLeNumber > value) return diem;
+      } else if (tyLe.startsWith("<=")) {
+        const value = parseFloat(tyLe.replace("<=", ""));
+        if (tyLeNumber <= value) return diem;
+      } else if (tyLe.startsWith("<")) {
+        const value = parseFloat(tyLe.replace("<", ""));
+        if (tyLeNumber < value) return diem;
+      } else if (tyLe.startsWith("=")) {
+        const value = parseFloat(tyLe.replace("=", ""));
+        if (tyLeNumber === value) return diem;
+      }
+    }
+
+    return null; // nếu không match rule nào
+  }
+
 
   return (
     <Fragment>
-      {/* <Pageheader
-        title="Kết Quả Theo Đơn Vị"
-        heading="Tables"
-        active="Tables"
-      /> */}
+
       <Row className="mt-3">
         <Col xl={12}>
           <Card className="custom-card">
@@ -260,7 +228,7 @@ const KQtheoDonVi = () => {
                 <Col xl={2} lg={6} md={6} sm={12}>
                   <Button
                     className="btn btn-primary label-btn"
-                    onClick={loadKQKT}
+                    // onClick={loadKQKT}
                     disabled={loading || !nam || !maDonVi}>
                     <i className="bi bi-search label-btn-icon me-2"></i>
                     {loading ? "Đang tải..." : "Tải dữ liệu"}
@@ -343,18 +311,18 @@ const KQtheoDonVi = () => {
                   <tbody>
                     {dataLo.map((cn, idx) => {
                       // Calculate values
-                      const hoTrong = cn.hoTrong || 0;
-                      const cayChuaCaoT50 = cn.cayChuaCaoT50 || 0;
-                      const cayChuaCaoD50 = cn.cayChuaCaoD50 || 0;
+                      const hoTrong = cn.soHoTrong || 0;
+                      const cayChuaCaoT50 = cn.soCayChuaCaoTren50 || 0;
+                      const cayChuaCaoD50 = cn.soCayChuaCaoDuoi50 || 0;
                       const tongCayChuaCao = cayChuaCaoT50 + cayChuaCaoD50;
-                      const cayCaoT50 = cn.cayCaoT50 || 0;
-                      const cayCaoD50 = cn.cayCaoD50 || 0;
+                      const cayCaoT50 = cn.soCayCaoTren50 || 0;
+                      const cayCaoD50 = cn.soCayCaoDuoi50 || 0;
                       const tongCayCao = cayCaoT50 + cayCaoD50;
 
                       // Calculate result columns
                       const tyLeCayDatVanh =
-                        cn.tongHoKT > 0
-                          ? ((tongCayCao / cn.tongHoKT) * 100).toFixed(1)
+                        (hoTrong + tongCayChuaCao + tongCayCao) > 0
+                          ? ((tongCayCao / (hoTrong + tongCayChuaCao + tongCayCao)) * 100).toFixed(1)
                           : "0.0";
 
                       // Calculate điểm based on TLMoCao table
@@ -367,7 +335,7 @@ const KQtheoDonVi = () => {
                       else if (tyLeNumber < 75) diem = 6;
 
                       const tyLeViPham = (
-                        (cn.cayCaoD50 / cn.tongHoKT) *
+                        (cn.soCayCaoDuoi50 / (cn.soHoTrong + (cayChuaCaoT50 + cayChuaCaoD50) + (cayCaoT50 + cayCaoD50))) *
                         100
                       ).toFixed(1);
 
@@ -380,23 +348,26 @@ const KQtheoDonVi = () => {
                       return (
                         <tr key={idx}>
                           <td className="text-wrap border">{idx + 1}</td>
-                          <td className="text-wrap border">{cn.doi}</td>
+                          <td className="text-wrap border">{cn.nongTruong}</td>
                           <td className="text-wrap border">{cn.tenLo}</td>
                           <td className="text-wrap border">{cn.namTrong}</td>
                           <td className="text-wrap border">{cn.hangDat}</td>
-                          <td className="text-wrap border">{cn.giong}</td>
-                          <td className="text-wrap border">{cn.dienTichKK}</td>
+                          <td className="text-wrap border">{cn.giongCay}</td>
+                          <td className="text-wrap border">
+                            {cn.dienTich != null ? Number(cn.dienTich).toFixed(2) : ""}
+                          </td>
+
                           <td className="text-wrap border">{cn.dienTichMC}</td>
-                          <td className="text-wrap border">{cn.tongHoKT}</td>
+                          <td className="text-wrap border">{hoTrong + tongCayChuaCao + tongCayCao}</td>
                           <td className="text-wrap border">{hoTrong}</td>
-                          <td className="text-wrap border">{cayChuaCaoT50}</td>
-                          <td className="text-wrap border">{cayChuaCaoD50}</td>
+                          <td className="text-wrap border">{cn.soCayChuaCaoTren50}</td>
+                          <td className="text-wrap border">{cn.soCayChuaCaoDuoi50}</td>
                           <td className="text-wrap border">{tongCayChuaCao}</td>
-                          <td className="text-wrap border">{cayCaoT50}</td>
-                          <td className="text-wrap border">{cayCaoD50}</td>
+                          <td className="text-wrap border">{cn.soCayCaoTren50}</td>
+                          <td className="text-wrap border">{cn.soCayCaoDuoi50}</td>
                           <td className="text-wrap border">{tongCayCao}</td>
-                          <td className="text-wrap border">{tyLeCayDatVanh}</td>
-                          <td className="text-wrap border">{diem}</td>
+                          <td className="text-wrap border">{tyLeNumber}</td>
+                          <td className="text-wrap border">{tinhDiem(tyLeNumber)}</td>
                           <td className="text-wrap border">{tyLeViPham}</td>
                           <td className="text-wrap border">{dtXetThuong}</td>
                         </tr>
@@ -411,7 +382,7 @@ const KQtheoDonVi = () => {
                           {" "}
                           <strong>
                             {dataLo.reduce(
-                              (sum, item) => sum + (item.dienTichKK || 0),
+                              (sum, item) => sum + (Number(item.dienTich).toFixed(2) || 0),
                               0
                             )}
                           </strong>
@@ -501,8 +472,8 @@ const KQtheoDonVi = () => {
                                 (item.cayCaoT50 || 0) + (item.cayCaoD50 || 0);
                               return item.tongHoKT > 0
                                 ? ((tongCayCao / item.tongHoKT) * 100).toFixed(
-                                    1
-                                  )
+                                  1
+                                )
                                 : "0.00";
                             }, 0)}
                           </strong>
@@ -511,24 +482,24 @@ const KQtheoDonVi = () => {
                           <strong>
                             {dataLo.length > 0
                               ? (
-                                  dataLo.reduce((sum, item) => {
-                                    const tongCayCao =
-                                      (item.cayCaoT50 || 0) +
-                                      (item.cayCaoD50 || 0);
-                                    const tyLeCayDatVanh =
-                                      item.tongHoKT > 0
-                                        ? (tongCayCao / item.tongHoKT) * 100
-                                        : 0;
+                                dataLo.reduce((sum, item) => {
+                                  const tongCayCao =
+                                    (item.cayCaoT50 || 0) +
+                                    (item.cayCaoD50 || 0);
+                                  const tyLeCayDatVanh =
+                                    item.tongHoKT > 0
+                                      ? (tongCayCao / item.tongHoKT) * 100
+                                      : 0;
 
-                                    let diem = 0;
-                                    if (tyLeCayDatVanh > 90) diem = 10;
-                                    else if (tyLeCayDatVanh > 80) diem = 9;
-                                    else if (tyLeCayDatVanh >= 75) diem = 8;
-                                    else if (tyLeCayDatVanh < 75) diem = 6;
+                                  let diem = 0;
+                                  if (tyLeCayDatVanh > 90) diem = 10;
+                                  else if (tyLeCayDatVanh > 80) diem = 9;
+                                  else if (tyLeCayDatVanh >= 75) diem = 8;
+                                  else if (tyLeCayDatVanh < 75) diem = 6;
 
-                                    return sum + diem;
-                                  }, 0) / dataLo.length
-                                ).toFixed(1)
+                                  return sum + diem;
+                                }, 0) / dataLo.length
+                              ).toFixed(1)
                               : "0.0"}
                           </strong>
                         </td>
@@ -537,9 +508,9 @@ const KQtheoDonVi = () => {
                             {dataLo.reduce((sum, item) => {
                               return item.tongHoKT > 0
                                 ? (
-                                    (item.cayCaoD50 / item.tongHoKT) *
-                                    100
-                                  ).toFixed(1)
+                                  (item.cayCaoD50 / item.tongHoKT) *
+                                  100
+                                ).toFixed(1)
                                 : "0.0";
                             }, 0)}
                           </strong>

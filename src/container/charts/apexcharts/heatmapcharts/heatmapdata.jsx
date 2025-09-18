@@ -1,6 +1,6 @@
 import  { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
+
 // Revenue Statistics
 
 function generateData(count, yrange) {

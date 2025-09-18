@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
+
 import us from "../../../assets/images/flags/us_flag.jpg";
 import uae from "../../../assets/images/flags/uae_flag.jpg";
 import germany from "../../../assets/images/flags/germany_flag.jpg";

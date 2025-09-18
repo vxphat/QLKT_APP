@@ -1,6 +1,6 @@
 import  { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
+
 import face4 from "../../../assets/images/faces/4.jpg";
 import face15 from "../../../assets/images/faces/15.jpg";
 import face11 from "../../../assets/images/faces/11.jpg";
