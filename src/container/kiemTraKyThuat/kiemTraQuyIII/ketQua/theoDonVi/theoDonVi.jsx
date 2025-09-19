@@ -1,18 +1,18 @@
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Card, Col, Form, Row, Table, } from "react-bootstrap";
+import { Button, Card, Col, Form, Row, Table } from "react-bootstrap";
 import { donVidata } from "../../danhMuc/dinhMuc/dinhMucData";
-
-
 
 const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
 const apiService = {
   getKetQuaTheoDonVi: async (year, maDonVi) => {
     try {
-      const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/ket-qua/theo-don-vi`);
-      url.searchParams.append('year', year);
-      url.searchParams.append('maDonVi', maDonVi);
+      const url = new URL(
+        `${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/ket-qua/theo-don-vi`
+      );
+      url.searchParams.append("year", year);
+      url.searchParams.append("maDonVi", maDonVi);
       const response = await axios.get(url.toString());
       return response.data;
     } catch (error) {
@@ -22,7 +22,7 @@ const apiService = {
   getDinhMuc: async () => {
     try {
       const url = new URL(`${import.meta.env.VITE_API_URL}dinh-muc`);
-      url.searchParams.append('TuKhoa', 'KiemTraQuyIII');
+      url.searchParams.append("TuKhoa", "KiemTraQuyIII");
       const response = await axios.get(url.toString());
       return response.data;
     } catch (error) {
@@ -37,8 +37,6 @@ const KQtheoDonVi = () => {
   const [loading, setLoading] = useState(false);
   const [nam, setNam] = useState(new Date().getFullYear());
   const [maDonVi, setMaDonVi] = useState("");
-
-
 
   // Function to print the table
   const printTable = () => {
@@ -106,11 +104,12 @@ const KQtheoDonVi = () => {
         <h2 style="text-align: center; margin-bottom: 10px;">
           CHI TIẾT XÉT THƯỞNG VƯỜN CÂY MỞ CẠO
           ${nam && ` NĂM ${nam}`}
-          ${maDonVi &&
-      ` - ĐỘI ${donVidata
-        .find((dv) => dv.maDonVi === maDonVi)
-        ?.donVi.toLocaleUpperCase()}`
-      }
+          ${
+            maDonVi &&
+            ` - ĐỘI ${donVidata
+              .find((dv) => dv.maDonVi === maDonVi)
+              ?.donVi.toLocaleUpperCase()}`
+          }
         </h2>
         ${tableClone.outerHTML}
         <p style="text-align: right; margin-top: 10px; font-style: italic;">
@@ -130,27 +129,24 @@ const KQtheoDonVi = () => {
     };
   };
 
-
-
   useEffect(() => {
-    getDinhMuc()
-    getKetQuaQuyIIITheoDonVi()
+    getDinhMuc();
+    getKetQuaQuyIIITheoDonVi();
   }, []);
 
   const getKetQuaQuyIIITheoDonVi = async () => {
-
     const result = await apiService.getKetQuaTheoDonVi(nam, maDonVi);
     if (result) {
-      setDataLo(result.data)
+      setDataLo(result.data);
     }
-  }
+  };
 
   const getDinhMuc = async () => {
     const result = await apiService.getDinhMuc();
     if (result) {
-      setDinhMuc(JSON.parse(result.data.DinhMuc))
+      setDinhMuc(JSON.parse(result.data.DinhMuc));
     }
-  }
+  };
 
   function tinhDiem(tyLeNumber) {
     if (!dinhMuc) return;
@@ -198,13 +194,15 @@ const KQtheoDonVi = () => {
       const diem = tinhDiem(tyLeCayDatVanh);
 
       // Tỷ lệ vi phạm
-      const tyLeViPham =
-        denominator > 0 ? (cayCaoD50 / denominator) * 100 : 0;
+      const tyLeViPham = denominator > 0 ? (cayCaoD50 / denominator) * 100 : 0;
 
       // Diện tích xét thưởng
-      const dtXetThuong = diem >= 8 ? (parseFloat(tyLeViPham) === 0
-        ? parseFloat(item.dienTichMC || 0)
-        : parseFloat(item.dtXetThuong || 0)) : 0;
+      const dtXetThuong =
+        diem >= 8
+          ? parseFloat(tyLeViPham) === 0
+            ? parseFloat(item.dienTichMC || 0)
+            : parseFloat(item.dtXetThuong || 0)
+          : 0;
 
       // Cộng dồn
       acc.dienTich += Number(item.dienTich) || 0;
@@ -243,17 +241,19 @@ const KQtheoDonVi = () => {
   );
 
   // Tính trung bình điểm & tỷ lệ
-  const avgDiem = dataLo.length > 0 ? (totals.diem / dataLo.length).toFixed(1) : "0.0";
+  const avgDiem =
+    dataLo.length > 0 ? (totals.diem / dataLo.length).toFixed(1) : "0.0";
   const avgTyLeCayDatVanh =
-    totals.tongHoKT > 0 ? ((totals.tongCayCao / totals.tongHoKT) * 100).toFixed(1) : "0.0";
+    totals.tongHoKT > 0
+      ? ((totals.tongCayCao / totals.tongHoKT) * 100).toFixed(1)
+      : "0.0";
   const avgTyLeViPham =
-    totals.tongHoKT > 0 ? ((totals.cayCaoD50 / totals.tongHoKT) * 100).toFixed(1) : "0.0";
-
-
+    totals.tongHoKT > 0
+      ? ((totals.cayCaoD50 / totals.tongHoKT) * 100).toFixed(1)
+      : "0.0";
 
   return (
     <Fragment>
-
       <Row className="mt-3">
         <Col xl={12}>
           <Card className="custom-card">
@@ -304,8 +304,7 @@ const KQtheoDonVi = () => {
                 <Col xl={2} lg={6} md={6} sm={12}>
                   <Button
                     className="btn btn-primary label-btn"
-                    onClick={getKetQuaQuyIIITheoDonVi}
-                  >
+                    onClick={getKetQuaQuyIIITheoDonVi}>
                     <i className="bi bi-search label-btn-icon me-2"></i>
                     {loading ? "Đang tải..." : "Tải dữ liệu"}
                   </Button>
@@ -396,7 +395,9 @@ const KQtheoDonVi = () => {
                       const tongHoKT = hoTrong + tongCayChuaCao + tongCayCao;
 
                       const tyLeCayDatVanh =
-                        tongHoKT > 0 ? ((tongCayCao / tongHoKT) * 100).toFixed(1) : "0.0";
+                        tongHoKT > 0
+                          ? ((tongCayCao / tongHoKT) * 100).toFixed(1)
+                          : "0.0";
 
                       const tyLeNumber = parseFloat(tyLeCayDatVanh);
                       let diem = 0;
@@ -410,10 +411,12 @@ const KQtheoDonVi = () => {
                           ? ((cayCaoD50 / tongHoKT) * 100).toFixed(1)
                           : "0.0";
 
-
-                      const dtXetThuong = diem >= 8 ? (parseFloat(tyLeViPham) === 0
-                        ? parseFloat(cn.dienTichMC || 0)
-                        : parseFloat(cn.dtXetThuong || 0)) : 0;
+                      const dtXetThuong =
+                        diem >= 8
+                          ? parseFloat(tyLeViPham) === 0
+                            ? parseFloat(cn.dienTichMC || 0)
+                            : parseFloat(cn.dtXetThuong || 0)
+                          : 0;
 
                       return (
                         <tr key={idx}>
@@ -423,7 +426,11 @@ const KQtheoDonVi = () => {
                           <td>{cn.namTrong}</td>
                           <td>{cn.hangDat}</td>
                           <td>{cn.giongCay}</td>
-                          <td>{cn.dienTich != null ? Number(cn.dienTich).toFixed(4) : ""}</td>
+                          <td>
+                            {cn.dienTich != null
+                              ? Number(cn.dienTich).toFixed(4)
+                              : ""}
+                          </td>
                           <td>{cn.dienTichMC}</td>
                           <td>{tongHoKT}</td>
                           <td>{hoTrong}</td>
@@ -443,24 +450,53 @@ const KQtheoDonVi = () => {
 
                     {dataLo.length > 0 && (
                       <tr className="table-active">
-                        <td colSpan="6"><strong>CỘNG</strong></td>
-                        <td><strong>{totals.dienTich.toFixed(4)}</strong></td>
-                        <td><strong>{totals.dienTichMC.toFixed(4)}</strong></td>
-                        <td><strong>{totals.tongHoKT}</strong></td>
-                        <td><strong>{totals.hoTrong}</strong></td>
-                        <td><strong>{totals.cayChuaCaoT50}</strong></td>
-                        <td><strong>{totals.cayChuaCaoD50}</strong></td>
-                        <td><strong>{totals.tongCayChuaCao}</strong></td>
-                        <td><strong>{totals.cayCaoT50}</strong></td>
-                        <td><strong>{totals.cayCaoD50}</strong></td>
-                        <td><strong>{totals.tongCayCao}</strong></td>
-                        <td><strong>{avgTyLeCayDatVanh}</strong></td>
-                        <td><strong>{avgDiem}</strong></td>
-                        <td><strong>{avgTyLeViPham}</strong></td>
-                        <td><strong>{totals.dtXetThuong.toFixed(4)}</strong></td>
+                        <td colSpan="6">
+                          <strong>CỘNG</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.dienTich.toFixed(4)}</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.dienTichMC.toFixed(4)}</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.tongHoKT}</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.hoTrong}</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.cayChuaCaoT50}</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.cayChuaCaoD50}</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.tongCayChuaCao}</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.cayCaoT50}</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.cayCaoD50}</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.tongCayCao}</strong>
+                        </td>
+                        <td>
+                          <strong>{avgTyLeCayDatVanh}</strong>
+                        </td>
+                        <td>
+                          <strong>{avgDiem}</strong>
+                        </td>
+                        <td>
+                          <strong>{avgTyLeViPham}</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.dtXetThuong.toFixed(4)}</strong>
+                        </td>
                       </tr>
                     )}
-
                   </tbody>
                 </Table>
               </div>
