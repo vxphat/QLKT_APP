@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
+import {  } from "apexcharts";
 import { Chart, ArcElement, Tooltip, Legend, registerables } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 Chart.register(...registerables, ArcElement, Tooltip, Legend);

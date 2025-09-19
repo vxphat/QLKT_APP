@@ -1,6 +1,6 @@
 import  { Component, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
+import {  } from "apexcharts";
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { Button, ButtonGroup } from 'react-bootstrap';

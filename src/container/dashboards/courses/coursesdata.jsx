@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
+import {  } from "apexcharts";
 import nftimage1 from "../../../assets/images/nft-images/1.png";
 import nftimage2 from "../../../assets/images/nft-images/2.png";
 import nftimage5 from "../../../assets/images/nft-images/5.png";

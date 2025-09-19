@@ -16,10 +16,11 @@ const API_URL =
   "https://script.google.com/macros/s/AKfycbwZM002-mVfsGaQeGlEt9qLnTK4Ef41VWhDFHlAeuH6XF_Xo9Lsiv194etMJCpzNbhiwA/exec"; // URL web app của bạn
 const TOKEN = "vxphat1994@";
 
-const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
+
 
 const PhieuDaNgoai = () => {
   const [danhSachCN, setDanhSachCN] = useState([]);
+  const [YEARS, setYEARS] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
 
@@ -28,6 +29,15 @@ const PhieuDaNgoai = () => {
   const [tenLo, setTenLo] = useState("");
   const [kqktData, setKqktData] = useState([]);
   const [filteredLo, setFilteredLo] = useState([]);
+
+  useEffect(() => {
+    const currentYear = new Date().getFullYear();
+    const yearsArray = Array.from(
+      { length: currentYear - 2024 + 1 },
+      (_, i) => 2024 + i
+    );
+    setYEARS(yearsArray);
+  }, []);
 
   async function loadKQKT() {
     setLoading(true);
@@ -65,6 +75,10 @@ const PhieuDaNgoai = () => {
     }
     setTenLo(""); // Reset tenLo when nam or maDonVi changes
   }, [nam, maDonVi, kqktData]);
+
+  const handleChangeYear = (year) => {
+    
+  }
 
   const printTable = () => {
     // if (dataLo.length === 0) {
@@ -207,7 +221,10 @@ const PhieuDaNgoai = () => {
                   <Form.Select
                     aria-label="Chọn năm"
                     value={nam}
-                    onChange={(e) => setNam(e.target.value)}>
+                    onChange={(e) => {
+                      setNam(e.target.value)
+                      handleChangeYear(e.target.value)
+                    }}>
                     <option value="">Chọn năm</option>
                     {YEARS.map((y) => (
                       <option key={y} value={y}>

@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
+import {  } from "apexcharts";
 import face1 from "../../../../assets/images/faces/1.jpg";
 import { Button, Card } from 'react-bootstrap';
 
