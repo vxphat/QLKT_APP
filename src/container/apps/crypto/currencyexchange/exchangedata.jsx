@@ -1,26 +1,25 @@
-import  { Component } from 'react';
-import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
+import { Component } from "react";
+import ReactApexChart from "react-apexcharts";
 
 export const Options1 = [
-  { value: 'Bitcoin', label: 'Bitcoin' },
-  { value: 'Etherium', label: 'Etherium' },
-  { value: 'Litecoin', label: 'Litecoin' },
-  { value: 'Ripple', label: 'Ripple' },
-  { value: 'Cardano', label: 'Cardano' },
-  { value: 'Neo', label: 'Neo' },
-  { value: 'Stellar', label: 'Stellar' },
-  { value: 'EOS', label: 'EOS' },
-  { value: 'NEM', label: 'NEM' },
+  { value: "Bitcoin", label: "Bitcoin" },
+  { value: "Etherium", label: "Etherium" },
+  { value: "Litecoin", label: "Litecoin" },
+  { value: "Ripple", label: "Ripple" },
+  { value: "Cardano", label: "Cardano" },
+  { value: "Neo", label: "Neo" },
+  { value: "Stellar", label: "Stellar" },
+  { value: "EOS", label: "EOS" },
+  { value: "NEM", label: "NEM" },
 ];
 export const Options2 = [
-  { value: 'USD', label: 'USD' },
-  { value: 'Pound', label: 'Pound' },
-  { value: 'Rupee', label: 'Rupee' },
-  { value: 'Euro', label: 'Euro' },
-  { value: 'Won', label: 'Won' },
-  { value: 'Dinar', label: 'Dinar' },
-  { value: 'Rial', label: 'Rial' }
+  { value: "USD", label: "USD" },
+  { value: "Pound", label: "Pound" },
+  { value: "Rupee", label: "Rupee" },
+  { value: "Euro", label: "Euro" },
+  { value: "Won", label: "Won" },
+  { value: "Dinar", label: "Dinar" },
+  { value: "Rial", label: "Rial" },
 ];
 ///////charts
 // BTC
@@ -30,7 +29,6 @@ export class BTC extends Component {
     super(props);
 
     this.state = {
-
       series: [
         {
           name: "Value",
@@ -48,7 +46,7 @@ export class BTC extends Component {
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
           dropShadow: {
             enabled: true,
@@ -84,15 +82,18 @@ export class BTC extends Component {
         tooltip: {
           enabled: false,
         },
-      }
-
+      },
     };
   }
 
   render() {
     return (
-      <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={60} />
-
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="area"
+        height={60}
+      />
     );
   }
 }
@@ -103,7 +104,6 @@ export class ETH extends Component {
     super(props);
 
     this.state = {
-
       series: [
         {
           name: "Value",
@@ -121,7 +121,7 @@ export class ETH extends Component {
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
           dropShadow: {
             enabled: true,
@@ -157,15 +157,18 @@ export class ETH extends Component {
         tooltip: {
           enabled: false,
         },
-      }
-
+      },
     };
   }
 
   render() {
     return (
-      <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={60} />
-
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="area"
+        height={60}
+      />
     );
   }
 }
@@ -192,7 +195,7 @@ export class DASH extends Component {
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
           dropShadow: {
             enabled: true,
@@ -233,15 +236,18 @@ export class DASH extends Component {
         tooltip: {
           enabled: false,
         },
-      }
-
+      },
     };
   }
 
   render() {
     return (
-      <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={60} />
-
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="area"
+        height={60}
+      />
     );
   }
 }
@@ -276,7 +282,7 @@ export class LTC extends Component {
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
         },
         stroke: {
@@ -287,8 +293,7 @@ export class LTC extends Component {
           width: 1.5,
         },
         fill: {
-          gradient: {
-          },
+          gradient: {},
         },
         yaxis: {
           min: 0,
@@ -306,15 +311,18 @@ export class LTC extends Component {
         tooltip: {
           enabled: false,
         },
-      }
-
+      },
     };
   }
 
   render() {
     return (
-      <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={60} />
-
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="area"
+        height={60}
+      />
     );
   }
 }
@@ -341,7 +349,7 @@ export class XRS extends Component {
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
           dropShadow: {
             enabled: true,
@@ -383,15 +391,18 @@ export class XRS extends Component {
         tooltip: {
           enabled: false,
         },
-      }
-
+      },
     };
   }
 
   render() {
     return (
-      <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={60} />
-
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="area"
+        height={60}
+      />
     );
   }
 }
@@ -418,7 +429,7 @@ export class GLM extends Component {
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
           dropShadow: {
             enabled: true,
@@ -460,15 +471,18 @@ export class GLM extends Component {
         tooltip: {
           enabled: false,
         },
-      }
-
+      },
     };
   }
 
   render() {
     return (
-      <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={60} />
-
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="area"
+        height={60}
+      />
     );
   }
 }
@@ -504,7 +518,7 @@ export class Monero extends Component {
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
         },
         stroke: {
@@ -538,15 +552,18 @@ export class Monero extends Component {
         tooltip: {
           enabled: false,
         },
-      }
-
+      },
     };
   }
 
   render() {
     return (
-      <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={60} />
-
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="area"
+        height={60}
+      />
     );
   }
 }
@@ -573,7 +590,7 @@ export class EOS extends Component {
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
           dropShadow: {
             enabled: true,
@@ -593,8 +610,7 @@ export class EOS extends Component {
           width: 1.5,
         },
         fill: {
-          gradient: {
-          },
+          gradient: {},
         },
 
         yaxis: {
@@ -613,15 +629,18 @@ export class EOS extends Component {
         tooltip: {
           enabled: false,
         },
-      }
-
+      },
     };
   }
 
   render() {
     return (
-      <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={60} />
-
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="area"
+        height={60}
+      />
     );
   }
 }

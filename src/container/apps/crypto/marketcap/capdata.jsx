@@ -1,7 +1,5 @@
-import  { Component } from 'react';
-import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
-
+import { Component } from "react";
+import ReactApexChart from "react-apexcharts";
 
 export class Bitcoin extends Component {
   constructor(props) {
@@ -12,11 +10,11 @@ export class Bitcoin extends Component {
         {
           name: "Value",
           data: [
-            0, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53,
-            61, 27, 54, 43, 19, 46, 0, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51,
-            35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46, 0, 45, 54, 38, 56, 24,
-            65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19,
-            46,
+            0, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93,
+            53, 61, 27, 54, 43, 19, 46, 0, 45, 54, 38, 56, 24, 65, 31, 37, 39,
+            62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46, 0, 45, 54,
+            38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27,
+            54, 43, 19, 46,
           ],
         },
       ],
@@ -31,7 +29,7 @@ export class Bitcoin extends Component {
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
           dropShadow: {
             enabled: true,
@@ -72,15 +70,19 @@ export class Bitcoin extends Component {
           enabled: false,
         },
         colors: ["rgb(230, 83, 60)"],
-      }
-
+      },
     };
   }
 
   render() {
     return (
-      <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={35} width={120} />
-
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="line"
+        height={35}
+        width={120}
+      />
     );
   }
 }
@@ -94,11 +96,11 @@ export class Etherium extends Component {
         {
           name: "Value",
           data: [
-            0, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53,
-            61, 27, 54, 43, 19, 46, 0, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51,
-            35, 41, 35, 27, 93, 53, 61, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53,
-            61, 27, 54, 43, 19, 46, 0, 45, 54, 93, 53, 61, 27, 54, 43, 19,
-            46,
+            0, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93,
+            53, 61, 27, 54, 43, 19, 46, 0, 45, 54, 38, 56, 24, 65, 31, 37, 39,
+            62, 51, 35, 41, 35, 27, 93, 53, 61, 65, 31, 37, 39, 62, 51, 35, 41,
+            35, 27, 93, 53, 61, 27, 54, 43, 19, 46, 0, 45, 54, 93, 53, 61, 27,
+            54, 43, 19, 46,
           ],
         },
       ],
@@ -113,7 +115,7 @@ export class Etherium extends Component {
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
           dropShadow: {
             enabled: true,
@@ -154,15 +156,19 @@ export class Etherium extends Component {
           enabled: false,
         },
         colors: ["rgb(38, 191, 148)"],
-      }
-
+      },
     };
   }
 
   render() {
     return (
-      <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={35} width={120} />
-
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="line"
+        height={35}
+        width={120}
+      />
     );
   }
 }
@@ -172,22 +178,27 @@ export class BTC extends Component {
     super(props);
 
     this.state = {
-      series: [{
-        name: 'Value',
-        data: [0, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46]
-      }],
+      series: [
+        {
+          name: "Value",
+          data: [
+            0, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93,
+            53, 61, 27, 54, 43, 19, 46,
+          ],
+        },
+      ],
       options: {
         chart: {
-          type: 'line',
+          type: "line",
           height: 40,
           width: 120,
           sparkline: {
-            enabled: true
+            enabled: true,
           },
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
           dropShadow: {
             enabled: true,
@@ -195,14 +206,14 @@ export class BTC extends Component {
             top: 0,
             left: 0,
             blur: 3,
-            color: '#000',
-            opacity: 0.1
-          }
+            color: "#000",
+            opacity: 0.1,
+          },
         },
         stroke: {
           show: true,
-          curve: 'smooth',
-          lineCap: 'butt',
+          curve: "smooth",
+          lineCap: "butt",
           colors: undefined,
           width: 1.5,
           dashArray: 0,
@@ -210,32 +221,36 @@ export class BTC extends Component {
         fill: {
           gradient: {
             //   enabled: false
-          }
+          },
         },
         yaxis: {
           min: 0,
           show: false,
           axisBorder: {
-            show: false
+            show: false,
           },
         },
         xaxis: {
           axisBorder: {
-            show: false
+            show: false,
           },
         },
-        colors: ['#26bf94'],
-      }
-
+        colors: ["#26bf94"],
+      },
     };
   }
 
   render() {
     return (
       // <div id="chart">
-      <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={35} width={120} />
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="line"
+        height={35}
+        width={120}
+      />
       // </div>
-
     );
   }
 }
@@ -246,22 +261,27 @@ export class ETH extends Component {
     super(props);
 
     this.state = {
-      series: [{
-        name: 'Value',
-        data: [0, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46]
-      }],
+      series: [
+        {
+          name: "Value",
+          data: [
+            0, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93,
+            53, 61, 27, 54, 43, 19, 46,
+          ],
+        },
+      ],
       options: {
         chart: {
-          type: 'line',
+          type: "line",
           height: 40,
           width: 120,
           sparkline: {
-            enabled: true
+            enabled: true,
           },
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
           dropShadow: {
             enabled: true,
@@ -269,14 +289,14 @@ export class ETH extends Component {
             top: 0,
             left: 0,
             blur: 3,
-            color: '#000',
-            opacity: 0.1
-          }
+            color: "#000",
+            opacity: 0.1,
+          },
         },
         stroke: {
           show: true,
-          curve: 'smooth',
-          lineCap: 'butt',
+          curve: "smooth",
+          lineCap: "butt",
           colors: undefined,
           width: 1.5,
           dashArray: 0,
@@ -284,30 +304,34 @@ export class ETH extends Component {
         fill: {
           gradient: {
             //   enabled: false
-          }
+          },
         },
         yaxis: {
           min: 0,
           show: false,
           axisBorder: {
-            show: false
+            show: false,
           },
         },
         xaxis: {
           axisBorder: {
-            show: false
+            show: false,
           },
         },
-        colors: ['#26bf94'],
-      }
-
+        colors: ["#26bf94"],
+      },
     };
   }
 
   render() {
     return (
-      <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={35} width={120} />
-
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="line"
+        height={35}
+        width={120}
+      />
     );
   }
 }
@@ -317,22 +341,27 @@ export class DASH extends Component {
     super(props);
 
     this.state = {
-      series: [{
-        name: 'Value',
-        data: [0, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93, 53, 61, 27, 54, 43, 19, 46]
-      }],
+      series: [
+        {
+          name: "Value",
+          data: [
+            0, 45, 54, 38, 56, 24, 65, 31, 37, 39, 62, 51, 35, 41, 35, 27, 93,
+            53, 61, 27, 54, 43, 19, 46,
+          ],
+        },
+      ],
       options: {
         chart: {
-          type: 'line',
+          type: "line",
           height: 40,
           width: 120,
           sparkline: {
-            enabled: true
+            enabled: true,
           },
           events: {
             mounted: (chart) => {
               chart.windowResizeHandler();
-            }
+            },
           },
           dropShadow: {
             enabled: true,
@@ -340,44 +369,47 @@ export class DASH extends Component {
             top: 0,
             left: 0,
             blur: 3,
-            color: '#000',
-            opacity: 0.1
-          }
+            color: "#000",
+            opacity: 0.1,
+          },
         },
         stroke: {
           show: true,
-          curve: 'smooth',
-          lineCap: 'butt',
+          curve: "smooth",
+          lineCap: "butt",
           colors: undefined,
           width: 1.5,
           dashArray: 0,
         },
         fill: {
-          gradient: {
-          }
+          gradient: {},
         },
         yaxis: {
           min: 0,
           show: false,
           axisBorder: {
-            show: false
+            show: false,
           },
         },
         xaxis: {
           axisBorder: {
-            show: false
+            show: false,
           },
         },
-        colors: ['#e6533c'],
-      }
-
+        colors: ["#e6533c"],
+      },
     };
   }
 
   render() {
     return (
-      <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={35} width={120} />
-
+      <ReactApexChart
+        options={this.state.options}
+        series={this.state.series}
+        type="line"
+        height={35}
+        width={120}
+      />
     );
   }
 }
