@@ -1,7 +1,7 @@
-import { Component } from "react";
-import ReactApexChart from "react-apexcharts";
-
-//
+import { Component } from 'react';
+import ReactApexChart from 'react-apexcharts';
+import { ApexOptions } from "apexcharts";
+// 
 export class TotalInvested extends Component {
   constructor(props) {
     super(props);

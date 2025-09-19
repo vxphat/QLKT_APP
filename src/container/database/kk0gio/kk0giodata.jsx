@@ -1,8 +1,8 @@
-import { Component } from "react";
-import ReactApexChart from "react-apexcharts";
-
-import { Chart, ArcElement, Tooltip, Legend, registerables } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
+import { Component } from 'react';
+import ReactApexChart from 'react-apexcharts';
+import { ApexOptions } from "apexcharts";
+import { Chart, ArcElement, Tooltip, Legend, registerables } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 Chart.register(...registerables, ArcElement, Tooltip, Legend);
 import face4 from "../../../assets/images/faces/4.jpg";
 import face15 from "../../../assets/images/faces/15.jpg";
