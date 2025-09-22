@@ -1,70 +1,178 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   Button,
   Card,
   Col,
-  Collapse,
   Form,
-  ProgressBar,
   Row,
   Table,
 } from "react-bootstrap";
-import Pageheader from "../../../../components/pageheader/pageheader";
+import axios from "axios";
 import { donVidata } from "../../kiemTraQuyIII/danhMuc/dinhMuc/dinhMucData";
 
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbwZM002-mVfsGaQeGlEt9qLnTK4Ef41VWhDFHlAeuH6XF_Xo9Lsiv194etMJCpzNbhiwA/exec"; // URL web app của bạn
-const TOKEN = "vxphat1994@";
+const apiService = {
 
-const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
+  getDonVi: async (year) => {
+    try {
+      const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/don-vi`);
+      url.searchParams.append('year', year);
+      const response = await axios.get(url.toString());
+      return response.data;
+    } catch (error) {
+      return null;
+    }
+  },
+  getLo: async (nam, donVi) => {
+    try {
+      const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/lo`);
+      url.searchParams.append('donVi', donVi);
+      url.searchParams.append('year', nam);
+      const response = await axios.get(url.toString());
+      return response.data;
+    } catch (error) {
+      return null;
+    }
+  },
+
+  getDataPhieuKiemTra: async (nam, donVi, lo) => {
+    try {
+      const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/phieu`);
+      url.searchParams.append('donVi', donVi);
+      url.searchParams.append('year', nam);
+      url.searchParams.append('lo', lo);
+      const response = await axios.get(url.toString());
+      return response.data;
+    } catch (error) {
+      return null;
+    }
+  },
+};
 
 const PhieuDaNgoai = () => {
-  const [danhSachCN, setDanhSachCN] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
 
   const [nam, setNam] = useState("");
-  const [maDonVi, setMaDonVi] = useState("");
-  const [tenLo, setTenLo] = useState("");
-  const [kqktData, setKqktData] = useState([]);
-  const [filteredLo, setFilteredLo] = useState([]);
+  const [maDonVi, setMaDonVi] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [lo, setLo] = useState([]);
+  const [donViSelect, setDonViSelect] = useState(null);
+  const [namSelect, setNamSelect] = useState(null);
+  const [loSelect, setLoSelect] = useState(null);
+  const [data, setData] = useState(null);
 
-  async function loadKQKT() {
-    setLoading(true);
-    try {
-      const url = new URL(API_URL);
-      url.searchParams.set("token", TOKEN);
-      console.log("Fetching:", url.toString());
-      const res = await fetch(url.toString(), { method: "GET" });
-      const json = await res.json();
-      setKqktData(json.data ?? []);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  }
+  const [YEARS, setYEARS] = useState([]);
 
   useEffect(() => {
-    loadKQKT();
+    const currentYear = new Date().getFullYear();
+    const yearsArray = Array.from(
+      { length: currentYear - 2024 + 1 },
+      (_, i) => 2024 + i
+    );
+    setYEARS(yearsArray);
   }, []);
 
-  useEffect(() => {
-    console.log("Filtering data:", { nam, maDonVi, kqktData });
-    if (nam && maDonVi) {
-      const filteredData = kqktData.filter(
-        (item) => item.nam.toString() === nam && item.doi === maDonVi
-      );
-      console.log("Filtered data:", filteredData);
-      const uniqueLo = [...new Set(filteredData.map((item) => item.tenlo))];
-      console.log("Unique lots:", uniqueLo); // Log unique lots
-      setFilteredLo(uniqueLo);
-      console.log("Filtered lots state updated:", filteredLo); // Log the updated state
-    } else {
-      setFilteredLo([]);
+
+
+  const handleChangeYear = async (year) => {
+    const result = await apiService.getDonVi(year)
+    setMaDonVi(result.data)
+  }
+
+  const handleChangeDonVi = async (nongTruong) => {
+    const result = await apiService.getLo(namSelect, nongTruong)
+    setLo(result.data)
+  }
+
+  const loadKQKT = async () => {
+    setLoading(true)
+    const result = await apiService.getDataPhieuKiemTra(namSelect, donViSelect, loSelect);
+    setData(result.data)
+    const rows = chunkArray(result.data.detail, 5, result.data);
+    setRows(rows)
+    setLoading(false)
+  }
+
+  const chunkArray = (arr, size, data) => {
+    const result = [];
+    let temp = 50;
+
+    // chú ý: so sánh phải dùng === chứ không phải =
+    if (data.giongCay === 'RRIV 124' && data.namKT === '2024') {
+      temp = 52;
     }
-    setTenLo(""); // Reset tenLo when nam or maDonVi changes
-  }, [nam, maDonVi, kqktData]);
+
+    for (let i = 0; i < arr.length; i += size) {
+      const group = arr.slice(i, i + size);
+
+      // thống kê
+      let HoTrong = 0;
+      let CaoT50 = 0;
+      let CaoD50 = 0;
+      let ChuaCaoT50 = 0;
+      let ChuaCaoD50 = 0;
+      let CutDot = 0;
+      let C1 = 0;
+      let C2 = 0;
+
+      group.forEach(item => {
+        
+
+        if (item.hoTrong == 1) {
+          HoTrong++;
+        } else if (item.cayCao >= temp) {
+          CaoT50++;
+        } else if(item.cayCao < temp ) {
+          CaoD50++;
+        } else if(item.cayChuaCao >= temp ) {
+          ChuaCaoT50++;
+        } else{
+          ChuaCaoD50++;
+        }
+        if(item.namHong == 'cụt đọt' ) {
+          CutDot++;
+        }else  if(item.namHong == 'C2+' ) {
+          C2++;
+        }else  if(item.namHong == 'C, C1' ) {
+          C1++;
+        }
+      });
+
+      result.push({
+        data: group,   // dữ liệu gốc
+        HoTrong,       // số hố trống
+        CaoT50,        // cây >= ngưỡng
+        CaoD50,        // cây < ngưỡng
+        ChuaCaoT50,    // cây chưa cạo >= ngưỡng
+        ChuaCaoD50,     // cây chưa cạo < ngưỡng
+        CutDot,
+        C1,
+        C2,
+      });
+    }
+
+    return result;
+  };
+
+  // 👉 hàm tính tổng
+  const calculateTotals = (rows) => {
+    return rows.reduce(
+      (acc, row) => {
+        acc.HoTrong += Number(row.HoTrong || 0);
+        acc.CaoT50 += Number(row.CaoT50 || 0);
+        acc.CaoD50 += Number(row.CaoD50 || 0);
+        acc.ChuaCaoT50 += Number(row.ChuaCaoT50 || 0);
+        acc.ChuaCaoD50 += Number(row.ChuaCaoD50 || 0);
+        acc.CutDot += Number(row.CutDot || 0);
+        acc.C1 += Number(row.C1 || 0);
+        acc.C2 += Number(row.C2 || 0);
+        return acc;
+      },
+      { HoTrong: 0, CaoT50: 0, CaoD50: 0, ChuaCaoT50: 0, ChuaCaoD50: 0, CutDot: 0, C1: 0, C2: 0 }
+    );
+  };
+
+  const totals = calculateTotals(rows);
 
   const printTable = () => {
     // if (dataLo.length === 0) {
@@ -136,15 +244,14 @@ const PhieuDaNgoai = () => {
       <div id="content-wrapper">
           <div id="header-block">
               <p><b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b></p>
-              <p><b>Đội:</b> ${
-                maDonVi &&
-                ` ${donVidata
-                  .find((dv) => dv.maDonVi === maDonVi)
-                  ?.donVi.toLocaleUpperCase()}`
-              }</p>
+              <p><b>Đội:</b> ${maDonVi &&
+      ` ${donVidata
+        .find((dv) => dv.maDonVi === maDonVi)
+        ?.donVi.toLocaleUpperCase()}`
+      }</p>
               <p><b>Ngày kiểm tra: </b> ${new Date().toLocaleDateString(
-                "vi-VN"
-              )}</p>
+        "vi-VN"
+      )}</p>
           </div>
 
           <h4 style="text-align: center; margin-bottom: 20px; font-weight: 600">
@@ -206,8 +313,11 @@ const PhieuDaNgoai = () => {
                 <Col xl={2} lg={6} md={6} sm={12}>
                   <Form.Select
                     aria-label="Chọn năm"
-                    value={nam}
-                    onChange={(e) => setNam(e.target.value)}>
+                    value={namSelect}
+                    onChange={(e) => {
+                      setNamSelect(e.target.value)
+                      handleChangeYear(e.target.value)
+                    }}>
                     <option value="">Chọn năm</option>
                     {YEARS.map((y) => (
                       <option key={y} value={y}>
@@ -220,12 +330,16 @@ const PhieuDaNgoai = () => {
                 <Col xl={2} lg={6} md={6} sm={12}>
                   <Form.Select
                     aria-label="Chọn đơn vị"
-                    value={maDonVi}
-                    onChange={(e) => setMaDonVi(e.target.value)}>
+                    value={donViSelect}
+                    disabled={!namSelect}
+                    onChange={(e) => {
+                      setDonViSelect(e.target.value)
+                      handleChangeDonVi(e.target.value)
+                    }}>
                     <option value="">Chọn đơn vị</option>
-                    {donVidata.map((dv) => (
-                      <option key={dv.id} value={dv.maDonVi}>
-                        {dv.maDonVi} - {dv.donVi}
+                    {maDonVi.map((dv, key) => (
+                      <option key={key} value={dv.nongTruong}>
+                        {dv.nongTruong}
                       </option>
                     ))}
                   </Form.Select>
@@ -233,25 +347,28 @@ const PhieuDaNgoai = () => {
                 <Col xl={2} lg={6} md={6} sm={12}>
                   <Form.Select
                     aria-label="Chọn lô"
-                    value={tenLo}
-                    onChange={(e) => setTenLo(e.target.value)}
-                    disabled={!nam || !maDonVi}>
+                    value={loSelect}
+                    onChange={(e) => setLoSelect(e.target.value)}
+                    disabled={!namSelect || !donViSelect}>
                     <option value="">Chọn lô</option>
-                    {filteredLo.map((lo, index) => (
-                      <option key={index} value={lo}>
-                        {lo}
+                    {lo.map((lo, index) => (
+                      <option key={index} value={lo.tenLo}>
+                        {lo.tenLo}
                       </option>
                     ))}
                   </Form.Select>
                 </Col>
-                <Col xl={4} lg={6} md={6} sm={12}>
+                <Col xl={2} lg={6} md={6} sm={12}>
                   <Button
                     className="btn btn-primary label-btn"
-                    onClick={() => loadKQKT(keyword)}
-                    disabled={loading}>
+                    onClick={() => loadKQKT()}>
                     <i className="bi bi-search label-btn-icon me-2"></i>
                     {loading ? "Đang tải..." : "Tìm kiếm"}
                   </Button>
+
+                </Col>
+                <Col className="d-flex align-items-center justify-content-end">
+
                   <Button
                     className="btn btn-success label-btn ms-5"
                     onClick={printTable}>
@@ -260,150 +377,156 @@ const PhieuDaNgoai = () => {
                   </Button>
                 </Col>
               </Row>
+              {data && (
+                <>
+                  <Row className="mt-5">
+                    <Col xl={3}>
+                      <p>
+                        <b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b>
+                      </p>
+                      <p>
+                        <b>Đội:</b>{" "}
+                        {data.nongTruong}
+                      </p>
+                      <p>
+                        <b>Ngày kiểm tra:</b>{" "}
+                        {new Date(data.ngayKiemTra).toLocaleDateString("vi-VN")}
+                      </p>
+                    </Col>
+                  </Row>
 
-              <Row className="mt-5">
-                <Col xl={3}>
-                  <p>
-                    <b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b>
-                  </p>
-                  <p>
-                    <b>Đội:</b>{" "}
-                    {maDonVi &&
-                      ` ${donVidata
-                        .find((dv) => dv.maDonVi === maDonVi)
-                        ?.donVi.toLocaleUpperCase()}`}
-                  </p>
-                  <p>
-                    <b>Ngày kiểm tra:</b>{" "}
-                    {new Date().toLocaleDateString("vi-VN")}
-                  </p>
-                </Col>
-              </Row>
+                  <div className="d-flex justify-content-center">
+                    <h4>
+                      PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY MỞ CẠO
+                      {nam && <> NĂM {nam}</>}
+                    </h4>
+                  </div>
 
-              <div className="d-flex justify-content-center">
-                <h4>
-                  PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY MỞ CẠO
-                  {nam && <> NĂM {nam}</>}
-                </h4>
-              </div>
+                  <div className="table-responsive mt-4">
+                    <Table className="table text-nowrap" id="bangNhap">
+                      <thead className="sticky-header ">
+                        <tr className="">
+                          <th className="text-wrap border border-dark" rowSpan={5}>
+                            STT
+                          </th>
+                          <th
+                            className="text-center border border-dark"
+                            colSpan={8}>
+                            Lô: <span style={{ textDecoration: "underline" }}>{data.loKiemTra}</span> - Năm trồng: <span style={{ textDecoration: "underline" }}>{data.namTrong}</span> - Giống: <span style={{ textDecoration: "underline" }}>{data.giongCay}</span>
+                          </th>
+                        </tr>
 
-              <div className="table-responsive mt-4">
-                <Table className="table text-nowrap" id="bangNhap">
-                  <thead className="sticky-header ">
-                    <tr className="">
-                      <th className="text-wrap border border-dark" rowSpan={5}>
-                        STT
-                      </th>
-                      <th
-                        className="text-center border border-dark"
-                        colSpan={8}>
-                        Lô:........Năm trồng:.........
-                      </th>
-                    </tr>
+                        <tr>
+                          <th
+                            className="text-center border border-dark"
+                            colSpan={8}>
+                            Tọa độ cây thứ I: Hàng: <span style={{ textDecoration: "underline" }}>{data.hang}</span> Cây: <span style={{ textDecoration: "underline" }}>{data.cay}</span>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th
+                            className="text-center border border-dark"
+                            rowSpan={3}>
+                            HT
+                          </th>
+                          <th
+                            className="text-center border border-dark"
+                            colSpan={4}>
+                            Vanh
+                          </th>
+                          <th
+                            className="text-center border border-dark"
+                            colSpan={3}>
+                            Nấm hồng
+                          </th>
+                        </tr>
+                        <tr>
+                          <th
+                            className="text-center border border-dark"
+                            colSpan={2}>
+                            Cây cạo
+                          </th>
+                          <th
+                            className="text-center border border-dark"
+                            colSpan={2}>
+                            Cây chưa cạo
+                          </th>
+                          <th
+                            className="text-center border border-dark"
+                            rowSpan={2}>
+                            C, C1
+                          </th>
+                          <th
+                            className="text-center border border-dark"
+                            rowSpan={2}>
+                            C2+
+                          </th>
+                          <th
+                            className="text-center border border-dark"
+                            rowSpan={2}>
+                            Cụt đọt
+                          </th>
+                        </tr>
+                        <tr>
+                          <th className="text-center border border-dark">
+                            &ge; 50
+                          </th>
+                          <th className="text-center border border-dark">
+                            &lt; 50
+                          </th>
+                          <th className="text-center border border-dark">
+                            &ge; 50
+                          </th>
+                          <th className="text-center border border-dark">
+                            &lt; 50
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
 
-                    <tr>
-                      <th
-                        className="text-center border border-dark"
-                        colSpan={8}>
-                        Tọa độ cây thứ I: Hàng:.....Cây:....
-                      </th>
-                    </tr>
-                    <tr>
-                      <th
-                        className="text-center border border-dark"
-                        rowSpan={3}>
-                        HT
-                      </th>
-                      <th
-                        className="text-center border border-dark"
-                        colSpan={4}>
-                        Vanh
-                      </th>
-                      <th
-                        className="text-center border border-dark"
-                        colSpan={3}>
-                        Nấm hồng
-                      </th>
-                    </tr>
-                    <tr>
-                      <th
-                        className="text-center border border-dark"
-                        colSpan={2}>
-                        Cây cạo
-                      </th>
-                      <th
-                        className="text-center border border-dark"
-                        colSpan={2}>
-                        Cây chưa cạo
-                      </th>
-                      <th
-                        className="text-center border border-dark"
-                        rowSpan={2}>
-                        C, C1
-                      </th>
-                      <th
-                        className="text-center border border-dark"
-                        rowSpan={2}>
-                        C2+
-                      </th>
-                      <th
-                        className="text-center border border-dark"
-                        rowSpan={2}>
-                        Cụt đọt
-                      </th>
-                    </tr>
-                    <tr>
-                      <th className="text-center border border-dark">
-                        &ge; 50
-                      </th>
-                      <th className="text-center border border-dark">
-                        &lt; 50
-                      </th>
-                      <th className="text-center border border-dark">
-                        &ge; 50
-                      </th>
-                      <th className="text-center border border-dark">
-                        &lt; 50
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Array.from({ length: 20 }, (_, i) => (
-                      <tr key={i}>
-                        <td className="text-center border border-dark">
-                          {i + 1}
-                        </td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                      </tr>
-                    ))}
-                    <tr>
-                      <td
-                        className="text-center border fw-bold border-dark"
-                        colSpan="2">
-                        <b>Cộng</b>
-                      </td>
-                      <td className="text-center border fw-bold border-dark">
-                        123
-                      </td>
-                      <td className="text-center border fw-bold border-dark">
-                        123
-                      </td>
-                      <td className="text-center border fw-bold border-dark"></td>
-                      <td className="text-center border fw-bold border-dark"></td>
-                      <td className="text-center border fw-bold border-dark"></td>
-                      <td className="text-center border fw-bold border-dark"></td>
-                      <td className="text-center border fw-bold border-dark"></td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </div>
+
+                        {rows.map((row, i) => (
+                          <tr key={i}>
+                            {/* Ô đầu: số thứ tự */}
+                            <td className="text-center border border-dark">{i + 1}</td>
+
+                            {/* Ô 2: hố trống */}
+                            <td className="text-center border border-dark">{row.HoTrong != 0 ? row.HoTrong : ''}</td>
+
+                            {/* Ô 3: số cây >=50 */}
+                            <td className="text-center border border-dark">{row.CaoT50 != 0 ? row.CaoT50 : ''}</td>
+
+                            {/* Ô 4: số cây <50 */}
+                            <td className="text-center border border-dark">{row.CaoD50 != 0 ? row.CaoD50 : ''}</td>
+
+                            {/* Các ô còn lại tùy bạn cần gì thêm */}
+                            <td className="text-center border border-dark">{row.ChuaCaoT50 != 0 ? row.ChuaCaoT50 : ''}</td>
+                            <td className="text-center border border-dark">{row.ChuaCaoD50 != 0 ? row.ChuaCaoD50 : ''}</td>
+                            <td className="text-center border border-dark">{row.C1 != 0 ? row.C1 : ''}</td>
+                            <td className="text-center border border-dark">{row.C2 != 0 ? row.C2 : ''}</td>
+                            <td className="text-center border border-dark">{row.CutDot != 0 ? row.CutDot : ''}</td>
+                          </tr>
+                        ))}
+                        
+
+                        {/* Dòng tổng thực tế hiển thị các giá trị */}
+                        <tr className="fw-bold table-active">
+                          <td className="text-center border border-dark">Cộng</td>
+                          <td className="text-center border border-dark">{totals.HoTrong != 0 ? totals.HoTrong : ''}</td>
+                          <td className="text-center border border-dark">{totals.CaoT50 != 0 ? totals.CaoT50 : ''}</td>
+                          <td className="text-center border border-dark">{totals.CaoD50 != 0 ? totals.CaoD50 : ''}</td>
+                          <td className="text-center border border-dark">{totals.ChuaCaoT50 != 0 ? totals.ChuaCaoT50 : ''}</td>
+                          <td className="text-center border border-dark">{totals.ChuaCaoD50 != 0 ? totals.ChuaCaoD50 : ''}</td>
+                          <td className="text-center border border-dark">{totals.C1 != 0 ? totals.C1 : ''}</td>
+                          <td className="text-center border border-dark">{totals.C2 != 0 ? totals.C2 : ''}</td>
+                          <td className="text-center border border-dark">{totals.CutDot != 0 ? totals.CutDot : ''}</td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  </div>
+                </>
+              )}
+
             </Card.Body>
           </Card>
         </Col>
