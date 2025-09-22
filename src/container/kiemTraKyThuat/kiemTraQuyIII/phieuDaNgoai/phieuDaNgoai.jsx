@@ -1,21 +1,15 @@
 import { Fragment, useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  Row,
-  Table,
-} from "react-bootstrap";
+import { Button, Card, Col, Form, Row, Table } from "react-bootstrap";
 import axios from "axios";
 import { donVidata } from "../../kiemTraQuyIII/danhMuc/dinhMuc/dinhMucData";
 
 const apiService = {
-
   getDonVi: async (year) => {
     try {
-      const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/don-vi`);
-      url.searchParams.append('year', year);
+      const url = new URL(
+        `${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/don-vi`
+      );
+      url.searchParams.append("year", year);
       const response = await axios.get(url.toString());
       return response.data;
     } catch (error) {
@@ -25,8 +19,8 @@ const apiService = {
   getLo: async (nam, donVi) => {
     try {
       const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/lo`);
-      url.searchParams.append('donVi', donVi);
-      url.searchParams.append('year', nam);
+      url.searchParams.append("donVi", donVi);
+      url.searchParams.append("year", nam);
       const response = await axios.get(url.toString());
       return response.data;
     } catch (error) {
@@ -36,10 +30,12 @@ const apiService = {
 
   getDataPhieuKiemTra: async (nam, donVi, lo) => {
     try {
-      const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/phieu`);
-      url.searchParams.append('donVi', donVi);
-      url.searchParams.append('year', nam);
-      url.searchParams.append('lo', lo);
+      const url = new URL(
+        `${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/phieu`
+      );
+      url.searchParams.append("donVi", donVi);
+      url.searchParams.append("year", nam);
+      url.searchParams.append("lo", lo);
       const response = await axios.get(url.toString());
       return response.data;
     } catch (error) {
@@ -72,33 +68,35 @@ const PhieuDaNgoai = () => {
     setYEARS(yearsArray);
   }, []);
 
-
-
   const handleChangeYear = async (year) => {
-    const result = await apiService.getDonVi(year)
-    setMaDonVi(result.data)
-  }
+    const result = await apiService.getDonVi(year);
+    setMaDonVi(result.data);
+  };
 
   const handleChangeDonVi = async (nongTruong) => {
-    const result = await apiService.getLo(namSelect, nongTruong)
-    setLo(result.data)
-  }
+    const result = await apiService.getLo(namSelect, nongTruong);
+    setLo(result.data);
+  };
 
   const loadKQKT = async () => {
-    setLoading(true)
-    const result = await apiService.getDataPhieuKiemTra(namSelect, donViSelect, loSelect);
-    setData(result.data)
+    setLoading(true);
+    const result = await apiService.getDataPhieuKiemTra(
+      namSelect,
+      donViSelect,
+      loSelect
+    );
+    setData(result.data);
     const rows = chunkArray(result.data.detail, 5, result.data);
-    setRows(rows)
-    setLoading(false)
-  }
+    setRows(rows);
+    setLoading(false);
+  };
 
   const chunkArray = (arr, size, data) => {
     const result = [];
     let temp = 50;
 
     // chú ý: so sánh phải dùng === chứ không phải =
-    if (data.giongCay === 'RRIV 124' && data.namKT === '2024') {
+    if (data.giongCay === "RRIV 124" && data.namKT === "2024") {
       temp = 52;
     }
 
@@ -115,36 +113,34 @@ const PhieuDaNgoai = () => {
       let C1 = 0;
       let C2 = 0;
 
-      group.forEach(item => {
-        
-
+      group.forEach((item) => {
         if (item.hoTrong == 1) {
           HoTrong++;
         } else if (item.cayCao >= temp) {
           CaoT50++;
-        } else if(item.cayCao < temp ) {
+        } else if (item.cayCao < temp) {
           CaoD50++;
-        } else if(item.cayChuaCao >= temp ) {
+        } else if (item.cayChuaCao >= temp) {
           ChuaCaoT50++;
-        } else{
+        } else {
           ChuaCaoD50++;
         }
-        if(item.namHong == 'cụt đọt' ) {
+        if (item.namHong == "cụt đọt") {
           CutDot++;
-        }else  if(item.namHong == 'C2+' ) {
+        } else if (item.namHong == "C2+") {
           C2++;
-        }else  if(item.namHong == 'C, C1' ) {
+        } else if (item.namHong == "C, C1") {
           C1++;
         }
       });
 
       result.push({
-        data: group,   // dữ liệu gốc
-        HoTrong,       // số hố trống
-        CaoT50,        // cây >= ngưỡng
-        CaoD50,        // cây < ngưỡng
-        ChuaCaoT50,    // cây chưa cạo >= ngưỡng
-        ChuaCaoD50,     // cây chưa cạo < ngưỡng
+        data: group, // dữ liệu gốc
+        HoTrong, // số hố trống
+        CaoT50, // cây >= ngưỡng
+        CaoD50, // cây < ngưỡng
+        ChuaCaoT50, // cây chưa cạo >= ngưỡng
+        ChuaCaoD50, // cây chưa cạo < ngưỡng
         CutDot,
         C1,
         C2,
@@ -168,7 +164,16 @@ const PhieuDaNgoai = () => {
         acc.C2 += Number(row.C2 || 0);
         return acc;
       },
-      { HoTrong: 0, CaoT50: 0, CaoD50: 0, ChuaCaoT50: 0, ChuaCaoD50: 0, CutDot: 0, C1: 0, C2: 0 }
+      {
+        HoTrong: 0,
+        CaoT50: 0,
+        CaoD50: 0,
+        ChuaCaoT50: 0,
+        ChuaCaoD50: 0,
+        CutDot: 0,
+        C1: 0,
+        C2: 0,
+      }
     );
   };
 
@@ -244,14 +249,15 @@ const PhieuDaNgoai = () => {
       <div id="content-wrapper">
           <div id="header-block">
               <p><b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b></p>
-              <p><b>Đội:</b> ${maDonVi &&
-      ` ${donVidata
-        .find((dv) => dv.maDonVi === maDonVi)
-        ?.donVi.toLocaleUpperCase()}`
-      }</p>
+              <p><b>Đội:</b> ${
+                maDonVi &&
+                ` ${donVidata
+                  .find((dv) => dv.maDonVi === maDonVi)
+                  ?.donVi.toLocaleUpperCase()}`
+              }</p>
               <p><b>Ngày kiểm tra: </b> ${new Date().toLocaleDateString(
-        "vi-VN"
-      )}</p>
+                "vi-VN"
+              )}</p>
           </div>
 
           <h4 style="text-align: center; margin-bottom: 20px; font-weight: 600">
@@ -315,8 +321,8 @@ const PhieuDaNgoai = () => {
                     aria-label="Chọn năm"
                     value={namSelect}
                     onChange={(e) => {
-                      setNamSelect(e.target.value)
-                      handleChangeYear(e.target.value)
+                      setNamSelect(e.target.value);
+                      handleChangeYear(e.target.value);
                     }}>
                     <option value="">Chọn năm</option>
                     {YEARS.map((y) => (
@@ -333,8 +339,8 @@ const PhieuDaNgoai = () => {
                     value={donViSelect}
                     disabled={!namSelect}
                     onChange={(e) => {
-                      setDonViSelect(e.target.value)
-                      handleChangeDonVi(e.target.value)
+                      setDonViSelect(e.target.value);
+                      handleChangeDonVi(e.target.value);
                     }}>
                     <option value="">Chọn đơn vị</option>
                     {maDonVi.map((dv, key) => (
@@ -365,10 +371,8 @@ const PhieuDaNgoai = () => {
                     <i className="bi bi-search label-btn-icon me-2"></i>
                     {loading ? "Đang tải..." : "Tìm kiếm"}
                   </Button>
-
                 </Col>
                 <Col className="d-flex align-items-center justify-content-end">
-
                   <Button
                     className="btn btn-success label-btn ms-5"
                     onClick={printTable}>
@@ -379,7 +383,7 @@ const PhieuDaNgoai = () => {
               </Row>
               {data && (
                 <>
-                  <Row className="mt-5">
+                  {/* <Row className="mt-5">
                     <Col xl={3}>
                       <p>
                         <b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b>
@@ -393,7 +397,7 @@ const PhieuDaNgoai = () => {
                         {new Date(data.ngayKiemTra).toLocaleDateString("vi-VN")}
                       </p>
                     </Col>
-                  </Row>
+                  </Row> */}
 
                   <div className="d-flex justify-content-center">
                     <h4>
@@ -406,13 +410,26 @@ const PhieuDaNgoai = () => {
                     <Table className="table text-nowrap" id="bangNhap">
                       <thead className="sticky-header ">
                         <tr className="">
-                          <th className="text-wrap border border-dark" rowSpan={5}>
+                          <th
+                            className="text-wrap border border-dark"
+                            rowSpan={5}>
                             STT
                           </th>
                           <th
                             className="text-center border border-dark"
                             colSpan={8}>
-                            Lô: <span style={{ textDecoration: "underline" }}>{data.loKiemTra}</span> - Năm trồng: <span style={{ textDecoration: "underline" }}>{data.namTrong}</span> - Giống: <span style={{ textDecoration: "underline" }}>{data.giongCay}</span>
+                            Lô:{" "}
+                            <span style={{ textDecoration: "underline" }}>
+                              {data.loKiemTra}
+                            </span>{" "}
+                            - Năm trồng:{" "}
+                            <span style={{ textDecoration: "underline" }}>
+                              {data.namTrong}
+                            </span>{" "}
+                            - Giống:{" "}
+                            <span style={{ textDecoration: "underline" }}>
+                              {data.giongCay}
+                            </span>
                           </th>
                         </tr>
 
@@ -420,7 +437,14 @@ const PhieuDaNgoai = () => {
                           <th
                             className="text-center border border-dark"
                             colSpan={8}>
-                            Tọa độ cây thứ I: Hàng: <span style={{ textDecoration: "underline" }}>{data.hang}</span> Cây: <span style={{ textDecoration: "underline" }}>{data.cay}</span>
+                            Tọa độ cây thứ I: Hàng:{" "}
+                            <span style={{ textDecoration: "underline" }}>
+                              {data.hang}
+                            </span>{" "}
+                            Cây:{" "}
+                            <span style={{ textDecoration: "underline" }}>
+                              {data.cay}
+                            </span>
                           </th>
                         </tr>
                         <tr>
@@ -483,50 +507,82 @@ const PhieuDaNgoai = () => {
                         </tr>
                       </thead>
                       <tbody>
-
-
                         {rows.map((row, i) => (
                           <tr key={i}>
                             {/* Ô đầu: số thứ tự */}
-                            <td className="text-center border border-dark">{i + 1}</td>
+                            <td className="text-center border border-dark">
+                              {i + 1}
+                            </td>
 
                             {/* Ô 2: hố trống */}
-                            <td className="text-center border border-dark">{row.HoTrong != 0 ? row.HoTrong : ''}</td>
+                            <td className="text-center border border-dark">
+                              {row.HoTrong != 0 ? row.HoTrong : ""}
+                            </td>
 
                             {/* Ô 3: số cây >=50 */}
-                            <td className="text-center border border-dark">{row.CaoT50 != 0 ? row.CaoT50 : ''}</td>
+                            <td className="text-center border border-dark">
+                              {row.CaoT50 != 0 ? row.CaoT50 : ""}
+                            </td>
 
                             {/* Ô 4: số cây <50 */}
-                            <td className="text-center border border-dark">{row.CaoD50 != 0 ? row.CaoD50 : ''}</td>
+                            <td className="text-center border border-dark">
+                              {row.CaoD50 != 0 ? row.CaoD50 : ""}
+                            </td>
 
                             {/* Các ô còn lại tùy bạn cần gì thêm */}
-                            <td className="text-center border border-dark">{row.ChuaCaoT50 != 0 ? row.ChuaCaoT50 : ''}</td>
-                            <td className="text-center border border-dark">{row.ChuaCaoD50 != 0 ? row.ChuaCaoD50 : ''}</td>
-                            <td className="text-center border border-dark">{row.C1 != 0 ? row.C1 : ''}</td>
-                            <td className="text-center border border-dark">{row.C2 != 0 ? row.C2 : ''}</td>
-                            <td className="text-center border border-dark">{row.CutDot != 0 ? row.CutDot : ''}</td>
+                            <td className="text-center border border-dark">
+                              {row.ChuaCaoT50 != 0 ? row.ChuaCaoT50 : ""}
+                            </td>
+                            <td className="text-center border border-dark">
+                              {row.ChuaCaoD50 != 0 ? row.ChuaCaoD50 : ""}
+                            </td>
+                            <td className="text-center border border-dark">
+                              {row.C1 != 0 ? row.C1 : ""}
+                            </td>
+                            <td className="text-center border border-dark">
+                              {row.C2 != 0 ? row.C2 : ""}
+                            </td>
+                            <td className="text-center border border-dark">
+                              {row.CutDot != 0 ? row.CutDot : ""}
+                            </td>
                           </tr>
                         ))}
-                        
 
                         {/* Dòng tổng thực tế hiển thị các giá trị */}
                         <tr className="fw-bold table-active">
-                          <td className="text-center border border-dark">Cộng</td>
-                          <td className="text-center border border-dark">{totals.HoTrong != 0 ? totals.HoTrong : ''}</td>
-                          <td className="text-center border border-dark">{totals.CaoT50 != 0 ? totals.CaoT50 : ''}</td>
-                          <td className="text-center border border-dark">{totals.CaoD50 != 0 ? totals.CaoD50 : ''}</td>
-                          <td className="text-center border border-dark">{totals.ChuaCaoT50 != 0 ? totals.ChuaCaoT50 : ''}</td>
-                          <td className="text-center border border-dark">{totals.ChuaCaoD50 != 0 ? totals.ChuaCaoD50 : ''}</td>
-                          <td className="text-center border border-dark">{totals.C1 != 0 ? totals.C1 : ''}</td>
-                          <td className="text-center border border-dark">{totals.C2 != 0 ? totals.C2 : ''}</td>
-                          <td className="text-center border border-dark">{totals.CutDot != 0 ? totals.CutDot : ''}</td>
+                          <td className="text-center border border-dark">
+                            Cộng
+                          </td>
+                          <td className="text-center border border-dark">
+                            {totals.HoTrong != 0 ? totals.HoTrong : ""}
+                          </td>
+                          <td className="text-center border border-dark">
+                            {totals.CaoT50 != 0 ? totals.CaoT50 : ""}
+                          </td>
+                          <td className="text-center border border-dark">
+                            {totals.CaoD50 != 0 ? totals.CaoD50 : ""}
+                          </td>
+                          <td className="text-center border border-dark">
+                            {totals.ChuaCaoT50 != 0 ? totals.ChuaCaoT50 : ""}
+                          </td>
+                          <td className="text-center border border-dark">
+                            {totals.ChuaCaoD50 != 0 ? totals.ChuaCaoD50 : ""}
+                          </td>
+                          <td className="text-center border border-dark">
+                            {totals.C1 != 0 ? totals.C1 : ""}
+                          </td>
+                          <td className="text-center border border-dark">
+                            {totals.C2 != 0 ? totals.C2 : ""}
+                          </td>
+                          <td className="text-center border border-dark">
+                            {totals.CutDot != 0 ? totals.CutDot : ""}
+                          </td>
                         </tr>
                       </tbody>
                     </Table>
                   </div>
                 </>
               )}
-
             </Card.Body>
           </Card>
         </Col>
