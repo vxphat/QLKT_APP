@@ -180,10 +180,10 @@ const PhieuDaNgoai = () => {
   const totals = calculateTotals(rows);
 
   const printTable = () => {
-    // if (dataLo.length === 0) {
-    //   alert("Không có dữ liệu để in!");
-    //   return;
-    // }
+    if (!data) {
+      alert("Chưa có dữ liệu để in. Hãy bấm Tìm kiếm trước.");
+      return;
+    }
 
     const printWindow = window.open("", "_blank");
     const tableElement = document.getElementById("bangNhap");
@@ -193,8 +193,37 @@ const PhieuDaNgoai = () => {
       return;
     }
 
+    const htmlEscape = (s) =>
+      (s ?? "")
+        .toString()
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
     // Clone the table to avoid modifying the original
     const tableClone = tableElement.cloneNode(true);
+
+    // Lấy thông tin cần hiển thị
+    const _donVi = donViSelect ? donViSelect.toUpperCase() : "";
+    const _nam = namSelect ? ` ${htmlEscape(namSelect)}` : "";
+    const _lo = data?.loKiemTra ? htmlEscape(data.loKiemTra) : "";
+    const _ngayKiemTra = data?.ngayKiemTra
+      ? new Date(data.ngayKiemTra).toLocaleDateString("vi-VN")
+      : new Date().toLocaleDateString("vi-VN");
+
+    const _iconDownRight =
+      data?.huong === 1 ? `<i class="bi bi-arrow-down-right"></i>` : "";
+
+    const _iconDownLeft =
+      data?.huong === 2 ? `<i class="bi bi-arrow-down-left"></i>` : "";
+
+    const _iconUpRight =
+      data?.huong === 3 ? `<i class="bi bi-arrow-up-right"></i>` : "";
+
+    const _iconUpLeft =
+      data?.huong === 4 ? `<i class="bi bi-arrow-up-left"></i>` : "";
 
     // Create print-friendly HTML
     const printContent = `
@@ -205,7 +234,7 @@ const PhieuDaNgoai = () => {
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
-        <title>Phiếu dã ngoại</title>
+        <title>Phiếu dã ngoại mở cạo</title>
         <style>
           body {
             font-family: "Times New Roman", Times, serif;
@@ -225,6 +254,7 @@ const PhieuDaNgoai = () => {
           th {
             background-color: #f0f0f0;
             font-weight: bold;
+            width: 100px;
           }
           .table-active {
             font-weight: bold;
@@ -234,11 +264,20 @@ const PhieuDaNgoai = () => {
             white-space: normal !important;
           }
           @media print {
-            body { margin: 40px; }
+            body { 
+            margin: 0 60px; 
+            zoom: 0.67;   /* thu nhỏ 67% */
+            transform-origin: top left; /* neo góc trái trên, tránh lệch trang */
+            }
             table { page-break-inside: auto; }
             tr { page-break-inside: avoid; page-break-after: auto; }
+
+
+
             @page {
-              margin: 2px;
+              
+              size: A4 portrait; /* hoặc landscape nếu bạn cần ngang */
+              margin: 50px 0;         /* để không bị cắt khi scale */
             }
           }
         </style>
@@ -249,36 +288,51 @@ const PhieuDaNgoai = () => {
       <div id="content-wrapper">
           <div id="header-block">
               <p><b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b></p>
-              <p><b>Đội:</b> ${
-                maDonVi &&
-                ` ${donVidata
-                  .find((dv) => dv.maDonVi === maDonVi)
-                  ?.donVi.toLocaleUpperCase()}`
-              }</p>
-              <p><b>Ngày kiểm tra: </b> ${new Date().toLocaleDateString(
-                "vi-VN"
-              )}</p>
+              <p><b>Đội:</b> ${htmlEscape(_donVi)}
+                
+              </p>
+              <p><b>Ngày kiểm tra: </b> ${htmlEscape(_ngayKiemTra)}</p>
           </div>
 
           <h4 style="text-align: center; margin-bottom: 20px; font-weight: 600">
-            PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY MỞ CẠO 
-            ${nam && ` NĂM ${nam}`}
+            PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY MỞ CẠO NĂM ${_nam}
           </h4>
 
           <div id="table-block">
             ${tableClone.outerHTML}
           </div>
 
-          <div id="legend-block" style="display: grid; grid-template-columns: auto auto auto; justify-content:  center; margin-top: 10px">
-            <p style="text-align: center; display: flex; align-items: center; justify-content: center;"><i class="bi bi-arrow-down-right"></i></p>
-            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin-bottom: 0">Trước</p>
-            <p style="text-align: center; display: flex; align-items: center; justify-content: center;"><i class="bi bi-arrow-down-left"></i></p>
-            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">Trái</p>
-            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">Lô</p>
-            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">Phải</p>
-            <p style="text-align: center; margin: 0; display: flex; align-items: center; justify-content: center;"><i class="bi bi-arrow-up-right"></i></p>
-            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">Sau</p>
-            <p style="text-align: center; margin: 0; display: flex; align-items: center; justify-content: center;"><i class="bi bi-arrow-up-left"></i></p>
+            <div id="legend-block" style="display: grid; grid-template-columns: auto auto auto; justify-content:  center; margin-top: 10px">
+
+            <p style="text-align: center; display: flex; align-items: center; justify-content: center;">
+            ${_iconDownRight}
+            </p>
+
+            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin-bottom: 0">${
+              data?.truoc
+            }</p>
+
+            <p style="text-align: center; display: flex; align-items: center; justify-content: center;">
+            ${_iconDownLeft}</p>
+
+            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">${
+              data?.trai
+            }</p>
+
+            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0; font-weight: 600">${_lo}</p>
+
+            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">
+            ${data?.phai}</p>
+
+            <p style="text-align: center; margin: 0; display: flex; align-items: center; justify-content: center;">
+            ${_iconUpRight}</p>
+
+            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">${
+              data?.sau
+            }</p>
+
+            <p style="text-align: center; margin: 0; display: flex; align-items: center; justify-content: center;">
+            ${_iconUpLeft}</p>
           </div>
 
           <div id="sign-block" style="display: flex; flex-direction: row; justify-content: space-around; margin-top: 10px">
@@ -413,7 +467,7 @@ const PhieuDaNgoai = () => {
                           <th
                             className="text-wrap border border-dark"
                             rowSpan={5}>
-                            STT
+                            Hàng
                           </th>
                           <th
                             className="text-center border border-dark"
@@ -449,9 +503,9 @@ const PhieuDaNgoai = () => {
                         </tr>
                         <tr>
                           <th
-                            className="text-center border border-dark"
+                            className="text-center border border-dark col-HT"
                             rowSpan={3}>
-                            HT
+                            Hố trống
                           </th>
                           <th
                             className="text-center border border-dark"
@@ -492,16 +546,16 @@ const PhieuDaNgoai = () => {
                           </th>
                         </tr>
                         <tr>
-                          <th className="text-center border border-dark">
+                          <th className="text-center border border-dark col-HT">
                             &ge; 50
                           </th>
-                          <th className="text-center border border-dark">
+                          <th className="text-center border border-dark col-HT">
                             &lt; 50
                           </th>
-                          <th className="text-center border border-dark">
+                          <th className="text-center border border-dark col-HT">
                             &ge; 50
                           </th>
-                          <th className="text-center border border-dark">
+                          <th className="text-center border border-dark col-HT">
                             &lt; 50
                           </th>
                         </tr>
@@ -617,31 +671,10 @@ const PhieuDaNgoai = () => {
         .table th.col-tenCN {
           width: 200px;
         }
-        .table th.col-maCN {
-          width: 120px;
+        .table th.col-HT {
+          width: 100px;
         }
-        .table th.col-sxkd-01012025,
-        .table th.col-mocao-2025,
-        .table th.col-sxkd-thanhlytc,
-        .table th.col-sxkd-thanhlygdp,
-        .table th.col-sxkd-31122025,
-        .table th.col-ktcb-01012025,
-        .table th.col-ktcb-mocao-2025,
-        .table th.col-ktcb-thanhlygdp,
-        .table th.col-ktcb-31122025,
-        .table th.col-kh-tctm-2025,
-        .table th.col-luancanh-2021,
-        .table th.col-luancanh-2022,
-        .table th.col-luancanh-2023,
-        .table th.col-tong-luancanh,
-        .table th.col-fsc,
-        .table th.col-vg-vn,
-        .table th.col-cho-gdp,
-        .table th.col-dt-chuyentc,
-        .table th.col-thanhly-goivu,
-        .table th.col-tong-dt-vuon {
-          width: 120px;
-        }
+
         .table tr.table-active {
           font-weight: bold;
           background-color: #f1f1f1;

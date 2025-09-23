@@ -1,7 +1,7 @@
-import  { Component } from 'react';
-import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
-import { Button } from 'react-bootstrap';
+import { Component } from "react";
+import ReactApexChart from "react-apexcharts";
+
+import { Button } from "react-bootstrap";
 import media21 from "../../../../assets/images/media/media-21.jpg";
 //
 

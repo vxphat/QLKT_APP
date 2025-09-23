@@ -1,6 +1,5 @@
-import  { Component } from 'react';
-import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
+import { Component } from "react";
+import ReactApexChart from "react-apexcharts";
 
 export const Options1 = [
   { value: "Bitcoin", label: "Bitcoin" },

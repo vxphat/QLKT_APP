@@ -61,16 +61,21 @@ const KQtheoDonVi = () => {
       <!DOCTYPE html>
       <html>
       <head>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+      
         <title>Báo cáo kết quả kiểm tra mở cạo</title>
         <style>
           body {
             font-family: "Times New Roman", Times, serif;
-            margin: 2px;
+            margin: 0;
           }
           table {
             width: 100%;
             border-collapse: collapse;
             font-size: 12px;
+            border: 1px solid #000;
           }
           th, td {
             border: 1px solid #000;
@@ -78,10 +83,44 @@ const KQtheoDonVi = () => {
             text-align: center;
             vertical-align: middle;
           }
+
+          .table-dashed {
+          border: 1px dashed rgba(0, 0, 0, 0.3); /* viền nét đứt mờ */
+          border-collapse: collapse;
+          }
+
+          .table-dashed th,
+          .table-dashed td {
+          border: 1px dashed rgba(0, 0, 0, 0.3);
+          
+          text-align: center;
+}
+
+          table th.col-TLDV{
+          width: 50px;
+          wrap-text: break-word;
+          }
+
+          table th.col-cay{
+          width: 50px;
+          wrap-text: break-word;
+          }
+
+          .table th.col-TLVP,
+          .table th.col-HT
+          {
+           width: 60px;
+          wrap-text: break-word;}
+
+          .table th.col-doi {
+          width: 50px;
+          }
+
           th {
             background-color: #f0f0f0;
             font-weight: bold;
             height:10px;
+            border: 1px solid #000;
           }
           .table-active {
             font-weight: bold;
@@ -91,17 +130,29 @@ const KQtheoDonVi = () => {
             white-space: normal !important;
           }
           @media print {
-            body { margin: 40px; }
-            table { page-break-inside: auto; }
+            body { margin: 0 40px; }
+            table { page-break-inside: auto; border: 1px solid #000; }
             tr { page-break-inside: avoid; page-break-after: auto; }
             @page {
-              margin: 2px;
+              size: A4 landscape; /* hoặc landscape nếu bạn cần ngang */
+              margin: 50px 0;         /* để không bị cắt khi scale */
             }
           }
         </style>
       </head>
       <body>
-        <h2 style="text-align: center; margin-bottom: 10px;">
+        <div id="header-block" class="print-Wapper">
+              <col xl={3} style="text-align: center; float: left; width: 50%;"> 
+              <p><b>CÔNG TY TNHH MỘT THÀNH VIÊN</b></p>
+              <p><b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b></p>
+              <p><b>PHÒNG QUẢN LÝ KỸ THUẬT</b></p>
+              </col>
+              
+            
+          </div>
+
+
+        <h4 style="text-align: center; margin-bottom: 10px; font-weight: bold;">
           CHI TIẾT XÉT THƯỞNG VƯỜN CÂY MỞ CẠO
           ${nam && ` NĂM ${nam}`}
           ${
@@ -110,10 +161,10 @@ const KQtheoDonVi = () => {
               .find((dv) => dv.maDonVi === maDonVi)
               ?.donVi.toLocaleUpperCase()}`
           }
-        </h2>
+        </h4>
         ${tableClone.outerHTML}
         <p style="text-align: right; margin-top: 10px; font-style: italic;">
-          In ngày: ${new Date().toLocaleDateString("vi-VN")}
+          
         </p>
       </body>
       </html>
@@ -321,13 +372,13 @@ const KQtheoDonVi = () => {
               </Row>
 
               <div className="table-responsive">
-                <Table className="table text-nowrap" id="bangNhap">
+                <Table className="table text-nowrap table-dashed" id="bangNhap">
                   <thead className="sticky-header">
                     <tr>
                       <th className="text-wrap border" rowSpan={2}>
                         STT
                       </th>
-                      <th className="text-wrap border" rowSpan={2}>
+                      <th className="text-wrap border col-doi" rowSpan={2}>
                         Đội
                       </th>
                       <th className="text-center border" rowSpan={2}>
@@ -371,12 +422,12 @@ const KQtheoDonVi = () => {
                       </th>
                     </tr>
                     <tr>
-                      <th className="text-wrap border">&ge; 50</th>
-                      <th className="text-wrap border">&lt; 50</th>
-                      <th className="text-wrap border">Tổng</th>
-                      <th className="text-wrap border">&ge; 50</th>
-                      <th className="text-wrap border">&lt; 50</th>
-                      <th className="text-wrap border">Tổng</th>
+                      <th className="text-wrap border col-cay">&ge; 50</th>
+                      <th className="text-wrap border col-cay">&lt; 50</th>
+                      <th className="text-wrap border col-cay">Tổng</th>
+                      <th className="text-wrap border col-cay">&ge; 50</th>
+                      <th className="text-wrap border col-cay">&lt; 50</th>
+                      <th className="text-wrap border col-cay">Tổng</th>
                       <th className="text-wrap border col-TLDV">
                         Tỷ lệ cây đạt vanh (%)
                       </th>
@@ -420,79 +471,79 @@ const KQtheoDonVi = () => {
 
                       return (
                         <tr key={idx}>
-                          <td>{idx + 1}</td>
-                          <td>{cn.nongTruong}</td>
-                          <td>{cn.tenLo}</td>
-                          <td>{cn.namTrong}</td>
-                          <td>{cn.hangDat}</td>
-                          <td>{cn.giongCay}</td>
-                          <td>
+                          <td className="border">{idx + 1}</td>
+                          <td className="border">{cn.nongTruong}</td>
+                          <td className="border">{cn.tenLo}</td>
+                          <td className="border">{cn.namTrong}</td>
+                          <td className="border">{cn.hangDat}</td>
+                          <td className="border">{cn.giongCay}</td>
+                          <td className="border">
                             {cn.dienTich != null
                               ? Number(cn.dienTich).toFixed(4)
                               : ""}
                           </td>
-                          <td>{cn.dienTichMC}</td>
-                          <td>{tongHoKT}</td>
-                          <td>{hoTrong}</td>
-                          <td>{cn.soCayChuaCaoTren50}</td>
-                          <td>{cn.soCayChuaCaoDuoi50}</td>
-                          <td>{tongCayChuaCao}</td>
-                          <td>{cn.soCayCaoTren50}</td>
-                          <td>{cn.soCayCaoDuoi50}</td>
-                          <td>{tongCayCao}</td>
-                          <td>{tyLeNumber}</td>
-                          <td>{diem}</td>
-                          <td>{tyLeViPham}</td>
-                          <td>{dtXetThuong}</td>
+                          <td className="border">{cn.dienTichMC}</td>
+                          <td className="border">{tongHoKT}</td>
+                          <td className="border">{hoTrong}</td>
+                          <td className="border">{cn.soCayChuaCaoTren50}</td>
+                          <td className="border">{cn.soCayChuaCaoDuoi50}</td>
+                          <td className="border">{tongCayChuaCao}</td>
+                          <td className="border">{cn.soCayCaoTren50}</td>
+                          <td className="border">{cn.soCayCaoDuoi50}</td>
+                          <td className="border">{tongCayCao}</td>
+                          <td className="border">{tyLeNumber}</td>
+                          <td className="border">{diem}</td>
+                          <td className="border">{tyLeViPham}</td>
+                          <td className="border">{dtXetThuong}</td>
                         </tr>
                       );
                     })}
 
                     {dataLo.length > 0 && (
                       <tr className="table-active">
-                        <td colSpan="6">
+                        <td colSpan="6" className="border">
                           <strong>CỘNG</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{totals.dienTich.toFixed(4)}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{totals.dienTichMC.toFixed(4)}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{totals.tongHoKT}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{totals.hoTrong}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{totals.cayChuaCaoT50}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{totals.cayChuaCaoD50}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{totals.tongCayChuaCao}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{totals.cayCaoT50}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{totals.cayCaoD50}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{totals.tongCayCao}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{avgTyLeCayDatVanh}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{avgDiem}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{avgTyLeViPham}</strong>
                         </td>
-                        <td>
+                        <td className="border">
                           <strong>{totals.dtXetThuong.toFixed(4)}</strong>
                         </td>
                       </tr>
@@ -538,10 +589,17 @@ const KQtheoDonVi = () => {
           width: 120px;
         }
 
-        .table th.col-TLDV,
+        .table th.col-TLDV {
+          width: 80px;
+        }
+
         .table th.col-TLVP,
         .table th.col-HT {
-          width: 80px;
+          width: 60px;
+        }
+
+        .table th.col-doi {
+          width: 50px;
         }
 
         .table tr.table-active {

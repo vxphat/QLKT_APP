@@ -1,18 +1,18 @@
 import { Fragment, useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import { Button, Card, Col, Form, Row, Table, } from "react-bootstrap";
+import { Button, Card, Col, Form, Row, Table } from "react-bootstrap";
 import { donVidata } from "../../danhMuc/dinhMuc/dinhMucData";
-
-
 
 const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
 const apiService = {
   getKetQuaTheoDonVi: async (year, maDonVi) => {
     try {
-      const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/ket-qua/theo-don-vi`);
-      url.searchParams.append('year', year);
-      url.searchParams.append('maDonVi', maDonVi);
+      const url = new URL(
+        `${import.meta.env.VITE_API_URL}kiem-tra-quy-iii/ket-qua/theo-don-vi`
+      );
+      url.searchParams.append("year", year);
+      url.searchParams.append("maDonVi", maDonVi);
       const response = await axios.get(url.toString());
       return response.data;
     } catch (error) {
@@ -22,7 +22,7 @@ const apiService = {
   getDinhMuc: async () => {
     try {
       const url = new URL(`${import.meta.env.VITE_API_URL}dinh-muc`);
-      url.searchParams.append('TuKhoa', 'KiemTraQuyIII');
+      url.searchParams.append("TuKhoa", "KiemTraQuyIII");
       const response = await axios.get(url.toString());
       return response.data;
     } catch (error) {
@@ -37,8 +37,6 @@ const KQtheoDonVi = () => {
   const [loading, setLoading] = useState(false);
   const [nam, setNam] = useState(new Date().getFullYear());
   const [maDonVi, setMaDonVi] = useState("");
-
-
 
   // Function to print the table
   const printTable = () => {
@@ -63,6 +61,10 @@ const KQtheoDonVi = () => {
       <!DOCTYPE html>
       <html>
       <head>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
         <title>Báo cáo kết quả kiểm tra mở cạo</title>
         <style>
           body {
@@ -93,28 +95,37 @@ const KQtheoDonVi = () => {
             white-space: normal !important;
           }
           @media print {
-            body { margin: 40px; }
+            body { margin: 40px 0; }
             table { page-break-inside: auto; }
             tr { page-break-inside: avoid; page-break-after: auto; }
             @page {
-              margin: 2px;
+              margin: 0 30px;
+              size: A4 landscape;
             }
           }
         </style>
       </head>
       <body>
-        <h2 style="text-align: center; margin-bottom: 10px;">
-          CHI TIẾT XÉT THƯỞNG VƯỜN CÂY MỞ CẠO
+        <div id="header-block" class="print-Wapper">
+              <col xl={3} className="text-center" style="width: 50%; line-height: 1.6; font-size: 14px;"> 
+              <p><b>CÔNG TY TNHH MỘT THÀNH VIÊN</b></p>
+              <p><b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b></p>
+              <p><b>PHÒNG QUẢN LÝ KỸ THUẬT</b></p>
+              </col>
+          </div>
+        <h4 style="text-align: center; margin: 30px 0; font-weight: bold;">
+          TỔNG HỢP XÉT THƯỞNG VƯỜN CÂY MỞ CẠO
           ${nam && ` NĂM ${nam}`}
-          ${maDonVi &&
-      ` - ĐỘI ${donVidata
-        .find((dv) => dv.maDonVi === maDonVi)
-        ?.donVi.toLocaleUpperCase()}`
-      }
-        </h2>
+          ${
+            maDonVi &&
+            ` - ĐỘI ${donVidata
+              .find((dv) => dv.maDonVi === maDonVi)
+              ?.donVi.toLocaleUpperCase()}`
+          }
+        </h4>
         ${tableClone.outerHTML}
         <p style="text-align: right; margin-top: 10px; font-style: italic;">
-          In ngày: ${new Date().toLocaleDateString("vi-VN")}
+          
         </p>
       </body>
       </html>
@@ -130,28 +141,24 @@ const KQtheoDonVi = () => {
     };
   };
 
-
-
   useEffect(() => {
-  
-    getDinhMuc()
-    getKetQuaQuyIIITheoDonVi()
+    getDinhMuc();
+    getKetQuaQuyIIITheoDonVi();
   }, []);
 
   const getKetQuaQuyIIITheoDonVi = async () => {
-    
     const result = await apiService.getKetQuaTheoDonVi(nam, maDonVi);
     if (result) {
-      setDataLo(result.data)
+      setDataLo(result.data);
     }
-  }
+  };
 
   const getDinhMuc = async () => {
     const result = await apiService.getDinhMuc();
     if (result) {
-      setDinhMuc(JSON.parse(result.data.DinhMuc))
+      setDinhMuc(JSON.parse(result.data.DinhMuc));
     }
-  }
+  };
 
   function tinhDiem(tyLeNumber) {
     if (!dinhMuc) return;
@@ -199,8 +206,7 @@ const KQtheoDonVi = () => {
       const diem = tinhDiem(tyLeCayDatVanh);
 
       // Tỷ lệ vi phạm
-      const tyLeViPham =
-        denominator > 0 ? (cayCaoD50 / denominator) * 100 : 0;
+      const tyLeViPham = denominator > 0 ? (cayCaoD50 / denominator) * 100 : 0;
 
       // Diện tích xét thưởng
       const dtXetThuong =
@@ -245,11 +251,16 @@ const KQtheoDonVi = () => {
   );
 
   // Tính trung bình điểm & tỷ lệ
-  const avgDiem = dataLo.length > 0 ? (totals.diem / dataLo.length).toFixed(1) : "0.0";
+  const avgDiem =
+    dataLo.length > 0 ? (totals.diem / dataLo.length).toFixed(1) : "0.0";
   const avgTyLeCayDatVanh =
-    totals.tongHoKT > 0 ? ((totals.tongCayCao / totals.tongHoKT) * 100).toFixed(1) : "0.0";
+    totals.tongHoKT > 0
+      ? ((totals.tongCayCao / totals.tongHoKT) * 100).toFixed(1)
+      : "0.0";
   const avgTyLeViPham =
-    totals.tongHoKT > 0 ? ((totals.cayCaoD50 / totals.tongHoKT) * 100).toFixed(1) : "0.0";
+    totals.tongHoKT > 0
+      ? ((totals.cayCaoD50 / totals.tongHoKT) * 100).toFixed(1)
+      : "0.0";
 
   const groupedArray = useMemo(() => {
     const grouped = dataLo.reduce((acc, item) => {
@@ -259,92 +270,99 @@ const KQtheoDonVi = () => {
       return acc;
     }, {});
 
-    return Object.keys(grouped).map(key => {
+    return Object.keys(grouped).map((key) => {
       const items = grouped[key];
-      const aggregated = items.reduce((agg, item) => {
-        const hoTrong = item.soHoTrong || 0;
-        const cayChuaCaoT50 = item.soCayChuaCaoTren50 || 0;
-        const cayChuaCaoD50 = item.soCayChuaCaoDuoi50 || 0;
-        const tongCayChuaCao = cayChuaCaoT50 + cayChuaCaoD50;
-        const cayCaoT50 = item.soCayCaoTren50 || 0;
-        const cayCaoD50 = item.soCayCaoDuoi50 || 0;
-        const tongCayCao = cayCaoT50 + cayCaoD50;
-        const denominator = hoTrong + tongCayChuaCao + tongCayCao;
+      const aggregated = items.reduce(
+        (agg, item) => {
+          const hoTrong = item.soHoTrong || 0;
+          const cayChuaCaoT50 = item.soCayChuaCaoTren50 || 0;
+          const cayChuaCaoD50 = item.soCayChuaCaoDuoi50 || 0;
+          const tongCayChuaCao = cayChuaCaoT50 + cayChuaCaoD50;
+          const cayCaoT50 = item.soCayCaoTren50 || 0;
+          const cayCaoD50 = item.soCayCaoDuoi50 || 0;
+          const tongCayCao = cayCaoT50 + cayCaoD50;
+          const denominator = hoTrong + tongCayChuaCao + tongCayCao;
 
-        const tyLeCayDatVanh = denominator > 0 ? (tongCayCao / denominator) * 100 : 0;
-        const diem = tinhDiem(tyLeCayDatVanh);
-        const tyLeViPham = denominator > 0 ? (cayCaoD50 / denominator) * 100 : 0;
-        const dtXetThuong = diem >= 8 ? parseFloat(item.dienTichMC || 0) : parseFloat(item.dtXetThuong || 0);
+          const tyLeCayDatVanh =
+            denominator > 0 ? (tongCayCao / denominator) * 100 : 0;
+          const diem = tinhDiem(tyLeCayDatVanh);
+          const tyLeViPham =
+            denominator > 0 ? (cayCaoD50 / denominator) * 100 : 0;
+          const dtXetThuong =
+            diem >= 8
+              ? parseFloat(item.dienTichMC || 0)
+              : parseFloat(item.dtXetThuong || 0);
 
-        const dt75 = tyLeCayDatVanh >= 75 ? dtXetThuong : 0;
-        const dtDuoi75 = tyLeCayDatVanh < 75 ? dtXetThuong : 0;
-        const dtCayDuoi50 = tyLeViPham > 0 ? item.dienTichMC  : 0;
+          const dt75 = tyLeCayDatVanh >= 75 ? dtXetThuong : 0;
+          const dtDuoi75 = tyLeCayDatVanh < 75 ? dtXetThuong : 0;
+          const dtCayDuoi50 = tyLeViPham > 0 ? item.dienTichMC : 0;
 
-        
-        agg.dienTichMC += Number(item.dienTichMC) || 0;
-        agg.tongHoKT += denominator;
-        agg.dienTich += denominator > 0 ? Number(item.dienTich) : 0;
-        agg.hoTrong += hoTrong;
-        agg.cayChuaCaoT50 += cayChuaCaoT50;
-        agg.cayChuaCaoD50 += cayChuaCaoD50;
-        agg.tongCayChuaCao += tongCayChuaCao;
-        agg.cayCaoT50 += cayCaoT50;
-        agg.cayCaoD50 += cayCaoD50;
-        agg.tongCayCao += tongCayCao;
-        agg.dt75 += dt75;
-        agg.dtDuoi75 += dtDuoi75;
-        agg.dtCayDuoi50 += dtCayDuoi50;
-        agg.dt8 += diem === 8 ? dt75 : 0;
-        agg.dt9 += diem === 9 ? dt75 : 0;
-        agg.dt10 += diem === 10 ? dt75 : 0;
-        agg.tyLeCayDatVanh.push(tyLeCayDatVanh);
-        agg.tyLeViPham.push(tyLeViPham);
+          agg.dienTichMC += Number(item.dienTichMC) || 0;
+          agg.tongHoKT += denominator;
+          agg.dienTich += denominator > 0 ? Number(item.dienTich) : 0;
+          agg.hoTrong += hoTrong;
+          agg.cayChuaCaoT50 += cayChuaCaoT50;
+          agg.cayChuaCaoD50 += cayChuaCaoD50;
+          agg.tongCayChuaCao += tongCayChuaCao;
+          agg.cayCaoT50 += cayCaoT50;
+          agg.cayCaoD50 += cayCaoD50;
+          agg.tongCayCao += tongCayCao;
+          agg.dt75 += dt75;
+          agg.dtDuoi75 += dtDuoi75;
+          agg.dtCayDuoi50 += dtCayDuoi50;
+          agg.dt8 += diem === 8 ? dt75 : 0;
+          agg.dt9 += diem === 9 ? dt75 : 0;
+          agg.dt10 += diem === 10 ? dt75 : 0;
+          agg.tyLeCayDatVanh.push(tyLeCayDatVanh);
+          agg.tyLeViPham.push(tyLeViPham);
 
-        return agg;
-      }, {
-        maDonVi: key,
-        dienTich: 0,
-        dienTichMC: 0,
-        tongHoKT: 0,
-        hoTrong: 0,
-        cayChuaCaoT50: 0,
-        cayChuaCaoD50: 0,
-        tongCayChuaCao: 0,
-        cayCaoT50: 0,
-        cayCaoD50: 0,
-        tongCayCao: 0,
-        dt75: 0,
-        dtDuoi75: 0,
-        dtCayDuoi50: 0,
-        dt8: 0,
-        dt9: 0,
-        dt10: 0,
-        tyLeCayDatVanh: [],
-        tyLeViPham: [],
-      });
+          return agg;
+        },
+        {
+          maDonVi: key,
+          dienTich: 0,
+          dienTichMC: 0,
+          tongHoKT: 0,
+          hoTrong: 0,
+          cayChuaCaoT50: 0,
+          cayChuaCaoD50: 0,
+          tongCayChuaCao: 0,
+          cayCaoT50: 0,
+          cayCaoD50: 0,
+          tongCayCao: 0,
+          dt75: 0,
+          dtDuoi75: 0,
+          dtCayDuoi50: 0,
+          dt8: 0,
+          dt9: 0,
+          dt10: 0,
+          tyLeCayDatVanh: [],
+          tyLeViPham: [],
+        }
+      );
 
-      const overallTyLeCayDatVanh = aggregated.tongHoKT > 0 ? (aggregated.tongCayCao / aggregated.tongHoKT) * 100 : 0;
+      const overallTyLeCayDatVanh =
+        aggregated.tongHoKT > 0
+          ? (aggregated.tongCayCao / aggregated.tongHoKT) * 100
+          : 0;
       aggregated.overallTyLeCayDatVanh = overallTyLeCayDatVanh;
       aggregated.diem = tinhDiem(overallTyLeCayDatVanh);
       aggregated.diemTru = aggregated.dtCayDuoi50 > 0 ? 1 : 0;
       aggregated.tongDiem = 100 - aggregated.diemTru;
-      
+
       return aggregated;
     });
   }, [dataLo]);
 
-
-
   return (
     <Fragment>
-
       <Row className="mt-3">
         <Col xl={12}>
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
               <Card.Title>
-                TỔNG HỢP KẾT QUẢ KIỂM TRA VƯỜN CÂY MỞ CẠO NĂM {nam && <> NĂM {nam}</>}
-                
+                TỔNG HỢP KẾT QUẢ KIỂM TRA VƯỜN CÂY MỞ CẠO NĂM{" "}
+                {nam && <> NĂM {nam}</>}
               </Card.Title>
             </Card.Header>
             <Card.Body>
@@ -366,8 +384,7 @@ const KQtheoDonVi = () => {
                 <Col xl={2} lg={6} md={6} sm={12}>
                   <Button
                     className="btn btn-primary label-btn"
-                    onClick={getKetQuaQuyIIITheoDonVi}
-                  >
+                    onClick={getKetQuaQuyIIITheoDonVi}>
                     <i className="bi bi-search label-btn-icon me-2"></i>
                     {loading ? "Đang tải..." : "Tải dữ liệu"}
                   </Button>
@@ -390,7 +407,7 @@ const KQtheoDonVi = () => {
                       <th className="text-wrap " rowSpan={3}>
                         STT
                       </th>
-                      <th className="text-wrap " rowSpan={3}>
+                      <th className="text-wrap col-doi" rowSpan={3}>
                         Đội
                       </th>
                       <th className="text-center" rowSpan={3}>
@@ -437,19 +454,28 @@ const KQtheoDonVi = () => {
                   </thead>
                   <tbody>
                     {groupedArray.map((cn, idx) => {
-                      const diemTru = cn.diemTru || 0;
-                      const tongDiem = cn.tongDiem || 0;
-                      const diemXepHang = cn.diem || 0;
+                      const diemTru = cn.diemTru || "-";
+                      const tongDiem = cn.tongDiem || "-";
+                      const diemXepHang = cn.diem || "-";
+                      const dt8 = cn.dt8 || "-";
+                      const dt9 = cn.dt9.toFixed(4) || "-";
+                      const dt10 = cn.dt10.toFixed(4) || "-";
+
                       return (
                         <tr key={idx}>
                           <td>{idx + 1}</td>
-                          <td className="text-left">{donVidata.find((dv) => dv.maDonVi === cn.maDonVi)?.donVi || cn.maDonVi || 'N/A'}</td>
+                          <td className="text-left">
+                            {donVidata.find((dv) => dv.maDonVi === cn.maDonVi)
+                              ?.donVi ||
+                              cn.maDonVi ||
+                              "N/A"}
+                          </td>
                           <td>{cn.dienTichMC.toFixed(2)}</td>
                           <td>{cn.dienTich.toFixed(2)}</td>
                           <td>{cn.overallTyLeCayDatVanh.toFixed(1)}</td>
-                          <td>{cn.dt8.toFixed(2)}</td>
-                          <td>{cn.dt9.toFixed(2)}</td>
-                          <td>{cn.dt10.toFixed(2)}</td>
+                          <td>{dt8}</td>
+                          <td>{dt9}</td>
+                          <td>{dt10}</td>
                           <td>{cn.dt75.toFixed(2)}</td>
                           <td>{(cn.dienTich - cn.dt75).toFixed(2)}</td>
                           <td>{cn.dtCayDuoi50.toFixed(2)}</td>
@@ -461,18 +487,84 @@ const KQtheoDonVi = () => {
                     })}
                     {groupedArray.length > 0 && (
                       <tr className="table-active">
-                        <td colSpan="2"><strong>TỔNG CỘNG</strong></td>
-                        <td><strong>{totals.dienTichMC.toFixed(2)}</strong></td>
-                        <td><strong>{totals.dienTich.toFixed(2)}</strong></td>
-                        <td><strong>{avgTyLeCayDatVanh}</strong></td>
-                        <td><strong>{groupedArray.reduce((acc, item) => acc + item.dt8, 0).toFixed(2)}</strong></td>
-                        <td><strong>{groupedArray.reduce((acc, item) => acc + item.dt9, 0).toFixed(2)}</strong></td>
-                        <td><strong>{groupedArray.reduce((acc, item) => acc + item.dt10, 0).toFixed(2)}</strong></td>
-                        <td><strong>{groupedArray.reduce((acc, item) => acc + item.dt75, 0).toFixed(2)}</strong></td>
-                        <td><strong>{(groupedArray.reduce((acc, item) => acc + item.dienTich, 0) - groupedArray.reduce((acc, item) => acc + item.dt75, 0)).toFixed(2)}</strong></td>
-                        <td><strong>{groupedArray.reduce((acc, item) => acc + item.dtCayDuoi50, 0).toFixed(2)}</strong></td>
-                        <td><strong>{groupedArray.reduce((acc, item) => acc + item.diemTru, 0)}</strong></td>
-                        <td><strong>{100 - groupedArray.reduce((acc, item) => acc + item.diemTru, 0)}</strong></td>
+                        <td colSpan="2">
+                          <strong>TỔNG CỘNG</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.dienTichMC.toFixed(2)}</strong>
+                        </td>
+                        <td>
+                          <strong>{totals.dienTich.toFixed(2)}</strong>
+                        </td>
+                        <td>
+                          <strong>{avgTyLeCayDatVanh}</strong>
+                        </td>
+                        <td>
+                          <strong>
+                            {groupedArray
+                              .reduce((acc, item) => acc + item.dt8, 0)
+                              .toFixed(2)}
+                          </strong>
+                        </td>
+                        <td>
+                          <strong>
+                            {groupedArray
+                              .reduce((acc, item) => acc + item.dt9, 0)
+                              .toFixed(2)}
+                          </strong>
+                        </td>
+                        <td>
+                          <strong>
+                            {groupedArray
+                              .reduce((acc, item) => acc + item.dt10, 0)
+                              .toFixed(2)}
+                          </strong>
+                        </td>
+                        <td>
+                          <strong>
+                            {groupedArray
+                              .reduce((acc, item) => acc + item.dt75, 0)
+                              .toFixed(2)}
+                          </strong>
+                        </td>
+                        <td>
+                          <strong>
+                            {(
+                              groupedArray.reduce(
+                                (acc, item) => acc + item.dienTich,
+                                0
+                              ) -
+                              groupedArray.reduce(
+                                (acc, item) => acc + item.dt75,
+                                0
+                              )
+                            ).toFixed(2)}
+                          </strong>
+                        </td>
+                        <td>
+                          <strong>
+                            {groupedArray
+                              .reduce((acc, item) => acc + item.dtCayDuoi50, 0)
+                              .toFixed(2)}
+                          </strong>
+                        </td>
+                        <td>
+                          <strong>
+                            {groupedArray.reduce(
+                              (acc, item) => acc + item.diemTru,
+                              0
+                            )}
+                          </strong>
+                        </td>
+                        <td>
+                          <strong>
+                            {100 -
+                              groupedArray.reduce(
+                                (acc, item) => acc + item.diemTru,
+                                0
+                              )}
+                          </strong>
+                        </td>
                         <td></td>
                       </tr>
                     )}
@@ -513,7 +605,7 @@ const KQtheoDonVi = () => {
         .table th.col-tenCN {
           width: 200px;
         }
-        .table th.col-maCN {
+        .table th.col-doi {
           width: 120px;
         }
 

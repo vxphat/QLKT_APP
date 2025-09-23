@@ -1,7 +1,5 @@
-import  { Component } from 'react';
-import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from "apexcharts";
-
+import { Component } from "react";
+import ReactApexChart from "react-apexcharts";
 
 export class Bitcoin extends Component {
   constructor(props) {
