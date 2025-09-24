@@ -1,4 +1,5 @@
 import { FC, Fragment, useEffect, useState } from "react";
+import axios from "axios";
 import {
   Button,
   Card,
@@ -9,7 +10,7 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import Pageheader from "../../../../../components/pageheader/pageheader";
 // import { danhMucCN } from "../danhSachCN/danhSachCNdata";
 
@@ -17,27 +18,40 @@ const API_URL =
   "https://script.google.com/macros/s/AKfycbxgIjtPLhCcv8nNWavOsMcTCObTUaQdMT_AvBVjHtB5e1FwEKCShO5EL3IWKW_ydBWo/exec";
 const TOKEN = "vxphat1994@";
 
-const DanhSachLo = () => {
-  const [dataLo, setDataLo] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [keyword, setKeyword] = useState("");
-
-  async function loadDataLo(query = "") {
-    setLoading(true);
+const apiService = {
+  getDanhSachLo: async (query = "") => {
     try {
       const url = new URL(API_URL);
       url.searchParams.set("token", TOKEN);
       if (query) url.searchParams.set("q", query);
       console.log("Fetching:", url.toString());
-      const res = await fetch(url.toString(), { method: "GET" });
-      const json = await res.json();
-      setDataLo(json.data ?? []);
+      const response = await axios.get(url.toString());
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
+};
+
+const DanhSachLo = () => {
+  const [dataLo, setDataLo] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [keyword, setKeyword] = useState("");
+
+  const loadDataLo = async (query = "") => {
+    setLoading(true);
+    try {
+      const result = await apiService.getDanhSachLo(query);
+      if (result) {
+        setDataLo(result.data ?? []);
+      }
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     loadDataLo();
@@ -45,55 +59,41 @@ const DanhSachLo = () => {
 
   return (
     <Fragment>
-      <Pageheader
-        title="Kết Quả Theo Đơn Vị"
-        heading="Tables"
-        active="Tables"
-      />
-      <Row>
+      <Row className="mt-3">
         <Col xl={12}>
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
-              <Card.Title>
-                CHI TIẾT XÉT THƯỞNG VƯỜN CÂY MỞ CẠO NĂM 2025
-              </Card.Title>
+              <Card.Title>DANH SÁCH LÔ MỞ CẠO</Card.Title>
             </Card.Header>
             <Card.Body>
               <Row className="mb-3">
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Row>
-                    <Col xl={6}>
-                      <Form.Control
-                        type="search"
-                        id="input-search"
-                        placeholder="Tìm tên công nhân"
-                        value={keyword}
-                        onChange={(e) => setKeyword(e.target.value)}
-                      />
-                    </Col>
-                    <Col xl={6} lg={6} md={6} sm={12}>
-                      <Button
-                        className="btn btn-primary label-btn"
-                        onClick={() => loadDataLo(keyword)}
-                        disabled={loading}>
-                        <i className="bi bi-search label-btn-icon me-2"></i>
-                        {loading ? "Đang tải..." : "Tìm kiếm"}
-                      </Button>
-                    </Col>
-                  </Row>
-                </Col>
-
-                <Col xl={4} lg={6} md={6} sm={12}></Col>
-                <Col xl={4} lg={6} md={6} sm={12} className="d-flex align-items-center justify-content-end">
-                  <Link to={`/kiemTraKyThuat/kiemTraQuyIII/danhMuc/danhSachLo/import`} >
-                    <Button className="btn btn-secondary label-btn ms-auto">
-                      <i className="bi bi-plus-lg label-btn-icon me-2"></i>
-                      Import dữ liệu
+                <Row>
+                  <Col xl={2}>
+                    <Form.Control
+                      type="search"
+                      id="input-search"
+                      placeholder="Nhập tên lô"
+                      value={keyword}
+                      onChange={(e) => setKeyword(e.target.value)}
+                    />
+                  </Col>
+                  <Col xl={4} lg={6} md={6} sm={12} className="d-flex gap-3">
+                    <Button
+                      className="btn btn-primary label-btn "
+                      onClick={() => loadDataLo(keyword)}
+                      disabled={loading}>
+                      <i className="bi bi-search label-btn-icon me-2"></i>
+                      {loading ? "Đang tải..." : "Tải dữ liệu"}
                     </Button>
-                  </Link>
-
-
-                </Col>
+                    <Link
+                      to={`/kiemTraKyThuat/kiemTraQuyIII/danhMuc/danhSachLo/import`}>
+                      <Button className="btn btn-secondary label-btn ms-auto">
+                        <i className="bi bi-plus-lg label-btn-icon me-2"></i>
+                        Import dữ liệu
+                      </Button>
+                    </Link>
+                  </Col>
+                </Row>
               </Row>
 
               <div className="table-responsive">

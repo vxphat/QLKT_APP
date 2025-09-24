@@ -352,15 +352,13 @@ const KQtheoDonVi = () => {
                     ))}
                   </Form.Select>
                 </Col>
-                <Col xl={2} lg={6} md={6} sm={12}>
+                <Col xl={4} lg={6} md={6} sm={12} className="d-flex gap-2">
                   <Button
                     className="btn btn-primary label-btn"
                     onClick={getKetQuaQuyIIITheoDonVi}>
                     <i className="bi bi-search label-btn-icon me-2"></i>
                     {loading ? "Đang tải..." : "Tải dữ liệu"}
                   </Button>
-                </Col>
-                <Col className="d-flex align-items-center justify-content-end">
                   <Button
                     className="btn btn-success label-btn"
                     onClick={printTable}
