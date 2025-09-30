@@ -223,9 +223,8 @@ const PhieuDaNgoai = () => {
       data?.huong === 3 ? `<i class="bi bi-arrow-up-right"></i>` : "";
 
     const _iconUpLeft =
-      data?.huong === 4 ? `<i class="bi bi-arrow-up-left"></i>` : "";
+      data?.huong === 4 ? `<i class="bi bi-arrow-up-left" class></i>` : "";
 
-    // Create print-friendly HTML
     const printContent = `
       <!DOCTYPE html>
       <html>
@@ -243,7 +242,7 @@ const PhieuDaNgoai = () => {
           table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 16px;
+            font-size: 20px;
           }
           th, td {
             border: 1px solid #000;
@@ -263,6 +262,7 @@ const PhieuDaNgoai = () => {
           .text-wrap {
             white-space: normal !important;
           }
+         
           @media print {
             body { 
             margin: 0 60px; 
@@ -304,35 +304,35 @@ const PhieuDaNgoai = () => {
 
             <div id="legend-block" style="display: grid; grid-template-columns: auto auto auto; justify-content:  center; margin-top: 10px">
 
-            <p style="text-align: center; display: flex; align-items: center; justify-content: center;">
-            ${_iconDownRight}
-            </p>
+              <p style="text-align: center; display: flex; align-items: center; justify-content: center;">
+              ${_iconDownRight}
+              </p>
 
-            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin-bottom: 0">${
-              data?.truoc
-            }</p>
+              <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin-bottom: 0">${
+                data?.truoc
+              }</p>
 
-            <p style="text-align: center; display: flex; align-items: center; justify-content: center;">
-            ${_iconDownLeft}</p>
+              <p style="text-align: center; display: flex; align-items: center; justify-content: center;">
+              ${_iconDownLeft}</p>
 
-            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">${
-              data?.trai
-            }</p>
+              <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">${
+                data?.trai
+              }</p>
 
-            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0; font-weight: 600">${_lo}</p>
+              <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0; font-weight: 600">${_lo}</p>
 
-            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">
-            ${data?.phai}</p>
+              <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">
+              ${data?.phai}</p>
 
-            <p style="text-align: center; margin: 0; display: flex; align-items: center; justify-content: center;">
-            ${_iconUpRight}</p>
+              <p style="text-align: center; margin: 0; display: flex; align-items: center; justify-content: center;">
+              ${_iconUpRight}</p>
 
-            <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">${
-              data?.sau
-            }</p>
+              <p style="border: 1px solid #000; padding: 10px 30px; text-align: center; margin: 0">${
+                data?.sau
+              }</p>
 
-            <p style="text-align: center; margin: 0; display: flex; align-items: center; justify-content: center;">
-            ${_iconUpLeft}</p>
+              <p style="text-align: center; margin: 0; display: flex; align-items: center; justify-content: center;">
+              ${_iconUpLeft}</p>
           </div>
 
           <div id="sign-block" style="display: flex; flex-direction: row; justify-content: space-around; margin-top: 10px">
