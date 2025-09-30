@@ -437,23 +437,7 @@ const PhieuDaNgoai = () => {
               </Row>
               {data && (
                 <>
-                  {/* <Row className="mt-5">
-                    <Col xl={3}>
-                      <p>
-                        <b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b>
-                      </p>
-                      <p>
-                        <b>Đội:</b>{" "}
-                        {data.nongTruong}
-                      </p>
-                      <p>
-                        <b>Ngày kiểm tra:</b>{" "}
-                        {new Date(data.ngayKiemTra).toLocaleDateString("vi-VN")}
-                      </p>
-                    </Col>
-                  </Row> */}
-
-                  <div className="d-flex justify-content-center">
+                  <div className="d-flex justify-content-center mt-5">
                     <h4>
                       PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY MỞ CẠO
                       {nam && <> NĂM {nam}</>}
@@ -604,31 +588,31 @@ const PhieuDaNgoai = () => {
 
                         {/* Dòng tổng thực tế hiển thị các giá trị */}
                         <tr className="fw-bold table-active">
-                          <td className="text-center border border-dark">
+                          <td className="text-center border border-dark fw-bold">
                             Cộng
                           </td>
-                          <td className="text-center border border-dark">
+                          <td className="text-center border border-dark fw-bold">
                             {totals.HoTrong != 0 ? totals.HoTrong : ""}
                           </td>
-                          <td className="text-center border border-dark">
+                          <td className="text-center border border-dark fw-bold">
                             {totals.CaoT50 != 0 ? totals.CaoT50 : ""}
                           </td>
-                          <td className="text-center border border-dark">
+                          <td className="text-center border border-dark fw-bold">
                             {totals.CaoD50 != 0 ? totals.CaoD50 : ""}
                           </td>
-                          <td className="text-center border border-dark">
+                          <td className="text-center border border-dark fw-bold">
                             {totals.ChuaCaoT50 != 0 ? totals.ChuaCaoT50 : ""}
                           </td>
-                          <td className="text-center border border-dark">
+                          <td className="text-center border border-dark fw-bold">
                             {totals.ChuaCaoD50 != 0 ? totals.ChuaCaoD50 : ""}
                           </td>
-                          <td className="text-center border border-dark">
+                          <td className="text-center border border-dark fw-bold">
                             {totals.C1 != 0 ? totals.C1 : ""}
                           </td>
-                          <td className="text-center border border-dark">
+                          <td className="text-center border border-dark fw-bold">
                             {totals.C2 != 0 ? totals.C2 : ""}
                           </td>
-                          <td className="text-center border border-dark">
+                          <td className="text-center border border-dark fw-bold">
                             {totals.CutDot != 0 ? totals.CutDot : ""}
                           </td>
                         </tr>
