@@ -79,15 +79,34 @@ const PhieuDaNgoai = () => {
   };
 
   const loadKQKT = async () => {
+    // Kiểm tra đã chọn đầy đủ các trường chưa
+    if (!namSelect || !donViSelect || !loSelect) {
+      alert("Vui lòng chọn đầy đủ Năm, Đơn vị và Lô");
+      return;
+    }
+
     setLoading(true);
     const result = await apiService.getDataPhieuKiemTra(
       namSelect,
       donViSelect,
       loSelect
     );
-    setData(result.data);
-    const rows = chunkArray(result.data.detail, 5, result.data);
-    setRows(rows);
+
+    // Kiểm tra kết quả trả về
+    if (
+      !result ||
+      !result.data ||
+      !result.data.detail ||
+      result.data.detail.length === 0
+    ) {
+      alert("Không tìm thấy dữ liệu cho lô đã chọn");
+      setData(null);
+      setRows([]);
+    } else {
+      setData(result.data);
+      const rows = chunkArray(result.data.detail, 5, result.data);
+      setRows(rows);
+    }
     setLoading(false);
   };
 
