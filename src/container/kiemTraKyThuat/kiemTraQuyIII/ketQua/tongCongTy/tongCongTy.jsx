@@ -394,7 +394,7 @@ const KQtheoDonVi = () => {
                   lg={6}
                   md={6}
                   sm={12}
-                  className="d-flex align-items-center justify-content-end">
+                  className="d-flex align-items-center justify-content-start gap-3">
                   <Button
                     className="btn btn-primary label-btn"
                     onClick={getKetQuaQuyIIITheoDonVi}>
@@ -402,7 +402,7 @@ const KQtheoDonVi = () => {
                     {loading ? "Đang tải..." : "Tải dữ liệu"}
                   </Button>
                   <Button
-                    className="btn btn-success label-btn ms-3"
+                    className="btn btn-success label-btn"
                     onClick={printTable}
                     disabled={dataLo.length === 0}>
                     <i className="bi bi-printer label-btn-icon me-2"></i>

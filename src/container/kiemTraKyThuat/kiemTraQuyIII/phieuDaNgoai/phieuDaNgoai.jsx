@@ -81,7 +81,12 @@ const PhieuDaNgoai = () => {
   const loadKQKT = async () => {
     // Kiểm tra đã chọn đầy đủ các trường chưa
     if (!namSelect || !donViSelect || !loSelect) {
-      alert("Vui lòng chọn đầy đủ Năm, Đơn vị và Lô");
+      // alert("Vui lòng chọn đầy đủ Năm, Đơn vị và Lô");
+      showToast({
+        title: "Thông báo",
+        message: "Vui lòng chọn đầy đủ Năm, Đơn vị và Lô",
+        variant: "success",
+      });
       return;
     }
 
@@ -442,22 +447,22 @@ const PhieuDaNgoai = () => {
                     ))}
                   </Form.Select>
                 </Col>
-                <Col xl={2} lg={6} md={6} sm={12}>
+
+                <Col xl={4} lg={6} md={6} sm={12} className="d-flex gap-3">
                   <Button
                     className="btn btn-primary label-btn"
                     onClick={() => loadKQKT()}>
                     <i className="bi bi-search label-btn-icon me-2"></i>
                     {loading ? "Đang tải..." : "Tìm kiếm"}
                   </Button>
-                </Col>
-                <Col className="d-flex align-items-center justify-content-end">
                   <Button
-                    className="btn btn-success label-btn ms-5"
+                    className="btn btn-success label-btn"
                     onClick={printTable}>
                     <i className="bi bi-printer label-btn-icon me-2"></i>
                     In phiếu
                   </Button>
                 </Col>
+                <Col className="d-flex align-items-center justify-content-end"></Col>
               </Row>
               {data && (
                 <>

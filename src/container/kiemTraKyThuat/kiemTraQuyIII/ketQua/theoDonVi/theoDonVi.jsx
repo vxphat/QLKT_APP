@@ -352,7 +352,7 @@ const KQtheoDonVi = () => {
                     ))}
                   </Form.Select>
                 </Col>
-                <Col xl={4} lg={6} md={6} sm={12} className="d-flex gap-2">
+                <Col xl={4} lg={6} md={6} sm={12} className="d-flex gap-3">
                   <Button
                     className="btn btn-primary label-btn"
                     onClick={getKetQuaQuyIIITheoDonVi}>
