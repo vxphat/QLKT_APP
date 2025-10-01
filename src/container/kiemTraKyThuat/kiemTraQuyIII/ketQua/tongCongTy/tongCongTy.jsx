@@ -76,6 +76,14 @@ const KQtheoDonVi = () => {
             border-collapse: collapse;
             font-size: 12px;
           }
+
+          .table th.col-diem {
+          width: 80px;
+        }
+        .table th.col-tyLeVanhDuoi75,
+          .table th.col-tyLeVanhDuoi50 {
+          width: 100px;
+        }
           th, td {
             border: 1px solid #000;
             padding: 3px;
@@ -401,7 +409,6 @@ const KQtheoDonVi = () => {
                     In báo cáo
                   </Button>
                 </Col>
-                
               </Row>
 
               <div className="table-responsive">
@@ -420,16 +427,16 @@ const KQtheoDonVi = () => {
                       <th className="text-center " rowSpan={3}>
                         Diện tích KT
                       </th>
-                      <th className="text-wrap " rowSpan={3}>
+                      <th className="text-wrap col-tyLeVanhDuoi50" rowSpan={3}>
                         Tỷ lệ cây đạt vanh(%)
                       </th>
                       <th className="text-wrap " colSpan={4}>
                         Diện tích có tỷ lệ vanh ≥75% (ha)
                       </th>
-                      <th className="text-wrap " rowSpan={3}>
+                      <th className="text-wrap col-tyLeVanhDuoi75" rowSpan={3}>
                         Diện tích có tỷ lệ đạt vanh dưới 75% (ha)
                       </th>
-                      <th className="text-wrap " rowSpan={3}>
+                      <th className="text-wrap col-tyLeVanhDuoi50" rowSpan={3}>
                         Diện tích mở cạo cây dưới 50 cm (ha)
                       </th>
                       <th className="text-wrap " rowSpan={3}>
@@ -446,24 +453,31 @@ const KQtheoDonVi = () => {
                       <th className="text-wrap " colSpan={3}>
                         Theo điểm
                       </th>
-                      <th className="text-wrap " rowSpan={2}>
+                      <th className="text-wrap col-diem" rowSpan={2}>
                         Cộng
                       </th>
                     </tr>
                     <tr>
-                      <th>8</th>
-                      <th>9</th>
-                      <th>10</th>
+                      <th className="col-diem">8</th>
+                      <th className="col-diem">9</th>
+                      <th className="col-diem">10</th>
                     </tr>
                   </thead>
                   <tbody>
                     {groupedArray.map((cn, idx) => {
-                      const diemTru = cn.diemTru || "-";
-                      const tongDiem = cn.tongDiem || "-";
-                      const diemXepHang = cn.diem || "-";
                       const dt8 = cn.dt8 || "-";
-                      const dt9 = cn.dt9.toFixed(4) || "-";
-                      const dt10 = cn.dt10.toFixed(4) || "-";
+                      const dt9 = cn.dt9 || "-";
+                      const dt10 = cn.dt10 || "-";
+                      const dienTichMC = cn.dienTichMC || "-";
+                      const dienTich = cn.dienTich || "-";
+                      const overallTyLeCayDatVanh =
+                        cn.overallTyLeCayDatVanh || "-";
+                      const cong = cn.dt8 + cn.dt9 + cn.dt10 || "-";
+                      const dtDuoi75 = cn.dtDuoi75 || "-";
+                      const dtCayDuoi50 = cn.dtCayDuoi50 || "-";
+                      const diemTru = cn.dtCayDuoi50 > 0 ? 1 : 0;
+                      const diemXepHang =
+                        cn.dienTichMC > 0 ? 100 - diemTru : "-";
 
                       return (
                         <tr key={idx}>
@@ -474,17 +488,17 @@ const KQtheoDonVi = () => {
                               cn.maDonVi ||
                               "N/A"}
                           </td>
-                          <td>{cn.dienTichMC.toFixed(2)}</td>
-                          <td>{cn.dienTich.toFixed(2)}</td>
-                          <td>{cn.overallTyLeCayDatVanh.toFixed(1)}</td>
+                          <td>{dienTichMC.toFixed(4)}</td>
+                          <td>{dienTich}</td>
+                          <td>{overallTyLeCayDatVanh}</td>
                           <td>{dt8}</td>
                           <td>{dt9}</td>
                           <td>{dt10}</td>
-                          <td>{cn.dt75.toFixed(2)}</td>
-                          <td>{(cn.dienTich - cn.dt75).toFixed(2)}</td>
-                          <td>{cn.dtCayDuoi50.toFixed(2)}</td>
+                          <td>{cong}</td>
+                          <td>{dtDuoi75}</td>
+                          <td>{dtCayDuoi50}</td>
                           <td>{diemTru}</td>
-                          <td>{tongDiem}</td>
+                          <td>{diemXepHang}</td>
                           <td></td>
                         </tr>
                       );
@@ -495,10 +509,10 @@ const KQtheoDonVi = () => {
                           <strong>TỔNG CỘNG</strong>
                         </td>
                         <td>
-                          <strong>{totals.dienTichMC.toFixed(2)}</strong>
+                          <strong>{totals.dienTichMC.toFixed(4)}</strong>
                         </td>
                         <td>
-                          <strong>{totals.dienTich.toFixed(2)}</strong>
+                          <strong>{totals.dienTich.toFixed(4)}</strong>
                         </td>
                         <td>
                           <strong>{avgTyLeCayDatVanh}</strong>
@@ -507,28 +521,28 @@ const KQtheoDonVi = () => {
                           <strong>
                             {groupedArray
                               .reduce((acc, item) => acc + item.dt8, 0)
-                              .toFixed(2)}
+                              .toFixed(4)}
                           </strong>
                         </td>
                         <td>
                           <strong>
                             {groupedArray
                               .reduce((acc, item) => acc + item.dt9, 0)
-                              .toFixed(2)}
+                              .toFixed(4)}
                           </strong>
                         </td>
                         <td>
                           <strong>
                             {groupedArray
                               .reduce((acc, item) => acc + item.dt10, 0)
-                              .toFixed(2)}
+                              .toFixed(4)}
                           </strong>
                         </td>
                         <td>
                           <strong>
                             {groupedArray
                               .reduce((acc, item) => acc + item.dt75, 0)
-                              .toFixed(2)}
+                              .toFixed(4)}
                           </strong>
                         </td>
                         <td>
@@ -603,11 +617,12 @@ const KQtheoDonVi = () => {
           vertical-align: middle;
           text-align: center;
         }
-        .table th.col-HTPC {
-          width: 100px;
+        .table th.col-diem {
+          width: 80px;
         }
-        .table th.col-tenCN {
-          width: 200px;
+        .table th.col-tyLeVanhDuoi75,
+        .table th.col-tyLeVanhDuoi50 {
+          width: 150px;
         }
         .table th.col-doi {
           width: 120px;
