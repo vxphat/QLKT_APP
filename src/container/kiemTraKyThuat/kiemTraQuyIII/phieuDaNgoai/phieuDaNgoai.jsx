@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Button, Card, Col, Form, Row, Table } from "react-bootstrap";
 import axios from "axios";
-import { donVidata } from "../../kiemTraQuyIII/danhMuc/dinhMuc/dinhMucData";
+import { useToast } from "../../../../contexts/ToastContext";
 
 const apiService = {
   getDonVi: async (year) => {
@@ -47,7 +47,7 @@ const apiService = {
 const PhieuDaNgoai = () => {
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
-
+  const { showToast } = useToast();
   const [nam, setNam] = useState("");
   const [maDonVi, setMaDonVi] = useState([]);
   const [rows, setRows] = useState([]);
@@ -99,7 +99,12 @@ const PhieuDaNgoai = () => {
       !result.data.detail ||
       result.data.detail.length === 0
     ) {
-      alert("Không tìm thấy dữ liệu cho lô đã chọn");
+      // alert("Không tìm thấy dữ liệu cho lô đã chọn");
+      showToast({
+        title: "Thông báo",
+        message: "Không tìm thấy dữ liệu cho lô đã chọn",
+        variant: "danger",
+      });
       setData(null);
       setRows([]);
     } else {
