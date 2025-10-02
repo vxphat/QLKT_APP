@@ -12,24 +12,46 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Pageheader from "../../../../../components/pageheader/pageheader";
-// import { danhMucCN } from "../danhSachCN/danhSachCNdata";
-
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbxgIjtPLhCcv8nNWavOsMcTCObTUaQdMT_AvBVjHtB5e1FwEKCShO5EL3IWKW_ydBWo/exec";
-const TOKEN = "vxphat1994@";
+import { donVidata } from "../../danhMuc/dinhMuc/dinhMucData";
 
 const apiService = {
-  getDanhSachLo: async (query = "") => {
+  getDanhSachLo: async (maDonVi, query = "") => {
     try {
-      const url = new URL(API_URL);
-      url.searchParams.set("token", TOKEN);
-      if (query) url.searchParams.set("q", query);
-      console.log("Fetching:", url.toString());
+      const url = new URL(
+        `${
+          import.meta.env.VITE_API_URL
+        }kiem-tra-quy-iii/danh-muc/import-danh-sach-lo`
+      );
+
+      // Thêm các tham số vào URL
+      if (maDonVi) {
+        url.searchParams.append("maDonVi", maDonVi);
+      }
+      if (query) {
+        url.searchParams.append("keyword", query);
+      }
+
       const response = await axios.get(url.toString());
-      return response.data;
+
+      if (response.status === 200 && response.data) {
+        return {
+          success: true,
+          data: response.data.data || [],
+          message: "Lấy dữ liệu thành công",
+        };
+      }
+
+      return {
+        success: false,
+        data: [],
+        message: "Không lấy được dữ liệu",
+      };
     } catch (error) {
-      console.error(error);
-      return null;
+      return {
+        success: false,
+        data: [],
+        message: error.message || "Có lỗi xảy ra",
+      };
     }
   },
 };
@@ -44,7 +66,9 @@ const DanhSachLo = () => {
     try {
       const result = await apiService.getDanhSachLo(query);
       if (result) {
+        console.log("result", result);
         setDataLo(result.data ?? []);
+
       }
     } catch (err) {
       console.error(err);
@@ -69,13 +93,7 @@ const DanhSachLo = () => {
               <Row className="mb-3">
                 <Row>
                   <Col xl={2}>
-                    <Form.Control
-                      type="search"
-                      id="input-search"
-                      placeholder="Nhập tên lô"
-                      value={keyword}
-                      onChange={(e) => setKeyword(e.target.value)}
-                    />
+                   
                   </Col>
                   <Col xl={4} lg={6} md={6} sm={12} className="d-flex gap-3">
                     <Button
@@ -111,18 +129,38 @@ const DanhSachLo = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {dataLo.map((cn, idx) => (
-                      <tr key={idx}>
-                        <td>{cn.stt}</td>
-                        <td>{cn.doi}</td>
-                        <td>{cn.tenLo}</td>
-                        <td>{cn.namTrong}</td>
-                        <td>{cn.hangDat}</td>
-                        <td>{cn.giong}</td>
-                        <td>{cn.dienTichKK}</td>
-                        <td>{cn.dienTichMC}</td>
+                    {dataLo && dataLo.length > 0 ? (
+                      dataLo.map((item, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>{item.maDonVi}</td>
+                          <td>{item.lo}</td>
+                          <td>{item.namTrong}</td>
+                          <td>{item.hangDat}</td>
+                          <td>{item.giong}</td>
+                          <td>{item.dienTichKK}</td>
+                          <td>{item.dienTichMC}</td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="8" className="text-center">
+                          {loading ? (
+                            <div className="d-flex justify-content-center">
+                              <div
+                                className="spinner-border text-primary"
+                                role="status">
+                                <span className="visually-hidden">
+                                  Đang tải...
+                                </span>
+                              </div>
+                            </div>
+                          ) : (
+                            "Không có dữ liệu"
+                          )}
+                        </td>
                       </tr>
-                    ))}
+                    )}
                   </tbody>
                 </Table>
               </div>

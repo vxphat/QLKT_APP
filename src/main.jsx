@@ -200,6 +200,7 @@ import KetQuaTheoDiem_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/
 import KetQuaXetThuong_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaXetThuong_TCTM/ketQuaXetThuong_TCTM.jsx";
 import DanhSachLoTCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/danhSachLoTCTM/danhSachLoTCTM.jsx";
 import DinhMuc_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/dinhMuc_TCTM/dinhMuc_TCTM.jsx";
+import PhieuDaNgoai_KTCB from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB/phieuDaNgoai_KTCB.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.Fragment>
@@ -332,6 +333,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               />
 
               {/* ---------------TCTM END------ */}
+
+              {/* ------------------KTCB----------------- */}
+              
+              <Route
+                path={`${import.meta.env.BASE_URL
+                  }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB`}
+                element={<PhieuDaNgoai_KTCB />}
+              />
+
+
 
               <Route
                 path={`${import.meta.env.BASE_URL}dashboards/ecommerce`}

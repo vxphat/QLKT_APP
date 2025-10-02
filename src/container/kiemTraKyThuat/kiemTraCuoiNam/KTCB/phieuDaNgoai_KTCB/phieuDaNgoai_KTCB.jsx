@@ -18,7 +18,7 @@ const TOKEN = "vxphat1994@";
 
 const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
-const PhieuDaNgoai_TCTM = () => {
+const PhieuDaNgoai_KTCB = () => {
   const [danhSachCN, setDanhSachCN] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -442,4 +442,4 @@ const PhieuDaNgoai_TCTM = () => {
   );
 };
 
-export default PhieuDaNgoai_TCTM;
+export default PhieuDaNgoai_KTCB;

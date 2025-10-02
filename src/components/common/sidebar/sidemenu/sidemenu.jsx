@@ -728,21 +728,27 @@ export const MENUITEMS = [
                 selected: false,
               },
               {
-                path: `${import.meta.env.BASE_URL}kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTheoDiem_TCTM`,
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTheoDiem_TCTM`,
                 title: "KQ xét thưởng",
                 type: "link",
                 active: false,
                 selected: false,
               },
               {
-                path: `${import.meta.env.BASE_URL}kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTheoDiem_TCTM`,
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTheoDiem_TCTM`,
                 title: "Danh sách lô",
                 type: "link",
                 active: false,
                 selected: false,
               },
               {
-                path: `${import.meta.env.BASE_URL}kiemTraKyThuat/kiemTraCuoiNam/TCTM/dinhMuc_TCTM`,
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/dinhMuc_TCTM`,
                 title: "Định mức",
                 type: "link",
                 active: false,
@@ -757,7 +763,9 @@ export const MENUITEMS = [
             selected: false,
             children: [
               {
-                path: `${import.meta.env.BASE_URL}database/kk0gio`,
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB`,
                 title: "Phiếu dã ngoại",
                 type: "link",
                 active: false,
