@@ -33,7 +33,9 @@ const Login = ({ ThemeChanger }) => {
   };
   const navigate = useNavigate();
   const routeChange = () => {
-    const path = `${import.meta.env.BASE_URL}dashboards/crm/`;
+    const path = `${
+      import.meta.env.BASE_URL
+    }kiemTraKyThuat/kiemTraQuyIII/ketQua/tongCongTy`;
     navigate(path);
   };
 
@@ -73,9 +75,7 @@ const Login = ({ ThemeChanger }) => {
           <Col xxl={4} xl={5} lg={5} md={6} sm={8} className="col-12">
             <Tab.Container id="left-tabs-example" defaultActiveKey="react">
               <Card>
-                <Nav
-                  variant="pills"
-                  className="justify-content-center mt-3">
+                <Nav variant="pills" className="justify-content-center mt-3">
                   <img
                     src={logoTCT}
                     alt="logo"

@@ -160,9 +160,9 @@ import Gridjstables from "./container/tables/gridjstables/gridjstables.jsx";
 import Datatables from "./container/tables/datatables/datatables.jsx";
 import Chartjscharts from "./container/charts/chartjscharts/chartjscharts.jsx";
 import Echartscharts from "./container/charts/echartscharts/echartscharts.jsx";
-import Leafletmaps from "./container/maps/leafletmaps/leafletmaps.jsx";
-import Vectormaps from "./container/maps/vectormaps/vectormaps.jsx";
-import Icons from "./container/icons/icons.jsx";
+// import Leafletmaps from "./container/maps/leafletmaps/leafletmaps.jsx";
+// import Vectormaps from "./container/maps/vectormaps/vectormaps.jsx";
+// import Icons from "./container/icons/icons.jsx";
 import Linecharts from "./container/charts/apexcharts/linecharts/linecharts.jsx";
 import Areacharts from "./container/charts/apexcharts/areacharts/areacharts.jsx";
 import Columncharts from "./container/charts/apexcharts/columncharts/columncharts.jsx";
@@ -254,95 +254,107 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraQuyIII/danhMuc/danhSachLo`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraQuyIII/danhMuc/danhSachLo`}
                 element={<DanhSachLo />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraQuyIII/danhMuc/danhSachLo/import`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraQuyIII/danhMuc/danhSachLo/import`}
                 element={<ImportDanhSachLo />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraQuyIII/danhMuc/dinhMuc`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraQuyIII/danhMuc/dinhMuc`}
                 element={<DinhMuc />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraQuyIII/ketQua/theoDonVi`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraQuyIII/ketQua/theoDonVi`}
                 element={<KQtheoDonVi />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraQuyIII/ketQua/tongCongTy`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraQuyIII/ketQua/tongCongTy`}
                 element={<KQtongCongTy />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraQuyIII/phieuDaNgoai`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraQuyIII/phieuDaNgoai`}
                 element={<PhieuDaNgoai />}
               />
 
               {/* ----------TCTM---------- */}
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraCuoiNam/TCTM/phieuDaNgoai_TCTM`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/phieuDaNgoai_TCTM`}
                 element={<PhieuDaNgoai_TCTM />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaDonVi_TCTM`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaDonVi_TCTM`}
                 element={<KetQuaDonVi_TCTM />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTCT_TCTM`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTCT_TCTM`}
                 element={<KetQuaTCT_TCTM />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTheoDiem_TCTM`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTheoDiem_TCTM`}
                 element={<KetQuaTheoDiem_TCTM />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaXetThuong_TCTM`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaXetThuong_TCTM`}
                 element={<KetQuaXetThuong_TCTM />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraCuoiNam/TCTM/danhSachLoTCTM`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/danhSachLoTCTM`}
                 element={<DanhSachLoTCTM />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraCuoiNam/TCTM/dinhMuc_TCTM`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/dinhMuc_TCTM`}
                 element={<DinhMuc_TCTM />}
               />
 
               {/* ---------------TCTM END------ */}
 
               {/* ------------------KTCB----------------- */}
-              
+
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB`}
                 element={<PhieuDaNgoai_KTCB />}
               />
-
-
 
               <Route
                 path={`${import.meta.env.BASE_URL}dashboards/ecommerce`}
@@ -449,7 +461,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 element={<Products />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL}pages/ecommerce/productdetails`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }pages/ecommerce/productdetails`}
                 element={<Productdetails />}
               />
               <Route
@@ -480,7 +494,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL}pages/filemanager/filemanager`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }pages/filemanager/filemanager`}
                 element={<Filemanager />}
               />
 
@@ -662,38 +678,51 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 element={<Inputs />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }forms/formelements/checksradios`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }forms/formelements/checksradios`}
                 element={<Checksradios />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL}forms/formelements/inputgroup`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }forms/formelements/inputgroup`}
                 element={<Inputgroup />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL}forms/formelements/formselect`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }forms/formelements/formselect`}
                 element={<Formselect />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL}forms/formelements/rangeslider`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }forms/formelements/rangeslider`}
                 element={<Rangeslider />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL}forms/formelements/inputmasks`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }forms/formelements/inputmasks`}
                 element={<Inputmasks />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL}forms/formelements/fileuploads`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }forms/formelements/fileuploads`}
                 element={<Fileuploads />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }forms/formelements/datetimepicker`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }forms/formelements/datetimepicker`}
                 element={<Datetimepicker />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }forms/formelements/colorpickers`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }forms/formelements/colorpickers`}
                 element={<Colorpickers />}
               />
 
@@ -720,7 +749,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL}advancedui/accordionscollapse`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }advancedui/accordionscollapse`}
                 element={<Accordionscollapse />}
               />
               <Route
@@ -779,7 +810,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 element={<Projectslist />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL}apps/projects/projectoverview`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }apps/projects/projectoverview`}
                 element={<Projectoverview />}
               />
               <Route
@@ -966,19 +999,19 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 element={<Echartscharts />}
               />
 
-              <Route
+              {/* <Route
                 path={`${import.meta.env.BASE_URL}maps/leafletmaps`}
                 element={<Leafletmaps />}
-              />
-              <Route
+              /> */}
+              {/* <Route
                 path={`${import.meta.env.BASE_URL}maps/vectormaps`}
                 element={<Vectormaps />}
-              />
+              /> */}
 
-              <Route
+              {/* <Route
                 path={`${import.meta.env.BASE_URL}icons`}
                 element={<Icons />}
-              />
+              /> */}
             </Route>
 
             <Route
@@ -989,74 +1022,87 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 element={<Comingsoon />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/createpassword/basic`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/createpassword/basic`}
                 element={<Basic />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/createpassword/cover`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/createpassword/cover`}
                 element={<Cover />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/lockscreen/lockscreenbasic`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/lockscreen/lockscreenbasic`}
                 element={<Lockscreenbasic />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/lockscreen/lockscreencover`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/lockscreen/lockscreencover`}
                 element={<Lockscreencover />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/resetpassword/resetbasic`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/resetpassword/resetbasic`}
                 element={<Resetbasic />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/resetpassword/resetcover`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/resetpassword/resetcover`}
                 element={<Resetcover />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/signup/signupbasic`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/signup/signupbasic`}
                 element={<Signupbasic />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/signup/signupcover`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/signup/signupcover`}
                 element={<Signupcover />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/signin/signinbasic`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/signin/signinbasic`}
                 element={<Signinbasic />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/signin/signincover`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/signin/signincover`}
                 element={<Signincover />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/twostepverification/twostepbasic`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/twostepverification/twostepbasic`}
                 element={<Twostepbasic />}
               />
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/twostepverification/twostepcover`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/twostepverification/twostepcover`}
                 element={<Twostepcover />}
               />
 
               <Route
-                path={`${import.meta.env.BASE_URL
-                  }authentication/undermaintenance`}
+                path={`${
+                  import.meta.env.BASE_URL
+                }authentication/undermaintenance`}
                 element={<Undermaintenance />}
               />
 

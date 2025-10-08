@@ -467,6 +467,7 @@ const Header = ({ local_varaiable, ThemeChanger }) => {
                   className="header-logo">
                   <img src={desktoplogo} alt="logo" className="desktop-logo" />
                   <img src={togglelogo} alt="logo" className="toggle-logo" />
+                  <h2 className="desktop-dark">Phát</h2>
                   <img src={desktopdark} alt="logo" className="desktop-dark" />
                   <img src={toggledark} alt="logo" className="toggle-dark" />
                   <img
