@@ -148,11 +148,11 @@ const PhieuDaNgoai = () => {
         } else if (item.cayCao >= temp) {
           CaoT50++;
         } else if (item.cayCao < temp) {
-          CaoD50++;
+          ChuaCaoD50++;
         } else if (item.cayChuaCao >= temp) {
           ChuaCaoT50++;
         } else {
-          ChuaCaoD50++;
+          CaoD50++;
         }
         if (item.namHong == "cụt đọt") {
           CutDot++;
