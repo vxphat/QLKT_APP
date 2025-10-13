@@ -8,7 +8,7 @@ import {
   Table,
 } from "react-bootstrap";
 import axios from "axios";
-import { donVidata } from "../../kiemTraQuyIII/danhMuc/dinhMuc/dinhMucData";
+
 
 const apiService = {
 
@@ -98,9 +98,9 @@ const PhieuDaNgoai = () => {
     let temp = 50;
 
     // chú ý: so sánh phải dùng === chứ không phải =
-    if (data.giongCay === 'RRIV 124' && data.namKT === '2024') {
-      temp = 52;
-    }
+    // if (data.giongCay === 'RRIV 124' && data.namKT === '2024') {
+    //   temp = 52;
+    // }
 
     for (let i = 0; i < arr.length; i += size) {
       const group = arr.slice(i, i + size);
@@ -122,12 +122,12 @@ const PhieuDaNgoai = () => {
           HoTrong++;
         } else if (item.cayCao >= temp) {
           CaoT50++;
-        } else if(item.cayCao < temp ) {
-          CaoD50++;
+        } else if(item.cayChuaCao < temp ) {
+          ChuaCaoD50++;
         } else if(item.cayChuaCao >= temp ) {
           ChuaCaoT50++;
         } else{
-          ChuaCaoD50++;
+          CaoD50++;
         }
         if(item.namHong == 'cụt đọt' ) {
           CutDot++;
@@ -522,7 +522,9 @@ const PhieuDaNgoai = () => {
                           <td className="text-center border border-dark">{totals.CutDot != 0 ? totals.CutDot : ''}</td>
                         </tr>
                       </tbody>
+                      
                     </Table>
+                    
                   </div>
                 </>
               )}

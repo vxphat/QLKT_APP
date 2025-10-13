@@ -276,7 +276,7 @@ const KQtheoDonVi = () => {
         const tyLeViPham = denominator > 0 ? (cayCaoD50 / denominator) * 100 : 0;
         const dtXetThuong = diem >= 8 ? parseFloat(item.dienTichMC || 0) : parseFloat(item.dtXetThuong || 0);
 
-        const dt75 = tyLeCayDatVanh >= 75 ? dtXetThuong : 0;
+        const dt75 = tyLeCayDatVanh < 75 ? dtXetThuong : 0;
         const dtDuoi75 = tyLeCayDatVanh < 75 ? dtXetThuong : 0;
         const dtCayDuoi50 = tyLeViPham > 0 ? item.dienTichMC  : 0;
 
@@ -450,6 +450,7 @@ const KQtheoDonVi = () => {
                           <td>{cn.dt8.toFixed(2)}</td>
                           <td>{cn.dt9.toFixed(2)}</td>
                           <td>{cn.dt10.toFixed(2)}</td>
+                          <td>Cộng</td>
                           <td>{cn.dt75.toFixed(2)}</td>
                           <td>{(cn.dienTich - cn.dt75).toFixed(2)}</td>
                           <td>{cn.dtCayDuoi50.toFixed(2)}</td>
