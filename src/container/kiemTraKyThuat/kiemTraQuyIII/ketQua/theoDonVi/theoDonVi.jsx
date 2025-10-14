@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Card, Col, Form, Row, Table } from "react-bootstrap";
 import { donVidata } from "../../danhMuc/dinhMuc/dinhMucData";
+import { useToast } from "../../../../../contexts/ToastContext";
 
 const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
@@ -38,10 +39,28 @@ const KQtheoDonVi = () => {
   const [nam, setNam] = useState(new Date().getFullYear());
   const [maDonVi, setMaDonVi] = useState("");
 
+  // Helper function để hiển thị giá trị, nếu 0 thì để trống
+  const formatDisplayValue = (value) => {
+    if (
+      value === 0 ||
+      value === "0" ||
+      value === null ||
+      value === undefined ||
+      value === ""
+    ) {
+      return "";
+    }
+    return value;
+  };
+
   // Function to print the table
   const printTable = () => {
     if (dataLo.length === 0) {
-      alert("Không có dữ liệu để in!");
+      showToast({
+        title: "Thông báo",
+        message: "Không có dữ liệu để in. Hãy bấm Tải dữ liệu trước.",
+        variant: "success",
+      });
       return;
     }
 
@@ -49,7 +68,12 @@ const KQtheoDonVi = () => {
     const tableElement = document.getElementById("bangNhap");
 
     if (!tableElement) {
-      alert("Không tìm thấy bảng dữ liệu!");
+      showToast({
+        title: "Thông báo",
+        message: "Không tìm thấy bảng dữ liệu.",
+        variant: "success",
+      });
+
       return;
     }
 
@@ -116,7 +140,7 @@ const KQtheoDonVi = () => {
           width: 50px;
           }
 
-          th, td, tr {
+          th{
             background-color: #f0f0f0;
             font-weight: bold;
             height:10px;
@@ -129,6 +153,9 @@ const KQtheoDonVi = () => {
           .text-wrap {
             white-space: normal !important;
           }
+             #header-block p {
+            margin: 0;
+            font-size: 20px;}
           @media print {
             body { margin: 0 40px; }
             table { page-break-inside: auto; border: 1px solid #000; }
@@ -142,17 +169,17 @@ const KQtheoDonVi = () => {
       </head>
       <body>
         <div id="header-block" class="print-Wapper">
-              <col xl={3} style="text-align: center; float: left; width: 50%;"> 
-              <p><b>CÔNG TY TNHH MỘT THÀNH VIÊN</b></p>
-              <p><b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b></p>
-              <p><b>PHÒNG QUẢN LÝ KỸ THUẬT</b></p>
-              </col>
-              
-            
+            <div class="row">
+              <div class="col-4" style="display: flex; flex-direction: column; justify-content: center; align-items: center;"> 
+                <p>CÔNG TY TNHH MỘT THÀNH VIÊN</p>
+                <p>TỔNG CÔNG TY CAO SU ĐỒNG NAI</p>
+                <p><b>PHÒNG QUẢN LÝ KỸ THUẬT</b></p>
+              </div>
+            </div>
           </div>
 
 
-        <h4 style="text-align: center; margin-bottom: 10px; font-weight: bold;">
+        <h4 style="text-align: center; margin: 20px 0; font-weight: bold;">
           CHI TIẾT XÉT THƯỞNG VƯỜN CÂY MỞ CẠO
           ${nam && ` NĂM ${nam}`}
           ${
@@ -376,13 +403,19 @@ const KQtheoDonVi = () => {
                       <th className="text-wrap border border-dark" rowSpan={2}>
                         STT
                       </th>
-                      <th className="text-wrap border border-dark col-doi" rowSpan={2}>
+                      <th
+                        className="text-wrap border border-dark col-doi"
+                        rowSpan={2}>
                         Đội
                       </th>
-                      <th className="text-center border border-dark" rowSpan={2}>
+                      <th
+                        className="text-center border border-dark"
+                        rowSpan={2}>
                         Tên lô
                       </th>
-                      <th className="text-center border border-dark" rowSpan={2}>
+                      <th
+                        className="text-center border border-dark"
+                        rowSpan={2}>
                         Năm trồng
                       </th>
                       <th className="text-wrap border border-dark" rowSpan={2}>
@@ -397,7 +430,9 @@ const KQtheoDonVi = () => {
                       <th className="text-wrap border border-dark" rowSpan={2}>
                         Diện tích MC
                       </th>
-                      <th className="text-wrap border border-dark col-HT" rowSpan={2}>
+                      <th
+                        className="text-wrap border border-dark col-HT"
+                        rowSpan={2}>
                         Tổng số hố KT
                       </th>
                       <th className="text-wrap border border-dark" rowSpan={2}>
@@ -412,7 +447,9 @@ const KQtheoDonVi = () => {
                       <th className="text-wrap border border-dark" colSpan={2}>
                         Kết quả
                       </th>
-                      <th className="text-wrap border border-dark col-TLVP" rowSpan={2}>
+                      <th
+                        className="text-wrap border border-dark col-TLVP"
+                        rowSpan={2}>
                         Tỷ lệ vi phạm (%)
                       </th>
                       <th className="text-wrap border border-dark" rowSpan={2}>
@@ -420,12 +457,24 @@ const KQtheoDonVi = () => {
                       </th>
                     </tr>
                     <tr>
-                      <th className="text-wrap border border-dark col-cay">&ge; 50</th>
-                      <th className="text-wrap border border-dark col-cay">&lt; 50</th>
-                      <th className="text-wrap border border-dark col-cay">Tổng</th>
-                      <th className="text-wrap border border-dark col-cay">&ge; 50</th>
-                      <th className="text-wrap border border-dark col-cay">&lt; 50</th>
-                      <th className="text-wrap border border-dark col-cay">Tổng</th>
+                      <th className="text-wrap border border-dark col-cay">
+                        &ge; 50
+                      </th>
+                      <th className="text-wrap border border-dark col-cay">
+                        &lt; 50
+                      </th>
+                      <th className="text-wrap border border-dark col-cay">
+                        Tổng
+                      </th>
+                      <th className="text-wrap border border-dark col-cay">
+                        &ge; 50
+                      </th>
+                      <th className="text-wrap border border-dark col-cay">
+                        &lt; 50
+                      </th>
+                      <th className="text-wrap border border-dark col-cay">
+                        Tổng
+                      </th>
                       <th className="text-wrap border border-dark col-TLDV">
                         Tỷ lệ cây đạt vanh (%)
                       </th>
@@ -470,79 +519,144 @@ const KQtheoDonVi = () => {
                       return (
                         <tr key={idx}>
                           <td className="border border-dark">{idx + 1}</td>
-                          <td className="border border-dark">{cn.nongTruong}</td>
+                          <td className="border border-dark">
+                            {cn.nongTruong}
+                          </td>
                           <td className="border border-dark">{cn.tenLo}</td>
                           <td className="border border-dark">{cn.namTrong}</td>
                           <td className="border border-dark">{cn.hangDat}</td>
                           <td className="border border-dark">{cn.giongCay}</td>
                           <td className="border border-dark text-end">
-                            {cn.dienTich != null
+                            {cn.dienTich != null && Number(cn.dienTich) !== 0
                               ? Number(cn.dienTich).toFixed(4)
                               : ""}
                           </td>
-                          <td className="border border-dark text-end">{cn.dienTichMC != null ? Number(cn.dienTichMC).toFixed(4) : ""}</td>
-                          <td className="border border-dark">{tongHoKT}</td>
-                          <td className="border border-dark">{hoTrong}</td>
-                          <td className="border border-dark">{cn.soCayChuaCaoTren50}</td>
-                          <td className="border border-dark">{cn.soCayChuaCaoDuoi50}</td>
-                          <td className="border border-dark">{tongCayChuaCao}</td>
-                          <td className="border border-dark">{cn.soCayCaoTren50}</td>
-                          <td className="border border-dark">{cn.soCayCaoDuoi50}</td>
-                          <td className="border border-dark">{tongCayCao}</td>
-                          <td className="border border-dark">{tyLeNumber}</td>
-                          <td className="border border-dark">{diem}</td>
-                          <td className="border border-dark">{tyLeViPham}</td>
-                          <td className="border border-dark">{dtXetThuong}</td>
+                          <td className="border border-dark text-end">
+                            {cn.dienTichMC != null &&
+                            Number(cn.dienTichMC) !== 0
+                              ? Number(cn.dienTichMC).toFixed(4)
+                              : ""}
+                          </td>
+                          <td className="border border-dark">
+                            {formatDisplayValue(tongHoKT)}
+                          </td>
+                          <td className="border border-dark">
+                            {formatDisplayValue(hoTrong)}
+                          </td>
+                          <td className="border border-dark">
+                            {formatDisplayValue(cn.soCayChuaCaoTren50)}
+                          </td>
+                          <td className="border border-dark">
+                            {formatDisplayValue(cn.soCayChuaCaoDuoi50)}
+                          </td>
+                          <td className="border border-dark">
+                            {formatDisplayValue(tongCayChuaCao)}
+                          </td>
+                          <td className="border border-dark">
+                            {formatDisplayValue(cn.soCayCaoTren50)}
+                          </td>
+                          <td className="border border-dark">
+                            {formatDisplayValue(cn.soCayCaoDuoi50)}
+                          </td>
+                          <td className="border border-dark">
+                            {formatDisplayValue(tongCayCao)}
+                          </td>
+                          <td className="border border-dark">
+                            {tyLeNumber === 0 ? "" : tyLeNumber}
+                          </td>
+                          <td className="border border-dark">
+                            {formatDisplayValue(diem)}
+                          </td>
+                          <td className="border border-dark">
+                            {parseFloat(tyLeViPham) === 0 ? "" : tyLeViPham}
+                          </td>
+                          <td className="border border-dark">
+                            {dtXetThuong === 0 ? "" : dtXetThuong.toFixed(4)}
+                          </td>
                         </tr>
                       );
                     })}
 
                     {dataLo.length > 0 && (
                       <tr className="table-active">
-                        <td colSpan="6" className="border">
+                        <td colSpan="6" className="border border-dark">
                           <strong>CỘNG</strong>
                         </td>
-                        <td className="border text-end">
-                          <strong>{totals.dienTich.toFixed(4)}</strong>
+                        <td className="border border-dark text-end">
+                          <strong>
+                            {totals.dienTich === 0
+                              ? ""
+                              : totals.dienTich.toFixed(4)}
+                          </strong>
                         </td>
-                        <td className="border text-end">
-                          <strong>{totals.dienTichMC.toFixed(4)}</strong>
+                        <td className="border border-dark text-end">
+                          <strong>
+                            {totals.dienTichMC === 0
+                              ? ""
+                              : totals.dienTichMC.toFixed(4)}
+                          </strong>
                         </td>
-                        <td className="border">
-                          <strong>{totals.tongHoKT}</strong>
+                        <td className="border border-dark">
+                          <strong>{formatDisplayValue(totals.tongHoKT)}</strong>
                         </td>
-                        <td className="border">
-                          <strong>{totals.hoTrong}</strong>
+                        <td className="border border-dark">
+                          <strong>{formatDisplayValue(totals.hoTrong)}</strong>
                         </td>
-                        <td className="border">
-                          <strong>{totals.cayChuaCaoT50}</strong>
+                        <td className="border border-dark">
+                          <strong>
+                            {formatDisplayValue(totals.cayChuaCaoT50)}
+                          </strong>
                         </td>
-                        <td className="border">
-                          <strong>{totals.cayChuaCaoD50}</strong>
+                        <td className="border border-dark">
+                          <strong>
+                            {formatDisplayValue(totals.cayChuaCaoD50)}
+                          </strong>
                         </td>
-                        <td className="border">
-                          <strong>{totals.tongCayChuaCao}</strong>
+                        <td className="border border-dark">
+                          <strong>
+                            {formatDisplayValue(totals.tongCayChuaCao)}
+                          </strong>
                         </td>
-                        <td className="border">
-                          <strong>{totals.cayCaoT50}</strong>
+                        <td className="border border-dark">
+                          <strong>
+                            {formatDisplayValue(totals.cayCaoT50)}
+                          </strong>
                         </td>
-                        <td className="border">
-                          <strong>{totals.cayCaoD50}</strong>
+                        <td className="border border-dark">
+                          <strong>
+                            {formatDisplayValue(totals.cayCaoD50)}
+                          </strong>
                         </td>
-                        <td className="border">
-                          <strong>{totals.tongCayCao}</strong>
+                        <td className="border border-dark">
+                          <strong>
+                            {formatDisplayValue(totals.tongCayCao)}
+                          </strong>
                         </td>
-                        <td className="border">
-                          <strong>{avgTyLeCayDatVanh}</strong>
+                        <td className="border border-dark">
+                          <strong>
+                            {parseFloat(avgTyLeCayDatVanh) === 0
+                              ? ""
+                              : avgTyLeCayDatVanh}
+                          </strong>
                         </td>
-                        <td className="border">
-                          <strong>{avgDiem}</strong>
+                        <td className="border border-dark">
+                          <strong>
+                            {parseFloat(avgDiem) === 0 ? "" : avgDiem}
+                          </strong>
                         </td>
-                        <td className="border">
-                          <strong>{avgTyLeViPham}</strong>
+                        <td className="border border-dark">
+                          <strong>
+                            {parseFloat(avgTyLeViPham) === 0
+                              ? ""
+                              : avgTyLeViPham}
+                          </strong>
                         </td>
-                        <td className="border">
-                          <strong>{totals.dtXetThuong.toFixed(4)}</strong>
+                        <td className="border border-dark">
+                          <strong>
+                            {totals.dtXetThuong === 0
+                              ? ""
+                              : totals.dtXetThuong.toFixed(4)}
+                          </strong>
                         </td>
                       </tr>
                     )}

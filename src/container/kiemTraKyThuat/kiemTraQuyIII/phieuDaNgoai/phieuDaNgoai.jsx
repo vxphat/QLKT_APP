@@ -81,7 +81,6 @@ const PhieuDaNgoai = () => {
   const loadKQKT = async () => {
     // Kiểm tra đã chọn đầy đủ các trường chưa
     if (!namSelect || !donViSelect || !loSelect) {
-      // alert("Vui lòng chọn đầy đủ Năm, Đơn vị và Lô");
       showToast({
         title: "Thông báo",
         message: "Vui lòng chọn đầy đủ Năm, Đơn vị và Lô",
@@ -208,9 +207,17 @@ const PhieuDaNgoai = () => {
 
   const totals = calculateTotals(rows);
 
+  const _nguoiKiemTra = data?.kiemTraVien ? data.kiemTraVien.toUpperCase() : "";
+  const _thuKi = data?.thuKi ? data.thuKi.toUpperCase() : "";
+  const _ghiChu = data?.ghiChu ? data.ghiChu : "";
+
   const printTable = () => {
     if (!data) {
-      alert("Chưa có dữ liệu để in. Hãy bấm Tìm kiếm trước.");
+      showToast({
+        title: "Thông báo",
+        message: "Chưa có dữ liệu để in. Hãy bấm Tìm kiếm trước.",
+        variant: "success",
+      });
       return;
     }
 
@@ -218,7 +225,11 @@ const PhieuDaNgoai = () => {
     const tableElement = document.getElementById("bangNhap");
 
     if (!tableElement) {
-      alert("Không tìm thấy bảng dữ liệu!");
+      showToast({
+        title: "Thông báo",
+        message: "Không tìm thấy bảng dữ liệu.",
+        variant: "success",
+      });
       return;
     }
 
@@ -241,6 +252,11 @@ const PhieuDaNgoai = () => {
     const _ngayKiemTra = data?.ngayKiemTra
       ? new Date(data.ngayKiemTra).toLocaleDateString("vi-VN")
       : new Date().toLocaleDateString("vi-VN");
+    const _nguoiKiemTra = data?.kiemTraVien
+      ? htmlEscape(data.kiemTraVien.toUpperCase())
+      : "";
+    const _thuKi = data?.thuKi ? htmlEscape(data.thuKi.toUpperCase()) : "";
+    const _ghiChu = data?.ghiChu ? htmlEscape(data.ghiChu) : "";
 
     const _iconDownRight =
       data?.huong === 1 ? `<i class="bi bi-arrow-down-right"></i>` : "";
@@ -291,10 +307,13 @@ const PhieuDaNgoai = () => {
           .text-wrap {
             white-space: normal !important;
           }
+          #header-block p {
+            margin: 0;
+            font-size: 20px;}
          
           @media print {
             body { 
-            margin: 0 60px; 
+            margin: 0 50px; 
             zoom: 0.67;   /* thu nhỏ 67% */
             transform-origin: top left; /* neo góc trái trên, tránh lệch trang */
             }
@@ -306,7 +325,7 @@ const PhieuDaNgoai = () => {
             @page {
               
               size: A4 portrait; /* hoặc landscape nếu bạn cần ngang */
-              margin: 50px 0;         /* để không bị cắt khi scale */
+              margin: 30px 0;         /* để không bị cắt khi scale */
             }
           }
         </style>
@@ -318,9 +337,9 @@ const PhieuDaNgoai = () => {
           <div id="header-block">
               <p><b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b></p>
               <p><b>Đội:</b> ${htmlEscape(_donVi)}
-                
               </p>
               <p><b>Ngày kiểm tra: </b> ${htmlEscape(_ngayKiemTra)}</p>
+              <p><b>Người kiểm tra: </b> ${htmlEscape(_nguoiKiemTra)}</p>
           </div>
 
           <h4 style="text-align: center; margin-bottom: 20px; font-weight: 600">
@@ -330,8 +349,9 @@ const PhieuDaNgoai = () => {
           <div id="table-block">
             ${tableClone.outerHTML}
           </div>
+          <div id="note-block" style="margin-top: 5px; font-size: 20px"> <b>Ghi chú:</b> ${_ghiChu}</div>
 
-            <div id="legend-block" style="display: grid; grid-template-columns: auto auto auto; justify-content:  center; margin-top: 10px">
+            <div id="legend-block" style="display: grid; grid-template-columns: auto auto auto; justify-content:  center; margin-top: 0">
 
               <p style="text-align: center; display: flex; align-items: center; justify-content: center;">
               ${_iconDownRight}
@@ -364,12 +384,20 @@ const PhieuDaNgoai = () => {
               ${_iconUpLeft}</p>
           </div>
 
-          <div id="sign-block" style="display: flex; flex-direction: row; justify-content: space-around; margin-top: 10px">
+          <div id="sign-block" style="display: flex; flex-direction: row; justify-content: space-around; margin-top: 0">
             <p style="text-align: right; margin-top: 10px; font-weight: bold; font-size: 20px">
               ĐẠI DIỆN ĐỘI
             </p>
             <p style="text-align: right; margin-top: 10px; font-weight: bold; font-size: 20px">
               NGƯỜI KIỂM TRA
+            </p>
+          </div>
+          <div id="sign-name" style="display: flex; flex-direction: row; justify-content: space-around; margin-top: 30px">
+            <p style="text-align: right; margin-top: 10px; font-weight: bold; font-size: 20px">
+              
+            </p>
+            <p style="text-align: right; margin-top: 30px; font-weight: bold; font-size: 20px">
+              ${htmlEscape(_nguoiKiemTra)}
             </p>
           </div>
       </div>
@@ -396,6 +424,11 @@ const PhieuDaNgoai = () => {
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
               <Card.Title>PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY MỞ CẠO</Card.Title>
+              <p>
+                <Button variant="teal-light" className="btn btn-border-down">
+                  {_nguoiKiemTra}
+                </Button>
+              </p>
             </Card.Header>
             <Card.Body>
               <Row className="mb-3">

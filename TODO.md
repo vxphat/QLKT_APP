@@ -1,14 +1,9 @@
-# TODO - Add Missing Columns to theoDonVi Table
+# TODO: Create Project File Structure per baruco README.md
 
-## Steps to Complete:
-
-- [ ] Add danhSachLo API URL and TOKEN constants to theoDonVi.jsx
-- [ ] Create state to store danhSachLo data in theoDonVi.jsx
-- [ ] Implement function to fetch danhSachLo data in theoDonVi.jsx
-- [ ] Implement data merging logic to combine data from both APIs by idLo
-- [ ] Update table rendering to use merged data for missing columns
-- [ ] Test the implementation
-
-## Current Status:
-
-Working on step 1 - Adding danhSachLo API constants
+- [x] Create src/app/(public)/gioi-thieu-tong-quan/page.tsx
+- [x] Create src/sections/introduce/view/introduce-page-view.tsx
+- [x] Create src/sections/introduce/view/index.ts
+- [x] Create src/sections/introduce/company-timeline.tsx
+- [x] Create src/sections/introduce/organization-chart.tsx
+- [x] Create src/sections/introduce/leadership-team.tsx
+- [x] Create src/sections/introduce/awards-showcase.tsx

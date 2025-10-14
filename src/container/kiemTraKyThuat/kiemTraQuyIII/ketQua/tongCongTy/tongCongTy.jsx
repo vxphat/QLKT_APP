@@ -102,6 +102,9 @@ const KQtheoDonVi = () => {
           .text-wrap {
             white-space: normal !important;
           }
+             #header-block p {
+            margin: 0;
+            font-size: 20px;}
           @media print {
             body { margin: 40px 0; }
             table { page-break-inside: auto; }
@@ -115,11 +118,13 @@ const KQtheoDonVi = () => {
       </head>
       <body>
         <div id="header-block" class="print-Wapper">
-              <col xl={3} className="text-center" style="width: 50%; line-height: 1.6; font-size: 14px;"> 
-              <p><b>CÔNG TY TNHH MỘT THÀNH VIÊN</b></p>
-              <p><b>TỔNG CÔNG TY CAO SU ĐỒNG NAI</b></p>
-              <p><b>PHÒNG QUẢN LÝ KỸ THUẬT</b></p>
-              </col>
+              <div class="row">
+              <div class="col-4" style="display: flex; flex-direction: column; justify-content: center; align-items: center;"> 
+                <p>CÔNG TY TNHH MỘT THÀNH VIÊN</p>
+                <p>TỔNG CÔNG TY CAO SU ĐỒNG NAI</p>
+                <p><b>PHÒNG QUẢN LÝ KỸ THUẬT</b></p>
+              </div>
+            </div>
           </div>
         <h4 style="text-align: center; margin: 30px 0; font-weight: bold;">
           TỔNG HỢP XÉT THƯỞNG VƯỜN CÂY MỞ CẠO
@@ -362,6 +367,14 @@ const KQtheoDonVi = () => {
     });
   }, [dataLo]);
 
+  // Helper function để format số với 2 chữ số thập phân và thay 0 bằng "-"
+  const formatNumber = (value) => {
+    if (value === 0 || value === "0" || !value) return "-";
+    return typeof value === "number"
+      ? value.toFixed(2)
+      : parseFloat(value).toFixed(2);
+  };
+
   return (
     <Fragment>
       <Row className="mt-3">
@@ -370,7 +383,7 @@ const KQtheoDonVi = () => {
             <Card.Header className="card-header justify-content-between">
               <Card.Title>
                 TỔNG HỢP KẾT QUẢ KIỂM TRA VƯỜN CÂY MỞ CẠO NĂM{" "}
-                {nam && <> NĂM {nam}</>}
+                {nam && <> {nam}</>}
               </Card.Title>
             </Card.Header>
             <Card.Body>
@@ -465,16 +478,6 @@ const KQtheoDonVi = () => {
                   </thead>
                   <tbody>
                     {groupedArray.map((cn, idx) => {
-                      const dt8 = cn.dt8 || "-";
-                      const dt9 = cn.dt9 || "-";
-                      const dt10 = cn.dt10 || "-";
-                      const dienTichMC = cn.dienTichMC || "-";
-                      const dienTich = cn.dienTich || "-";
-                      const overallTyLeCayDatVanh =
-                        cn.overallTyLeCayDatVanh || "-";
-                      const cong = cn.dt8 + cn.dt9 + cn.dt10 || "-";
-                      const dtDuoi75 = cn.dtDuoi75 || "-";
-                      const dtCayDuoi50 = cn.dtCayDuoi50 || "-";
                       const diemTru = cn.dtCayDuoi50 > 0 ? 1 : 0;
                       const diemXepHang =
                         cn.dienTichMC > 0 ? 100 - diemTru : "-";
@@ -488,16 +491,18 @@ const KQtheoDonVi = () => {
                               cn.maDonVi ||
                               "N/A"}
                           </td>
-                          <td>{dienTichMC.toFixed(4)}</td>
-                          <td>{dienTich}</td>
-                          <td>{overallTyLeCayDatVanh}</td>
-                          <td>{dt8}</td>
-                          <td>{dt9}</td>
-                          <td>{dt10}</td>
-                          <td>{cong}</td>
-                          <td>{dtDuoi75}</td>
-                          <td>{dtCayDuoi50}</td>
-                          <td>{diemTru}</td>
+                          <td>{formatNumber(cn.dienTichMC)}</td>
+                          <td>{formatNumber(cn.dienTich)}</td>
+                          <td>{formatNumber(cn.overallTyLeCayDatVanh)}</td>
+                          <td>{formatNumber(cn.dt8)}</td>
+                          <td>{formatNumber(cn.dt9)}</td>
+                          <td>{formatNumber(cn.dt10)}</td>
+                          <td className="fw-bold">
+                            {formatNumber(cn.dt8 + cn.dt9 + cn.dt10)}
+                          </td>
+                          <td>{formatNumber(cn.dtDuoi75)}</td>
+                          <td>{formatNumber(cn.dtCayDuoi50)}</td>
+                          <td>{formatNumber(diemTru)}</td>
                           <td>{diemXepHang}</td>
                           <td></td>
                         </tr>
@@ -509,68 +514,85 @@ const KQtheoDonVi = () => {
                           <strong>TỔNG CỘNG</strong>
                         </td>
                         <td>
-                          <strong>{totals.dienTichMC.toFixed(4)}</strong>
+                          <strong>{formatNumber(totals.dienTichMC)}</strong>
                         </td>
                         <td>
-                          <strong>{totals.dienTich.toFixed(4)}</strong>
+                          <strong>{formatNumber(totals.dienTich)}</strong>
                         </td>
                         <td>
-                          <strong>{avgTyLeCayDatVanh}</strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {groupedArray
-                              .reduce((acc, item) => acc + item.dt8, 0)
-                              .toFixed(4)}
-                          </strong>
+                          <strong>{formatNumber(avgTyLeCayDatVanh)}</strong>
                         </td>
                         <td>
                           <strong>
-                            {groupedArray
-                              .reduce((acc, item) => acc + item.dt9, 0)
-                              .toFixed(4)}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {groupedArray
-                              .reduce((acc, item) => acc + item.dt10, 0)
-                              .toFixed(4)}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {groupedArray
-                              .reduce((acc, item) => acc + item.dt75, 0)
-                              .toFixed(4)}
-                          </strong>
-                        </td>
-                        <td>
-                          <strong>
-                            {(
+                            {formatNumber(
                               groupedArray.reduce(
-                                (acc, item) => acc + item.dienTich,
+                                (acc, item) => acc + item.dt8,
                                 0
-                              ) -
+                              )
+                            )}
+                          </strong>
+                        </td>
+                        <td>
+                          <strong>
+                            {formatNumber(
+                              groupedArray.reduce(
+                                (acc, item) => acc + item.dt9,
+                                0
+                              )
+                            )}
+                          </strong>
+                        </td>
+                        <td>
+                          <strong>
+                            {formatNumber(
+                              groupedArray.reduce(
+                                (acc, item) => acc + item.dt10,
+                                0
+                              )
+                            )}
+                          </strong>
+                        </td>
+                        <td>
+                          <strong>
+                            {formatNumber(
                               groupedArray.reduce(
                                 (acc, item) => acc + item.dt75,
                                 0
                               )
-                            ).toFixed(2)}
+                            )}
                           </strong>
                         </td>
                         <td>
                           <strong>
-                            {groupedArray
-                              .reduce((acc, item) => acc + item.dtCayDuoi50, 0)
-                              .toFixed(2)}
+                            {formatNumber(
+                              groupedArray.reduce(
+                                (acc, item) => acc + item.dienTich,
+                                0
+                              ) -
+                                groupedArray.reduce(
+                                  (acc, item) => acc + item.dt75,
+                                  0
+                                )
+                            )}
                           </strong>
                         </td>
                         <td>
                           <strong>
-                            {groupedArray.reduce(
-                              (acc, item) => acc + item.diemTru,
-                              0
+                            {formatNumber(
+                              groupedArray.reduce(
+                                (acc, item) => acc + item.dtCayDuoi50,
+                                0
+                              )
+                            )}
+                          </strong>
+                        </td>
+                        <td>
+                          <strong>
+                            {formatNumber(
+                              groupedArray.reduce(
+                                (acc, item) => acc + item.diemTru,
+                                0
+                              )
                             )}
                           </strong>
                         </td>

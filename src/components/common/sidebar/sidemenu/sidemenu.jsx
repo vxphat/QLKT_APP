@@ -2498,7 +2498,7 @@ export const MENUITEMS = [
         ],
       },
       {
-        path: `${import.meta.env.BASE_URL}icons`,
+        path: `${import.meta.env.BASE_URL}Icons`,
         icon: <i className="bx bx-store-alt side-menu__icon"></i>,
         type: "link",
         selected: false,
