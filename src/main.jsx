@@ -200,7 +200,7 @@ import KetQuaTheoDiem_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/
 import KetQuaXetThuong_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaXetThuong_TCTM/ketQuaXetThuong_TCTM.jsx";
 import DanhSachLoTCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/danhSachLoTCTM/danhSachLoTCTM.jsx";
 import DinhMuc_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/dinhMuc_TCTM/dinhMuc_TCTM.jsx";
-import PhieuDaNgoai_KTCB from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB/phieuDaNgoai_KTCB.jsx";
+import PhieuDaNgoai_KTCB2 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB2/phieuDaNgoai_KTCB2.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.Fragment>
@@ -352,8 +352,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route
                 path={`${
                   import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB`}
-                element={<PhieuDaNgoai_KTCB />}
+                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB2`}
+                element={<PhieuDaNgoai_KTCB2 />}
               />
 
               <Route

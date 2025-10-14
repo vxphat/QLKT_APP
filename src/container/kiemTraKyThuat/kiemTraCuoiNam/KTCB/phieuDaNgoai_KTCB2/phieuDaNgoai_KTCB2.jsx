@@ -18,7 +18,7 @@ const TOKEN = "vxphat1994@";
 
 const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
-const PhieuDaNgoai_KTCB = () => {
+const PhieuDaNgoai_KTCB2 = () => {
   const [danhSachCN, setDanhSachCN] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -199,7 +199,9 @@ const PhieuDaNgoai_KTCB = () => {
         <Col xl={12}>
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
-              <Card.Title>PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY TCTM</Card.Title>
+              <Card.Title>
+                PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY KTCB NĂM 2
+              </Card.Title>
             </Card.Header>
             <Card.Body>
               <Row className="mb-3">
@@ -262,77 +264,81 @@ const PhieuDaNgoai_KTCB = () => {
               </Row>
 
               <div className="d-flex justify-content-center mt-5">
-                <h4>
-                  PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY TCTM
-                  {nam && <> NĂM {nam}</>}
-                </h4>
+                <h4>PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY KTCB NĂM 2</h4>
               </div>
 
-              <div className="table-responsive mt-4">
-                <Table className="table text-nowrap" id="bangNhap">
-                  <thead className="sticky-header ">
+              <div className="table-responsive mt-4 d-flex justify-content-center">
+                <Table className="table w-50" id="bangNhap">
+                  <thead>
                     <tr>
                       <th
-                        rowSpan={4}
-                        className="text-center border border-dark">
-                        Hàng
+                        rowspan={4}
+                        className="border border-dark text-center"
+                        width="70px">
+                        <p>
+                          <b>Số thứ tự hàng</b>
+                        </p>
                       </th>
                       <th
-                        colSpan={6}
-                        className="text-center border border-dark">
-                        Lô:.......Giống:.......
-                      </th>
-                      <th
-                        colSpan={6}
-                        className="text-center border border-dark">
-                        Tọa độ cây thứ I
+                        colspan={10}
+                        class="text-wrap border border-dark text-center text-middle">
+                        <p>
+                          {" "}
+                          <b>Lô: A2 - Hạng đất: III - PP trồng: 2023</b>
+                        </p>
                       </th>
                     </tr>
                     <tr>
-                      <th
-                        colSpan={6}
-                        className="text-center border border-dark">
-                        PP trồng……... Ngày trồng………...…Kết thúc…...........
-                      </th>
-                      <th
-                        colSpan={6}
-                        className="text-center border border-dark">
-                        Hàng……………. Cây thứ…………
-                      </th>
+                      <td colspan={10} className="border border-dark">
+                        Tọa độ cây thứ I: Hàng: 5 Cây: 10
+                      </td>
                     </tr>
                     <tr>
                       <th
-                        rowSpan={2}
-                        className="text-center border border-dark">
+                        rowspan={2}
+                        className="border border-dark text-center"
+                        width="80px">
                         HT
                       </th>
-                      <th
-                        colSpan={5}
-                        className="text-center border border-dark">
-                        Số tầng lá (tầng)
-                      </th>
-                      <th
-                        colSpan={5}
-                        className="text-center border border-dark">
-                        Sinh trưởng (A, B, C)
-                      </th>
-                      <th
-                        rowSpan={2}
-                        className="text-center border border-dark">
-                        Kudzu (%)
-                      </th>
+                      <td colspan={5} className="border border-dark">
+                        {" "}
+                        <b>Vanh</b>
+                      </td>
+                      <td colspan={3} className="border border-dark">
+                        <b>Sinh trưởng cây dặm</b>
+                      </td>
+                      <td colspan={1} className="border border-dark">
+                        <b>Kudzu</b>
+                      </td>
                     </tr>
-                    <tr>
-                      <th className="text-center border border-dark">Cây 1</th>
-                      <th className="text-center border border-dark">Cây 2</th>
-                      <th className="text-center border border-dark">Cây 3</th>
-                      <th className="text-center border border-dark">Cây 4</th>
-                      <th className="text-center border border-dark">Cây 5</th>
-                      <th className="text-center border border-dark">Cây 1</th>
-                      <th className="text-center border border-dark">Cây 2</th>
-                      <th className="text-center border border-dark">Cây 3</th>
-                      <th className="text-center border border-dark">Cây 4</th>
-                      <th className="text-center border border-dark">Cây 5</th>
+                    <tr class="table_row1">
+                      <td className="border border-dark" width="60px">
+                        Cây 1
+                      </td>
+                      <td className="border border-dark" width="60px">
+                        Cây 2
+                      </td>
+                      <td className="border border-dark" width="60px">
+                        Cây 3
+                      </td>
+                      <td className="border border-dark" width="60px">
+                        Cây 4
+                      </td>
+                      <td className="border border-dark" width="60px">
+                        Cây 5
+                      </td>
+                      <td className="border border-dark" width="60px">
+                        A
+                      </td>
+                      <td className="border border-dark" width="60px">
+                        B
+                      </td>
+                      <td className="border border-dark" width="60px">
+                        C
+                      </td>
+                      <td className="border border-dark" width="60px">
+                        %
+                      </td>
                     </tr>
                   </thead>
                   <tbody>
@@ -341,18 +347,16 @@ const PhieuDaNgoai_KTCB = () => {
                         <td className="text-center border border-dark">
                           {i + 1}
                         </td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
-                        <td className="text-center border border-dark"></td>
+                        <td className="text-center border border-dark">50</td>
+                        <td className="text-center border border-dark">100</td>
+                        <td className="text-center border border-dark">35</td>
+                        <td className="text-center border border-dark">40</td>
+                        <td className="text-center border border-dark">45</td>
+                        <td className="text-center border border-dark">50</td>
+                        <td className="text-center border border-dark">5</td>
+                        <td className="text-center border border-dark">5</td>
+                        <td className="text-center border border-dark">5</td>
+                        <td className="text-center border border-dark">5</td>
                       </tr>
                     ))}
                     <tr>
@@ -367,8 +371,6 @@ const PhieuDaNgoai_KTCB = () => {
                       <td className="text-center border fw-bold border-dark bg-light">
                         123
                       </td>
-                      <td className="text-center border fw-bold border-dark bg-light"></td>
-                      <td className="text-center border fw-bold border-dark bg-light"></td>
                       <td className="text-center border fw-bold border-dark bg-light"></td>
                       <td className="text-center border fw-bold border-dark bg-light"></td>
                       <td className="text-center border fw-bold border-dark bg-light"></td>
@@ -442,4 +444,4 @@ const PhieuDaNgoai_KTCB = () => {
   );
 };
 
-export default PhieuDaNgoai_KTCB;
+export default PhieuDaNgoai_KTCB2;
