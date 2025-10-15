@@ -23,8 +23,8 @@ const Login = ({ ThemeChanger }) => {
   const [passwordshow1, setpasswordshow1] = useState(false);
   const [err, setError] = useState("");
   const [data, setData] = useState({
-    email: "qlkt@donaruco.vn",
-    password: "admin",
+    email: null,
+    password: null,
   });
   const { email, password } = data;
   const changeHandler = (e) => {
@@ -104,9 +104,10 @@ const Login = ({ ThemeChanger }) => {
                             placeholder="Enter your email"
                             name="email"
                             type="text"
-                            value=""
+                            value={email}
                             onChange={changeHandler}
                             required
+                            tabIndex={1}
                           />
                         </Col>
                         <Col xl={12} className="mb-2">
@@ -125,16 +126,18 @@ const Login = ({ ThemeChanger }) => {
                               placeholder="Enter your password"
                               name="password"
                               type={passwordshow1 ? "text" : "password"}
-                              value=""
+                              value={password}
                               onChange={changeHandler}
                               required
+                              tabIndex={2}
                             />
                             <Button
                               variant="light"
                               className="btn btn-light"
                               type="button"
                               onClick={() => setpasswordshow1(!passwordshow1)}
-                              id="button-addon2">
+                              id="button-addon2"
+                              tabIndex={3}>
                               <i
                                 className={`${
                                   passwordshow1
