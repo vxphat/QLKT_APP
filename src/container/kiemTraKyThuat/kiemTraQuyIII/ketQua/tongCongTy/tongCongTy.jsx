@@ -264,15 +264,10 @@ const KQtheoDonVi = () => {
   );
 
   // Tính trung bình điểm & tỷ lệ
-  const avgDiem =
-    dataLo.length > 0 ? (totals.diem / dataLo.length).toFixed(1) : "0.0";
+
   const avgTyLeCayDatVanh =
     totals.tongHoKT > 0
       ? ((totals.tongCayCao / totals.tongHoKT) * 100).toFixed(1)
-      : "0.0";
-  const avgTyLeViPham =
-    totals.tongHoKT > 0
-      ? ((totals.cayCaoD50 / totals.tongHoKT) * 100).toFixed(1)
       : "0.0";
 
   const groupedArray = useMemo(() => {
@@ -566,13 +561,9 @@ const KQtheoDonVi = () => {
                           <strong>
                             {formatNumber(
                               groupedArray.reduce(
-                                (acc, item) => acc + item.dienTich,
+                                (acc, item) => acc + item.dtDuoi75,
                                 0
-                              ) -
-                                groupedArray.reduce(
-                                  (acc, item) => acc + item.dt75,
-                                  0
-                                )
+                              )
                             )}
                           </strong>
                         </td>
@@ -580,7 +571,7 @@ const KQtheoDonVi = () => {
                           <strong>
                             {formatNumber(
                               groupedArray.reduce(
-                                (acc, item) => acc + item.dtCayDuoi50,
+                                (acc, item) => acc + item.dt50,
                                 0
                               )
                             )}
