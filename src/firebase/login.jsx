@@ -58,8 +58,8 @@ const Login = ({ ThemeChanger }) => {
     } else {
       setError("Thông tin đăng nhập không hợp lệ");
       setData({
-        email: "qlkt@donaruco.vn",
-        password: "admin",
+        email: null,
+        password: null,
       });
     }
   };
