@@ -56,7 +56,7 @@ const Login = ({ ThemeChanger }) => {
     if (data.email == "qlkt@donaruco.vn" && data.password == "admin") {
       routeChange();
     } else {
-      setError("The Auction details did not Match");
+      setError("Thông tin đăng nhập không hợp lệ");
       setData({
         email: "qlkt@donaruco.vn",
         password: "admin",
