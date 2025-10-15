@@ -88,7 +88,7 @@ const Login = ({ ThemeChanger }) => {
                     <div className="p-4">
                       <p className="h5 fw-semibold mb-2 text-center">Sign In</p>
                       <p className="mb-4 text-muted op-7 fw-normal text-center">
-                        Welcome back Phát!
+                        Welcome back Admin!
                       </p>
                       <div className="row gy-3">
                         {err && <Alert variant="danger">{err}</Alert>}
@@ -104,7 +104,7 @@ const Login = ({ ThemeChanger }) => {
                             placeholder="Enter your email"
                             name="email"
                             type="text"
-                            value={email}
+                            value=""
                             onChange={changeHandler}
                             required
                           />
@@ -125,7 +125,7 @@ const Login = ({ ThemeChanger }) => {
                               placeholder="Enter your password"
                               name="password"
                               type={passwordshow1 ? "text" : "password"}
-                              value={password}
+                              value=""
                               onChange={changeHandler}
                               required
                             />
@@ -169,32 +169,6 @@ const Login = ({ ThemeChanger }) => {
                             Sign In
                           </Button>
                         </Col>
-                      </div>
-                      <div className="text-center">
-                        <p className="fs-12 text-muted mt-3">
-                          Dont have an account?{" "}
-                          <Link
-                            to={`${
-                              import.meta.env.BASE_URL
-                            }authentication/signup/signupcover`}
-                            className="text-primary">
-                            Sign Up
-                          </Link>
-                        </p>
-                      </div>
-                      <div className="text-center my-3 authentication-barrier">
-                        <span>OR</span>
-                      </div>
-                      <div className="btn-list text-center">
-                        <Button variant="light" className="btn btn-icon">
-                          <i className="ri-facebook-line fw-bold text-dark op-7"></i>
-                        </Button>
-                        <Button variant="light" className="btn btn-icon">
-                          <i className="ri-google-line fw-bold text-dark op-7"></i>
-                        </Button>
-                        <Button variant="light" className="btn btn-icon">
-                          <i className="ri-twitter-line fw-bold text-dark op-7"></i>
-                        </Button>
                       </div>
                     </div>
                   </Tab.Pane>
