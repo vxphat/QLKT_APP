@@ -11,7 +11,6 @@ import {
 } from "react-bootstrap";
 import Pageheader from "../../../../../components/pageheader/pageheader";
 import { donVidata } from "../../../kiemTraQuyIII/danhMuc/dinhMuc/dinhMucData";
-import { CheckBox } from "@mui/icons-material";
 
 const API_URL =
   "https://script.google.com/macros/s/AKfycbwZM002-mVfsGaQeGlEt9qLnTK4Ef41VWhDFHlAeuH6XF_Xo9Lsiv194etMJCpzNbhiwA/exec"; // URL web app của bạn
@@ -19,7 +18,7 @@ const TOKEN = "vxphat1994@";
 
 const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
-const PhieuDaNgoai_KTCB2 = () => {
+const PhieuDaNgoai_KTCB4 = () => {
   const [danhSachCN, setDanhSachCN] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -122,7 +121,7 @@ const PhieuDaNgoai_KTCB2 = () => {
             white-space: normal !important;
           }
           @media print {
-            body { 
+           body { 
             margin: 0 50px; 
             zoom: 0.67;   /* thu nhỏ 67% */
             transform-origin: top left; /* neo góc trái trên, tránh lệch trang */
@@ -154,8 +153,8 @@ const PhieuDaNgoai_KTCB2 = () => {
           </div>
 
           <h4 style="text-align: center; margin-bottom: 20px; font-weight: 600">
-            PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY KTCB NĂM 2
-           
+            PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY KTCB NĂM 3
+            ${nam && ` NĂM ${nam}`}
           </h4>
 
           <div id="table-block">
@@ -206,7 +205,7 @@ const PhieuDaNgoai_KTCB2 = () => {
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
               <Card.Title>
-                PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY KTCB NĂM 2
+                PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY KTCB NĂM 4
               </Card.Title>
             </Card.Header>
             <Card.Body>
@@ -270,7 +269,7 @@ const PhieuDaNgoai_KTCB2 = () => {
               </Row>
 
               <div className="d-flex justify-content-center mt-5">
-                <h4>PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY KTCB NĂM 2</h4>
+                <h4>PHIẾU KIỂM TRA DÃ NGOẠI VƯỜN CÂY KTCB NĂM 4</h4>
               </div>
 
               <div className="table-responsive mt-4 d-flex justify-content-center">
@@ -281,22 +280,17 @@ const PhieuDaNgoai_KTCB2 = () => {
                         rowspan={4}
                         className="border border-dark text-center"
                         width="70px">
-                        <p>
-                          <b>Số thứ tự hàng</b>
-                        </p>
+                        <b>Số thứ tự hàng</b>
                       </th>
                       <th
                         colspan={10}
                         class="text-wrap border border-dark text-center text-middle">
-                        <p>
-                          {" "}
-                          <b>Lô: A2 - Hạng đất: III - PP trồng: 2023</b>
-                        </p>
+                        <b>Lô: A2 - Hạng đất: III - PP trồng: 2023 - Giống:</b>
                       </th>
                     </tr>
                     <tr>
                       <td colspan={10} className="border border-dark">
-                        Tọa độ cây thứ I: Hàng: 5 Cây: 10
+                        <b>Tọa độ cây thứ I: Hàng: 5 Cây: 10</b>
                       </td>
                     </tr>
                     <tr>
@@ -311,39 +305,33 @@ const PhieuDaNgoai_KTCB2 = () => {
                         <b>Vanh</b>
                       </td>
                       <td colspan={3} className="border border-dark">
-                        <b>Sinh trưởng cây dặm</b>
-                      </td>
-                      <td colspan={1} className="border border-dark">
-                        <b>Kudzu</b>
+                        <b>Nấm hồng</b>
                       </td>
                     </tr>
                     <tr class="table_row1">
                       <td className="border border-dark" width="60px">
-                        Cây 1
+                        <b>Cây 1</b>
                       </td>
                       <td className="border border-dark" width="60px">
-                        Cây 2
+                        <b>Cây 2</b>
                       </td>
                       <td className="border border-dark" width="60px">
-                        Cây 3
+                        <b>Cây 3</b>
                       </td>
                       <td className="border border-dark" width="60px">
-                        Cây 4
+                        <b>Cây 4</b>
                       </td>
                       <td className="border border-dark" width="60px">
-                        Cây 5
+                        <b>Cây 5</b>
                       </td>
                       <td className="border border-dark" width="60px">
-                        A
+                        <b>C1</b>
                       </td>
                       <td className="border border-dark" width="60px">
-                        B
+                        <b>C2</b>
                       </td>
                       <td className="border border-dark" width="60px">
-                        C
-                      </td>
-                      <td className="border border-dark" width="60px">
-                        %
+                        <b>Cụt đọt</b>
                       </td>
                     </tr>
                   </thead>
@@ -359,7 +347,6 @@ const PhieuDaNgoai_KTCB2 = () => {
                         <td className="text-center border border-dark">40</td>
                         <td className="text-center border border-dark">45</td>
                         <td className="text-center border border-dark">50</td>
-                        <td className="text-center border border-dark">5</td>
                         <td className="text-center border border-dark">5</td>
                         <td className="text-center border border-dark">5</td>
                         <td className="text-center border border-dark">5</td>
@@ -389,7 +376,6 @@ const PhieuDaNgoai_KTCB2 = () => {
                       <td className="text-center border fw-bold border-dark bg-light"></td>
                       <td className="text-center border fw-bold border-dark bg-light"></td>
                       <td className="text-center border fw-bold border-dark bg-light"></td>
-                      <td className="text-center border fw-bold border-dark bg-light"></td>
                     </tr>
                   </tbody>
                 </Table>
@@ -398,7 +384,7 @@ const PhieuDaNgoai_KTCB2 = () => {
               <div className="comment">
                 <Row className="mt-3">
                   <Col xl={4} className="text-start">
-                    <b>1. Tỉa chồi có kiểm soát:</b>
+                    <b>1. Quản lý tỉa chồi, tạo tán:</b>
                   </Col>
                   <Col xl={4} className="text-start">
                     <Form.Check
@@ -467,77 +453,6 @@ const PhieuDaNgoai_KTCB2 = () => {
                     />
                   </Col>
                 </Row>
-
-                <Row className="mt-3">
-                  <Col xl={4} className="text-start">
-                    <b>4. Cày ép xanh (Khoảng cách, kỹ thuật cày):</b>
-                  </Col>
-                  <Col xl={4} className="text-start">
-                    <Form.Check
-                      className="form-check-xl d-flex align-items-center me-3"
-                      type="checkbox"
-                      defaultChecked
-                      id="checkebox-md"
-                      label=" Đúng"
-                    />
-                  </Col>
-                  <Col xl={4} className="text-start">
-                    <Form.Check
-                      className="form-check-xl d-flex align-items-center me-3"
-                      type="checkbox"
-                      defaultChecked
-                      id="checkebox-md"
-                      label=" Sai"
-                    />
-                  </Col>
-                </Row>
-
-                <Row className="mt-3">
-                  <Col xl={4} className="text-start">
-                    <b>5. Quản lý thảm phủ:</b>
-                  </Col>
-                  <Col xl={4} className="text-start">
-                    <Form.Check
-                      className="form-check-xl d-flex align-items-center me-3"
-                      type="checkbox"
-                      defaultChecked
-                      id="checkebox-md"
-                      label=" Cỏ dại"
-                    />
-                  </Col>
-                  <Col xl={4} className="text-start">
-                    <Form.Check
-                      className="form-check-xl d-flex align-items-center me-3"
-                      type="checkbox"
-                      defaultChecked
-                      id="checkebox-md"
-                      label="Leo lên cây cao su"
-                    />
-                  </Col>
-                </Row>
-                <Row className="mt-3">
-                  <Col xl={4} className="text-start">
-                    <b>6. Quản lý gia súc phá hoại:</b>
-                  </Col>
-                  <Col xl={4} className="text-start">
-                    <Form.Check
-                      className="form-check-xl d-flex align-items-center me-3"
-                      type="checkbox"
-                      defaultChecked
-                      id="checkebox-md"
-                      label="Có"
-                    />
-                  </Col>
-                  <Col xl={4} className="text-start">
-                    <Form.Check
-                      className="form-check-xl d-flex align-items-center me-3"
-                      type="checkbox"
-                      defaultChecked
-                      id="checkebox-xl"
-                      label="Không"
-                    />
-                  </Col>
-                </Row>
               </div>
             </Card.Body>
           </Card>
@@ -601,4 +516,4 @@ const PhieuDaNgoai_KTCB2 = () => {
   );
 };
 
-export default PhieuDaNgoai_KTCB2;
+export default PhieuDaNgoai_KTCB4;

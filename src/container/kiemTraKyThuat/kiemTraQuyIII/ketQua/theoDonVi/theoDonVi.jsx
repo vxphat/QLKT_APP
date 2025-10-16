@@ -180,7 +180,7 @@ const KQtheoDonVi = () => {
 
 
         <h4 style="text-align: center; margin: 20px 0; font-weight: bold;">
-          CHI TIẾT XÉT THƯỞNG VƯỜN CÂY MỞ CẠO
+          CHI TIẾT KẾT QUẢ VƯỜN CÂY MỞ CẠO
           ${nam && ` NĂM ${nam}`}
           ${
             maDonVi &&
@@ -337,7 +337,7 @@ const KQtheoDonVi = () => {
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
               <Card.Title>
-                CHI TIẾT XÉT THƯỞNG VƯỜN CÂY MỞ CẠO
+                CHI TIẾT KẾT QUẢ VƯỜN CÂY MỞ CẠO
                 {nam && <> NĂM {nam}</>}
                 {maDonVi && (
                   <>
@@ -453,7 +453,7 @@ const KQtheoDonVi = () => {
                         Tỷ lệ vi phạm (%)
                       </th>
                       <th className="text-wrap border border-dark" rowSpan={2}>
-                        DT xét thưởng
+                        DT tỷ lệ vanh &ge; 75% (ha)
                       </th>
                     </tr>
                     <tr>

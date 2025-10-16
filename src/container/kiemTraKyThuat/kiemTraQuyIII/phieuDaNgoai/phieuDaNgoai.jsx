@@ -314,7 +314,7 @@ const PhieuDaNgoai = () => {
           @media print {
             body { 
             margin: 0 50px; 
-            zoom: 0.67;   /* thu nhỏ 67% */
+            zoom: 0.70;   /* thu nhỏ 67% */
             transform-origin: top left; /* neo góc trái trên, tránh lệch trang */
             }
             table { page-break-inside: auto; }
