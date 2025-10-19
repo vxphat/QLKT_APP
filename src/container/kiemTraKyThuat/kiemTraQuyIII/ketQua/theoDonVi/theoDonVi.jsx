@@ -440,19 +440,29 @@ const KQtheoDonVi = () => {
                         rowSpan={2}>
                         Năm trồng
                       </th>
-                      <th className="text-wrap border border-dark col-giong" rowSpan={2}>
+                      <th
+                        className="text-wrap border border-dark col-giong"
+                        rowSpan={2}>
                         Hạng đất
                       </th>
-                      <th className="text-wrap border border-dark col-giong" rowSpan={2}>
+                      <th
+                        className="text-wrap border border-dark col-giong"
+                        rowSpan={2}>
                         Giống
                       </th>
-                      <th className="text-wrap border border-dark col-dt" rowSpan={2}>
+                      <th
+                        className="text-wrap border border-dark col-dt"
+                        rowSpan={2}>
                         Diện tích KK (ha)
                       </th>
-                      <th className="text-wrap border border-dark col-dt" rowSpan={2}>
+                      <th
+                        className="text-wrap border border-dark col-dt"
+                        rowSpan={2}>
                         Diện tích MC (ha)
                       </th>
-                      <th className="text-wrap border border-dark col-dt" rowSpan={2}>
+                      <th
+                        className="text-wrap border border-dark col-dt"
+                        rowSpan={2}>
                         Diện tích KT (ha)
                       </th>
                       <th
@@ -588,7 +598,7 @@ const KQtheoDonVi = () => {
                           <td className="border border-dark">
                             {formatDisplayValue(cn.soCayChuaCaoDuoi50)}
                           </td>
-                          <td className="border border-dark">
+                          <td className="border border-dark fw-bold">
                             {formatDisplayValue(tongCayChuaCao)}
                           </td>
                           <td className="border border-dark">
@@ -597,7 +607,7 @@ const KQtheoDonVi = () => {
                           <td className="border border-dark">
                             {formatDisplayValue(cn.soCayCaoDuoi50)}
                           </td>
-                          <td className="border border-dark">
+                          <td className="border border-dark fw-bold">
                             {formatDisplayValue(tongCayCao)}
                           </td>
                           <td className="border border-dark">
@@ -609,7 +619,7 @@ const KQtheoDonVi = () => {
                           <td className="border border-dark">
                             {parseFloat(tyLeViPham) === 0 ? "" : tyLeViPham}
                           </td>
-                          <td className="border border-dark">
+                          <td className="border border-dark text-end fw-bold">
                             {dtXetThuong === 0 ? "" : dtXetThuong.toFixed(4)}
                           </td>
                         </tr>
@@ -695,7 +705,7 @@ const KQtheoDonVi = () => {
                               : avgTyLeViPham}
                           </strong>
                         </td>
-                        <td className="border border-dark">
+                        <td className="border border-dark text-end fw-bold">
                           <strong>
                             {totals.dtXetThuong === 0
                               ? ""
@@ -741,7 +751,7 @@ const KQtheoDonVi = () => {
         .table th.col-giong {
           width: 80px;
         }
-        .table th.col-dt{
+        .table th.col-dt {
           width: 100px;
         }
 
@@ -757,7 +767,7 @@ const KQtheoDonVi = () => {
         .table th.col-dtKT {
           width: 50px;
         }
-         .table th.col-cay {
+        .table th.col-cay {
           width: 60px;
         }
 

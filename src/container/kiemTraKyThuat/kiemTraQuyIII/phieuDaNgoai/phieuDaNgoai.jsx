@@ -142,9 +142,26 @@ const PhieuDaNgoai = () => {
       let C2 = 0;
 
       group.forEach((item) => {
+        // Đếm hố trồng
         if (item.hoTrong == 1) {
           HoTrong++;
-        } else if (item.cayCao >= temp) {
+          return;
+        }
+
+        // Trường hợp cây bị hỏng (không cạo được)
+        if (item.cayCao === 0 && item.cayChuaCao === 0) {
+          if (item.namHong === "cụt đọt") {
+            CutDot++;
+          } else if (item.namHong === "C2+") {
+            C2++;
+          } else if (item.namHong === "C, C1") {
+            C1++;
+          }
+          return; // dừng ở đây, không tính tiếp vào nhóm cao thấp
+        }
+
+        // Nếu không thuộc nhóm cây hỏng → tiếp tục phân loại theo temp
+        if (item.cayCao >= temp) {
           CaoT50++;
         } else if (item.cayCao < temp) {
           ChuaCaoD50++;
@@ -152,13 +169,6 @@ const PhieuDaNgoai = () => {
           ChuaCaoT50++;
         } else {
           CaoD50++;
-        }
-        if (item.namHong == "cụt đọt") {
-          CutDot++;
-        } else if (item.namHong == "C2+") {
-          C2++;
-        } else if (item.namHong == "C, C1") {
-          C1++;
         }
       });
 

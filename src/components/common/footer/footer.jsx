@@ -9,15 +9,13 @@ const Footer = () => {
           <span className="text-muted">
             {" "}
             Copyright © 2025 <span id="year"></span>{" "}
-            <Link to="#" className="text-dark fw-semibold">
+            <Link to="#" className="text-success fw-semibold">
               DONARUCO
             </Link>
             . Designed with{" "}
             <span className="bi bi-heart-fill text-danger"></span> by{" "}
             <Link to="#">
-              <span className="fw-semibold text-primary text-decoration-underline">
-                QUẢN LÝ KỸ THUẬT
-              </span>
+              <span className="fw-semibold text-primary">QUẢN LÝ KỸ THUẬT</span>
             </Link>{" "}
             All rights reserved
           </span>
