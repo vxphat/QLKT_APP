@@ -173,7 +173,7 @@ const KQtheoDonVi = () => {
               <div class="col-4" style="display: flex; flex-direction: column; justify-content: center; align-items: center;"> 
                 <p>CÔNG TY TNHH MỘT THÀNH VIÊN</p>
                 <p>TỔNG CÔNG TY CAO SU ĐỒNG NAI</p>
-                <p><b>PHÒNG QUẢN LÝ KỸ THUẬT</b></p>
+                <p><b>PHÒNG QUẢN LÝ KỸ THUẬT PHÁT</b></p>
               </div>
             </div>
           </div>
@@ -226,7 +226,12 @@ const KQtheoDonVi = () => {
     }
   };
 
-  function tinhDiem(tyLeNumber) {
+  function tinhDiem(tyLeNumber, tongHoKT) {
+    // Nếu tổng số hố KT < 50 thì trả về 0
+    if (tongHoKT < 50) {
+      return 0;
+    }
+
     if (!dinhMuc) return;
     for (const rule of dinhMuc) {
       const { tyLe, diem } = rule;
@@ -269,7 +274,7 @@ const KQtheoDonVi = () => {
         denominator > 0 ? (tongCayCao / denominator) * 100 : 0;
 
       // Điểm
-      const diem = tinhDiem(tyLeCayDatVanh);
+      const diem = tinhDiem(tyLeCayDatVanh, denominator);
 
       // Tỷ lệ vi phạm
       const tyLeViPham = denominator > 0 ? (cayCaoD50 / denominator) * 100 : 0;
@@ -281,6 +286,7 @@ const KQtheoDonVi = () => {
             ? parseFloat(item.dienTichMC || 0)
             : parseFloat(item.dtXetThuong || 0)
           : 0;
+      const dienTichKT = denominator > 0 ? parseFloat(item.dienTichMC || 0) : 0;
 
       // Cộng dồn
       acc.dienTich += Number(item.dienTich) || 0;
@@ -297,6 +303,7 @@ const KQtheoDonVi = () => {
       acc.tyLeCayDatVanh.push(tyLeCayDatVanh);
       acc.tyLeViPham.push(tyLeViPham);
       acc.dtXetThuong += dtXetThuong;
+      acc.dienTichKT += dienTichKT;
 
       return acc;
     },
@@ -315,15 +322,30 @@ const KQtheoDonVi = () => {
       tyLeCayDatVanh: [],
       tyLeViPham: [],
       dtXetThuong: 0,
+      dienTichKT: 0,
     }
   );
 
   // Tính trung bình điểm & tỷ lệ
+  // Đếm số lô có dienTichKT > 0
+  const soLoCoKiemTra = dataLo.filter((item) => {
+    const hoTrong = item.soHoTrong || 0;
+    const cayChuaCaoT50 = item.soCayChuaCaoTren50 || 0;
+    const cayChuaCaoD50 = item.soCayChuaCaoDuoi50 || 0;
+    const tongCayChuaCao = cayChuaCaoT50 + cayChuaCaoD50;
+    const cayCaoT50 = item.soCayCaoTren50 || 0;
+    const cayCaoD50 = item.soCayCaoDuoi50 || 0;
+    const tongCayCao = cayCaoT50 + cayCaoD50;
+    const tongHoKT = hoTrong + tongCayChuaCao + tongCayCao;
+    const dienTichKT = tongHoKT > 0 ? parseFloat(item.dienTich || 0) : 0;
+    return dienTichKT > 0;
+  }).length;
+
   const avgDiem =
-    dataLo.length > 0 ? (totals.diem / dataLo.length).toFixed(1) : "0.0";
+    soLoCoKiemTra > 0 ? (totals.diem / soLoCoKiemTra).toFixed(1) : "0.0";
   const avgTyLeCayDatVanh =
     totals.tongHoKT > 0
-      ? ((totals.tongCayCao / totals.tongHoKT) * 100).toFixed(1)
+      ? ((totals.cayCaoT50 / totals.tongHoKT) * 100).toFixed(1)
       : "0.0";
   const avgTyLeViPham =
     totals.tongHoKT > 0
@@ -409,40 +431,43 @@ const KQtheoDonVi = () => {
                         Đội
                       </th>
                       <th
-                        className="text-center border border-dark"
+                        className="text-center border border-dark col-giong"
                         rowSpan={2}>
                         Tên lô
                       </th>
                       <th
-                        className="text-center border border-dark"
+                        className="text-center border border-dark col-giong"
                         rowSpan={2}>
                         Năm trồng
                       </th>
-                      <th className="text-wrap border border-dark" rowSpan={2}>
+                      <th className="text-wrap border border-dark col-giong" rowSpan={2}>
                         Hạng đất
                       </th>
-                      <th className="text-wrap border border-dark" rowSpan={2}>
+                      <th className="text-wrap border border-dark col-giong" rowSpan={2}>
                         Giống
                       </th>
-                      <th className="text-wrap border border-dark" rowSpan={2}>
-                        Diện tích KK
+                      <th className="text-wrap border border-dark col-dt" rowSpan={2}>
+                        Diện tích KK (ha)
                       </th>
-                      <th className="text-wrap border border-dark" rowSpan={2}>
-                        Diện tích MC
+                      <th className="text-wrap border border-dark col-dt" rowSpan={2}>
+                        Diện tích MC (ha)
+                      </th>
+                      <th className="text-wrap border border-dark col-dt" rowSpan={2}>
+                        Diện tích KT (ha)
                       </th>
                       <th
-                        className="text-wrap border border-dark col-HT"
+                        className="text-wrap border border-dark col-tonghoKT"
                         rowSpan={2}>
-                        Tổng số hố KT
+                        Tổng số hố KT (Hố)
                       </th>
                       <th className="text-wrap border border-dark" rowSpan={2}>
                         Hố trống
                       </th>
                       <th className="text-wrap border border-dark" colSpan={3}>
-                        Cây chưa cạo
+                        Cây chưa cạo (cây)
                       </th>
                       <th className="text-wrap border border-dark" colSpan={3}>
-                        Cây cạo
+                        Cây cạo (cây)
                       </th>
                       <th className="text-wrap border border-dark" colSpan={2}>
                         Kết quả
@@ -494,15 +519,22 @@ const KQtheoDonVi = () => {
 
                       const tyLeCayDatVanh =
                         tongHoKT > 0
-                          ? ((tongCayCao / tongHoKT) * 100).toFixed(1)
+                          ? ((cayCaoT50 / tongHoKT) * 100).toFixed(1)
                           : "0.0";
 
                       const tyLeNumber = parseFloat(tyLeCayDatVanh);
                       let diem = 0;
-                      if (tyLeNumber > 90) diem = 10;
-                      else if (tyLeNumber > 80) diem = 9;
-                      else if (tyLeNumber >= 75) diem = 8;
-                      else if (tyLeNumber < 75) diem = 6;
+
+                      // Kiểm tra điều kiện tổng số hố KT < 50 trước
+                      if (tongHoKT < 50) {
+                        diem = 0;
+                      } else {
+                        // Chỉ tính điểm khi tổng số hố KT >= 50
+                        if (tyLeNumber > 90) diem = 10;
+                        else if (tyLeNumber > 80) diem = 9;
+                        else if (tyLeNumber >= 75) diem = 8;
+                        else if (tyLeNumber < 75) diem = 6;
+                      }
 
                       const tyLeViPham =
                         tongHoKT > 0
@@ -515,6 +547,8 @@ const KQtheoDonVi = () => {
                             ? parseFloat(cn.dienTichMC || 0)
                             : parseFloat(cn.dtXetThuong || 0)
                           : 0;
+                      const dienTichKT =
+                        tongHoKT > 0 ? parseFloat(cn.dienTich || 0) : 0;
 
                       return (
                         <tr key={idx}>
@@ -535,6 +569,11 @@ const KQtheoDonVi = () => {
                             {cn.dienTichMC != null &&
                             Number(cn.dienTichMC) !== 0
                               ? Number(cn.dienTichMC).toFixed(4)
+                              : ""}
+                          </td>
+                          <td className="border border-dark text-end">
+                            {dienTichKT != null && Number(dienTichKT) !== 0
+                              ? Number(dienTichKT).toFixed(4)
                               : ""}
                           </td>
                           <td className="border border-dark">
@@ -594,6 +633,11 @@ const KQtheoDonVi = () => {
                             {totals.dienTichMC === 0
                               ? ""
                               : totals.dienTichMC.toFixed(4)}
+                          </strong>
+                        </td>
+                        <td className="border border-dark text-end">
+                          <strong>
+                            {formatDisplayValue(totals.dienTichKT.toFixed(4))}
                           </strong>
                         </td>
                         <td className="border border-dark">
@@ -691,14 +735,14 @@ const KQtheoDonVi = () => {
           vertical-align: middle;
           text-align: center;
         }
-        .table th.col-HTPC {
+        .table th.col-tonghoKT {
           width: 100px;
         }
-        .table th.col-tenCN {
-          width: 200px;
+        .table th.col-giong {
+          width: 80px;
         }
-        .table th.col-maCN {
-          width: 120px;
+        .table th.col-dt{
+          width: 100px;
         }
 
         .table th.col-TLDV {
@@ -710,8 +754,15 @@ const KQtheoDonVi = () => {
           width: 60px;
         }
 
-        .table th.col-doi {
+        .table th.col-dtKT {
           width: 50px;
+        }
+         .table th.col-cay {
+          width: 60px;
+        }
+
+        .table th.col-doi {
+          width: 70px;
         }
 
         .table tr.table-active {
