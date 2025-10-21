@@ -87,3 +87,33 @@ export const hinhThuc = [
     hinhThuc: "Vi Phạm",
   },
 ];
+
+export const ghiChuKQ = 
+[
+  {
+    maDonVi: "CM",
+    noiDung: "Thông tin cho đơn vị CM"
+  },
+  {
+    maDonVi: "CĐ",
+    noiDung: "Thông tin cho đơn vị CĐ"
+  },
+  {
+    maDonVi: "OQ",
+    noiDung: "Thông tin cho đơn vị OQ"
+  },
+  {
+    maDonVi: "AL",
+    noiDung: "Thông tin cho đơn vị AL"
+  },
+  {
+    maDonVi: "BL",
+    noiDung: "Thông tin cho đơn vị BL"
+  },
+  {
+    maDonVi: "LT",
+    noiDung: "109,31 ha không kiểm tra, bao gồm: Cây nhỏ chưa mở cạo (Lô 85), quy hoạch KCN Long Đức (Lô 116, 218, 238, 216, 236)"
+  }
+]
+
+

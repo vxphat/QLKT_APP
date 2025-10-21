@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Card, Col, Form, Row, Table } from "react-bootstrap";
 import { donVidata } from "../../danhMuc/dinhMuc/dinhMucData";
+import { ghiChuKQ } from "../../danhMuc/dinhMuc/dinhMucData";
 import { useToast } from "../../../../../contexts/ToastContext";
 
 const YEARS = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
@@ -38,6 +39,12 @@ const KQtheoDonVi = () => {
   const [loading, setLoading] = useState(false);
   const [nam, setNam] = useState(new Date().getFullYear());
   const [maDonVi, setMaDonVi] = useState("");
+
+  // Function để lấy nội dung ghi chú theo mã đơn vị
+  const getGhiChuByMaDonVi = (maDonVi) => {
+    const ghiChu = ghiChuKQ.find((item) => item.maDonVi === maDonVi);
+    return ghiChu ? ghiChu.noiDung : null;
+  };
 
   // Helper function để hiển thị giá trị, nếu 0 thì để trống
   const formatDisplayValue = (value) => {
@@ -173,7 +180,7 @@ const KQtheoDonVi = () => {
               <div class="col-4" style="display: flex; flex-direction: column; justify-content: center; align-items: center;"> 
                 <p>CÔNG TY TNHH MỘT THÀNH VIÊN</p>
                 <p>TỔNG CÔNG TY CAO SU ĐỒNG NAI</p>
-                <p><b>PHÒNG QUẢN LÝ KỸ THUẬT PHÁT</b></p>
+                <p><b>PHÒNG QUẢN LÝ KỸ THUẬT</b></p>
               </div>
             </div>
           </div>
@@ -190,9 +197,19 @@ const KQtheoDonVi = () => {
           }
         </h4>
         ${tableClone.outerHTML}
-        <p style="text-align: right; margin-top: 10px; font-style: italic;">
-          
-        </p>
+        ${
+          maDonVi && getGhiChuByMaDonVi(maDonVi)
+            ? `
+          <div style="margin-top: 10px;">
+            <p style="margin-bottom: 10px; color: #000000;"> <b>Ghi chú: </b><span style="margin: 0; font-size: 14px;">${getGhiChuByMaDonVi(
+              maDonVi
+            )}</span></p>
+            
+          </div>
+        `
+            : ""
+        }
+       
       </body>
       </html>
     `;
@@ -717,6 +734,20 @@ const KQtheoDonVi = () => {
                   </tbody>
                 </Table>
               </div>
+
+              {/* Hiển thị ghi chú kết quả nếu có mã đơn vị được chọn */}
+              {maDonVi && getGhiChuByMaDonVi(maDonVi) && (
+                <div className="mt-3">
+                  <Card className="bg-light">
+                    <Card.Header className="bg-info text-black">
+                      <strong>Ghi chú kết quả</strong>
+                    </Card.Header>
+                    <Card.Body>
+                      <p className="mb-0">{getGhiChuByMaDonVi(maDonVi)}</p>
+                    </Card.Body>
+                  </Card>
+                </div>
+              )}
             </Card.Body>
           </Card>
         </Col>

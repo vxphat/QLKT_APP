@@ -484,8 +484,8 @@ const PhieuDaNgoai = () => {
                     disabled={!namSelect || !donViSelect}>
                     <option value="">Chọn lô</option>
                     {lo.map((lo, index) => (
-                      <option key={index} value={lo.tenLo}>
-                        {lo.tenLo}
+                      <option key={index} value={lo.id}>
+                        {lo.tenLo} - {lo.namTrong}
                       </option>
                     ))}
                   </Form.Select>
