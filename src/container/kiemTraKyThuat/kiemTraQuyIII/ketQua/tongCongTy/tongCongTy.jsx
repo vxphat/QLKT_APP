@@ -210,6 +210,7 @@ const KQtheoDonVi = () => {
       const cayCaoD50 = item.soCayCaoDuoi50 || 0;
       const tongCayCao = cayCaoT50 + cayCaoD50;
       const denominator = hoTrong + tongCayChuaCao + tongCayCao;
+      const dienTichKT = denominator > 0 ? parseFloat(item.dienTichMC || 0) : 0;
 
       // Tỷ lệ cây đạt vanh
       const tyLeCayDatVanh =
@@ -242,6 +243,7 @@ const KQtheoDonVi = () => {
       acc.tyLeCayDatVanh.push(tyLeCayDatVanh);
       acc.tyLeViPham.push(tyLeViPham);
       acc.dtXetThuong += dtXetThuong;
+      acc.dienTichKT += dienTichKT;
 
       return acc;
     },
@@ -260,6 +262,7 @@ const KQtheoDonVi = () => {
       tyLeCayDatVanh: [],
       tyLeViPham: [],
       dtXetThuong: 0,
+      dienTichKT: 0,
     }
   );
 
@@ -290,6 +293,7 @@ const KQtheoDonVi = () => {
           const cayCaoD50 = item.soCayCaoDuoi50 || 0;
           const tongCayCao = cayCaoT50 + cayCaoD50;
           const denominator = hoTrong + tongCayChuaCao + tongCayCao;
+          const dienTichKT =  denominator > 0 ? parseFloat(item.dienTichMC || 0) : 0;
 
           const tyLeCayDatVanh =
             denominator > 0 ? (tongCayCao / denominator) * 100 : 0;
@@ -302,7 +306,7 @@ const KQtheoDonVi = () => {
               : parseFloat(item.dtXetThuong || 0);
 
           const dt75 = tyLeCayDatVanh >= 75 ? dtXetThuong : 0;
-          const dtDuoi75 = tyLeCayDatVanh < 75 ? dtXetThuong : 0;
+          const dtDuoi75 = tyLeCayDatVanh < 75 ? dienTichKT : 0;
           const dtCayDuoi50 = tyLeViPham > 0 ? item.dienTichMC : 0;
 
           agg.dienTichMC += Number(item.dienTichMC) || 0;
@@ -351,7 +355,7 @@ const KQtheoDonVi = () => {
 
       const overallTyLeCayDatVanh =
         aggregated.tongHoKT > 0
-          ? (aggregated.tongCayCao / aggregated.tongHoKT) * 100
+          ? (aggregated.cayCaoT50 / aggregated.tongHoKT) * 100
           : 0;
       aggregated.overallTyLeCayDatVanh = overallTyLeCayDatVanh;
       aggregated.diem = tinhDiem(overallTyLeCayDatVanh);
@@ -476,6 +480,7 @@ const KQtheoDonVi = () => {
                       const diemTru = cn.dtCayDuoi50 > 0 ? 1 : 0;
                       const diemXepHang =
                         cn.dienTichMC > 0 ? 100 - diemTru : "-";
+                      const tong = cn.dt8 + cn.dt9 + cn.dt10;
 
                       return (
                         <tr key={idx}>
@@ -492,8 +497,8 @@ const KQtheoDonVi = () => {
                           <td>{formatNumber(cn.dt8)}</td>
                           <td>{formatNumber(cn.dt9)}</td>
                           <td>{formatNumber(cn.dt10)}</td>
-                          <td className="fw-bold">
-                            {formatNumber(cn.dt8 + cn.dt9 + cn.dt10)}
+                          <td className="fw-bold text-end">
+                            {formatNumber(tong)}
                           </td>
                           <td>{formatNumber(cn.dtDuoi75)}</td>
                           <td>{formatNumber(cn.dtCayDuoi50)}</td>
@@ -547,7 +552,7 @@ const KQtheoDonVi = () => {
                             )}
                           </strong>
                         </td>
-                        <td>
+                        <td className="text-end">
                           <strong>
                             {formatNumber(
                               groupedArray.reduce(

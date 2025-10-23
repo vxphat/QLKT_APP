@@ -868,6 +868,15 @@ export const MENUITEMS = [
             selected: false,
             children: [
               {
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/SXKD/phieuKyThuat`,
+                title: "Phiếu kỹ thuật",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
                 path: `${import.meta.env.BASE_URL}database/kk0gio`,
                 title: "Danh sách lô",
                 type: "link",

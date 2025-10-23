@@ -21,40 +21,21 @@ export const donVidata = [
     maDonVi: "OQ",
     donVi: "Ông Quế",
   },
+  
   {
     id: 4,
-    maDonVi: "HG",
-    donVi: "Hàng Gòn",
-  },
-  {
-    id: 5,
     maDonVi: "AL",
     donVi: "An Lộc",
   },
   {
-    id: 6,
+    id: 5,
     maDonVi: "BL",
     donVi: "Bình Lộc",
   },
   {
-    id: 7,
-    maDonVi: "TT",
-    donVi: "Túc Trưng",
-  },
-  {
-    id: 8,
-    maDonVi: "AV",
-    donVi: "An Viễng",
-  },
-  {
-    id: 9,
+    id: 6,
     maDonVi: "LT",
     donVi: "Long Thành",
-  },
-  {
-    id: 10,
-    maDonVi: "THT",
-    donVi: "Thái Hiệp Thành",
   },
 ];
 

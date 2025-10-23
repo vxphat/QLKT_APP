@@ -206,6 +206,7 @@ import PhieuDaNgoai_KTCB4 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/p
 import PhieuDaNgoai_KTCB5 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB5/phieuDaNgoai_KTCB5.jsx";
 import PhieuDaNgoai_KTCB6 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB6/phieuDaNgoai_KTCB6.jsx";
 import PhieuDaNgoai_KTCB7 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB7/phieuDaNgoai_KTCB7.jsx";
+import PhieuKyThuat from "./container/kiemTraKyThuat/kiemTraCuoiNam/SXKD/phieuKyThuat/phieuKyThuat.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.Fragment>
@@ -394,6 +395,15 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                   import.meta.env.BASE_URL
                 }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB7`}
                 element={<PhieuDaNgoai_KTCB7 />}
+              />
+
+              {/* -------------------KTCB END----------------- */}
+
+              {/* -----------------------SXKD----------------------- */}
+
+              <Route
+                path={`${import.meta.env.BASE_URL}kiemTraKyThuat/kiemTraCuoiNam/SXKD/phieuKyThuat`}
+                element={<PhieuKyThuat />}
               />
 
               <Route
