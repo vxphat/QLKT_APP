@@ -854,13 +854,7 @@ export const MENUITEMS = [
                 active: false,
                 selected: false,
               },
-              {
-                path: `${import.meta.env.BASE_URL}database/kk0gio`,
-                title: "Danh sách lô",
-                type: "link",
-                active: false,
-                selected: false,
-              },
+
               {
                 path: `${import.meta.env.BASE_URL}database/kk0gio`,
                 title: "Định mức",
