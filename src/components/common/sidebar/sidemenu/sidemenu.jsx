@@ -817,6 +817,15 @@ export const MENUITEMS = [
                 selected: false,
               },
               {
+                path: `${
+                  import.meta.env.BASE_URL
+                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/danhSachLo_KTCB`,
+                title: "Danh sách lô",
+                type: "link",
+                active: false,
+                selected: false,
+              },
+              {
                 path: `${import.meta.env.BASE_URL}database/kk0gio`,
                 title: "KQ theo năm",
                 type: "link",
