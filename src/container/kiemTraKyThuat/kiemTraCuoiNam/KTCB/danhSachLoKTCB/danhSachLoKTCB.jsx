@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import Pageheader from "../../../../../components/pageheader/pageheader";
 // import { donVidata } from "../../danhMuc/dinhMuc/dinhMucData";
+import { useToast } from "../../../../../contexts/ToastContext";
 
 const apiService = {
   getDanhSachLo: async (maDonVi, query = "") => {
@@ -86,12 +87,25 @@ const DanhSachLoKTCB = () => {
         <Col xl={12}>
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
-              <Card.Title>DANH SÁCH LÔ KIỂM TRÁ CUỐI NĂM KTCB</Card.Title>
+              <Card.Title>DANH SÁCH LÔ KIỂM TRA CUỐI NĂM KTCB</Card.Title>
             </Card.Header>
             <Card.Body>
               <Row className="mb-3">
                 <Row>
-                  <Col xl={2}></Col>
+                  <Col xl={2}>
+                    <Form.Select
+                      aria-label="Chọn đơn vị"
+                      value={""}
+                      disabled={""}
+                      onChange={(e) => {
+                        setDonViSelect(e.target.value);
+                        handleChangeDonVi(e.target.value);
+                      }}>
+                      <option value="">Chọn đơn vị</option>
+
+                      <option value={""}></option>
+                    </Form.Select>
+                  </Col>
                   <Col xl={4} lg={6} md={6} sm={12} className="d-flex gap-3">
                     <Button
                       className="btn btn-primary label-btn "
@@ -115,15 +129,15 @@ const DanhSachLoKTCB = () => {
                 <Table className="table text-nowrap" id="bangNhap">
                   <thead className="sticky-header">
                     <tr>
-                      <th className="text-wrap ">STT</th>
-                      <th className="text-wrap ">Đội</th>
+                      <th className="text-wrap">STT</th>
+                      <th className="text-wrap">Đội</th>
                       <th className="text-center">Tên lô</th>
-                      <th className="text-center ">Năm trồng</th>
-                      <th className="text-wrap ">Hạng đất</th>
-                      <th className="text-wrap ">Giống</th>
-                      <th className="text-wrap ">Diện tích KK</th>
-                      <th className="text-wrap ">Trạng thái</th>
-                      <th className="text-wrap ">Stutus</th>
+                      <th className="text-center">Năm trồng</th>
+                      <th className="text-wrap">Hạng đất</th>
+                      <th className="text-wrap">Giống</th>
+                      <th className="text-wrap">Diện tích KK</th>
+                      <th className="text-wrap">Trạng thái</th>
+                      <th className="text-wrap">Stutus</th>
                     </tr>
                   </thead>
                   <tbody>
