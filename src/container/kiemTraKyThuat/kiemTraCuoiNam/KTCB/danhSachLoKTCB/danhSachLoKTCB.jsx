@@ -11,25 +11,16 @@ import {
   Table,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Pageheader from "../../../../../components/pageheader/pageheader";
-// import { donVidata } from "../../danhMuc/dinhMuc/dinhMucData";
-import { useToast } from "../../../../../contexts/ToastContext";
+
 
 const apiService = {
+
   getDanhSachLo: async (maDonVi, query = "") => {
     try {
-      const url = new URL(
-        `${
-          import.meta.env.VITE_API_URL
-        }kiem-tra-quy-iii/danh-muc/import-danh-sach-lo`
-      );
+      const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iv/danh-sach-lo`);
 
-      // Thêm các tham số vào URL
       if (maDonVi) {
-        url.searchParams.append("maDonVi", maDonVi);
-      }
-      if (query) {
-        url.searchParams.append("keyword", query);
+        url.searchParams.append("nongTruong", maDonVi);
       }
 
       const response = await axios.get(url.toString());
@@ -55,19 +46,31 @@ const apiService = {
       };
     }
   },
+  getPhieuIn: async (id) => {
+    try {
+      const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iv/phieu-in/${id}`);
+
+      const response = await axios.get(url.toString());
+      return response;
+
+    } catch (error) {
+      return null;
+    }
+  },
 };
 
 const DanhSachLoKTCB = () => {
   const [dataLo, setDataLo] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
+  const [donViSelect, setDonViSelect] = useState(null);
+
 
   const loadDataLo = async (query = "") => {
     setLoading(true);
     try {
       const result = await apiService.getDanhSachLo(query);
       if (result) {
-        console.log("result", result);
         setDataLo(result.data ?? []);
       }
     } catch (err) {
@@ -80,6 +83,32 @@ const DanhSachLoKTCB = () => {
   useEffect(() => {
     loadDataLo();
   }, []);
+
+  const handlePrinter = async (id) => {
+    const printWindow = window.open('', '_blank', 'width=800,height=600');
+    if (!printWindow) {
+      alert('Trình duyệt đang chặn cửa sổ in, vui lòng bật pop-up!');
+      return;
+    }
+    try {
+      const result = await apiService.getPhieuIn(id);
+      // console.log(result);return
+      const html = result.data;
+
+      printWindow.document.open();
+      printWindow.document.write(html);
+      printWindow.document.close();
+
+      printWindow.onload = () => {
+        printWindow.focus();
+        printWindow.print();
+        printWindow.onafterprint = () => printWindow.close();
+      };
+    } catch (error) {
+      alert('Không thể in phiếu: ' + error);
+    }
+
+  }
 
   return (
     <Fragment>
@@ -95,21 +124,25 @@ const DanhSachLoKTCB = () => {
                   <Col xl={2}>
                     <Form.Select
                       aria-label="Chọn đơn vị"
-                      value={""}
+                      value={donViSelect}
                       disabled={""}
                       onChange={(e) => {
                         setDonViSelect(e.target.value);
-                        handleChangeDonVi(e.target.value);
                       }}>
                       <option value="">Chọn đơn vị</option>
+                      <option value={"AL"}>An Lộc</option>
+                      <option value={"BL"}>Bình Lộc</option>
+                      <option value={"CĐ"}>Cẩm Đường</option>
+                      <option value={"CM"}>Cẩm Mỹ</option>
+                      <option value={"OQ"}>Ông Quế</option>
+                      <option value={"LT"}>Long Thành</option>
 
-                      <option value={""}></option>
                     </Form.Select>
                   </Col>
                   <Col xl={4} lg={6} md={6} sm={12} className="d-flex gap-3">
                     <Button
                       className="btn btn-primary label-btn "
-                      onClick={() => loadDataLo(keyword)}
+                      onClick={() => loadDataLo(donViSelect)}
                       disabled={loading}>
                       <i className="bi bi-search label-btn-icon me-2"></i>
                       {loading ? "Đang tải..." : "Tải dữ liệu"}
@@ -137,7 +170,7 @@ const DanhSachLoKTCB = () => {
                       <th className="text-wrap">Giống</th>
                       <th className="text-wrap">Diện tích KK</th>
                       <th className="text-wrap">Trạng thái</th>
-                      <th className="text-wrap">Stutus</th>
+                      <th className="text-wrap">Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -145,29 +178,26 @@ const DanhSachLoKTCB = () => {
                       dataLo.map((item, index) => (
                         <tr key={index}>
                           <td>{index + 1}</td>
-                          <td>{item.maDonVi}</td>
-                          <td>{item.lo}</td>
+                          <td>{item.nongTruong}</td>
+                          <td>{item.tenLo}</td>
                           <td>{item.namTrong}</td>
                           <td>{item.hangDat}</td>
-                          <td>{item.giong}</td>
-                          <td>{item.dienTichKK}</td>
-                          <td></td>
+                          <td>{item.giongCay}</td>
+                          <td>{item.dienTich}</td>
+                          <td>
+                            <p className={item.TrangThai === 1 ? "text-success" : "text-danger"}>
+                              {item.TrangThai === 1 ? "Đã gửi" : "Chưa gửi"}
+                            </p>
+                          </td>
                           <td>
                             <div className="hstack gap-2 fs-15">
+
                               <Link
-                                to="#"
-                                className="btn btn-icon btn-sm btn-success-transparent rounded-pill">
-                                <i className="ri-download-2-line"></i>
-                              </Link>
-                              <Link
-                                to="#"
-                                className="btn btn-icon btn-sm btn-info-transparent rounded-pill">
-                                <i className="ri-edit-line"></i>
-                              </Link>
-                              <Link
-                                to="#"
-                                className="btn btn-icon btn-sm btn-danger-transparent rounded-pill">
-                                <i className="ri-delete-bin-line"></i>
+                                onClick={() => {
+                                  handlePrinter(item.idPhieu)
+                                }}
+                                className="btn btn-icon btn-sm btn-primary-transparent rounded-pill">
+                                <i className="ri-printer-line"></i>
                               </Link>
                             </div>
                           </td>

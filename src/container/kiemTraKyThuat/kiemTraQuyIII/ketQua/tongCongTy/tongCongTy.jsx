@@ -48,7 +48,7 @@ const KQtheoDonVi = () => {
     const printWindow = window.open("", "_blank");
     const tableElement = document.getElementById("bangNhap");
 
-    if (!tableElement) {
+    if (!tableElement) { 
       alert("Không tìm thấy bảng dữ liệu!");
       return;
     }
