@@ -897,6 +897,19 @@ export const MENUITEMS = [
     ],
   },
   {
+    menutitle: "Lịch nông vụ",
+    Items: [
+      {
+        path: `${import.meta.env.BASE_URL}lich-nong-vu`,
+        icon: <i className="bx bx-store-alt side-menu__icon"></i>,
+        type: "link",
+        selected: false,
+        active: false,
+        title: "dashboard",
+      }
+    ],
+  },
+  {
     menutitle: "MAIN",
     Items: [
       {

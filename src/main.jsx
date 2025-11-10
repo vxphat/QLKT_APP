@@ -208,6 +208,10 @@ import PhieuDaNgoai_KTCB6 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/p
 import PhieuDaNgoai_KTCB7 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB7/phieuDaNgoai_KTCB7.jsx";
 import PhieuKyThuat from "./container/kiemTraKyThuat/kiemTraCuoiNam/SXKD/phieuKyThuat/phieuKyThuat.jsx";
 
+
+// lịch nông vụ
+import LichNongVuDashboard from "./container/LichNongVu/Dashboard/index.jsx";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.Fragment>
     <ToastProvider>
@@ -352,6 +356,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               />
 
               {/* ---------------TCTM END------ */}
+
+              {/* ---------------Lịch nông vụ route start------ */}
+              <Route path={`${import.meta.env.BASE_URL}lich-nong-vu`} element={<LichNongVuDashboard />} />
+              {/* ---------------Lịch nông vụ route end------ */}
+
+
 
               {/* ------------------KTCB----------------- */}
 
