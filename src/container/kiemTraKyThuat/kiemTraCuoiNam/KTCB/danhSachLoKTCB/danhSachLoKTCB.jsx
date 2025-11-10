@@ -12,12 +12,12 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-
 const apiService = {
-
   getDanhSachLo: async (maDonVi, query = "") => {
     try {
-      const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iv/danh-sach-lo`);
+      const url = new URL(
+        `${import.meta.env.VITE_API_URL}kiem-tra-quy-iv/danh-sach-lo`
+      );
 
       if (maDonVi) {
         url.searchParams.append("nongTruong", maDonVi);
@@ -48,11 +48,12 @@ const apiService = {
   },
   getPhieuIn: async (id) => {
     try {
-      const url = new URL(`${import.meta.env.VITE_API_URL}kiem-tra-quy-iv/phieu-in/${id}`);
+      const url = new URL(
+        `${import.meta.env.VITE_API_URL}kiem-tra-quy-iv/phieu-in/${id}`
+      );
 
       const response = await axios.get(url.toString());
       return response;
-
     } catch (error) {
       return null;
     }
@@ -64,7 +65,6 @@ const DanhSachLoKTCB = () => {
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [donViSelect, setDonViSelect] = useState(null);
-
 
   const loadDataLo = async (query = "") => {
     setLoading(true);
@@ -85,9 +85,9 @@ const DanhSachLoKTCB = () => {
   }, []);
 
   const handlePrinter = async (id) => {
-    const printWindow = window.open('', '_blank', 'width=800,height=600');
+    const printWindow = window.open("", "_blank", "width=1908,height=1000");
     if (!printWindow) {
-      alert('Trình duyệt đang chặn cửa sổ in, vui lòng bật pop-up!');
+      alert("Trình duyệt đang chặn cửa sổ in, vui lòng bật pop-up!");
       return;
     }
     try {
@@ -105,10 +105,9 @@ const DanhSachLoKTCB = () => {
         printWindow.onafterprint = () => printWindow.close();
       };
     } catch (error) {
-      alert('Không thể in phiếu: ' + error);
+      alert("Không có dữ liệu đê in!");
     }
-
-  }
+  };
 
   return (
     <Fragment>
@@ -136,7 +135,6 @@ const DanhSachLoKTCB = () => {
                       <option value={"CM"}>Cẩm Mỹ</option>
                       <option value={"OQ"}>Ông Quế</option>
                       <option value={"LT"}>Long Thành</option>
-
                     </Form.Select>
                   </Col>
                   <Col xl={4} lg={6} md={6} sm={12} className="d-flex gap-3">
@@ -166,6 +164,7 @@ const DanhSachLoKTCB = () => {
                       <th className="text-wrap">Đội</th>
                       <th className="text-center">Tên lô</th>
                       <th className="text-center">Năm trồng</th>
+                      <th className="text-center">Năm KTCB</th>
                       <th className="text-wrap">Hạng đất</th>
                       <th className="text-wrap">Giống</th>
                       <th className="text-wrap">Diện tích KK</th>
@@ -181,20 +180,25 @@ const DanhSachLoKTCB = () => {
                           <td>{item.nongTruong}</td>
                           <td>{item.tenLo}</td>
                           <td>{item.namTrong}</td>
+                          <td>{item.namKTCB}</td>
                           <td>{item.hangDat}</td>
                           <td>{item.giongCay}</td>
                           <td>{item.dienTich}</td>
                           <td>
-                            <p className={item.TrangThai === 1 ? "text-success" : "text-danger"}>
+                            <p
+                              className={
+                                item.TrangThai === 1
+                                  ? "text-success"
+                                  : "text-danger"
+                              }>
                               {item.TrangThai === 1 ? "Đã gửi" : "Chưa gửi"}
                             </p>
                           </td>
                           <td>
-                            <div className="hstack gap-2 fs-15">
-
+                            <div className="fs-15">
                               <Link
                                 onClick={() => {
-                                  handlePrinter(item.idPhieu)
+                                  handlePrinter(item.idPhieu);
                                 }}
                                 className="btn btn-icon btn-sm btn-primary-transparent rounded-pill">
                                 <i className="ri-printer-line"></i>
@@ -235,7 +239,7 @@ const DanhSachLoKTCB = () => {
         .table-responsive {
           overflow-x: auto;
           -webkit-overflow-scrolling: touch;
-          max-height: 660px;
+          max-height: 970px;
           overflow-y: auto;
         }
 
@@ -262,28 +266,7 @@ const DanhSachLoKTCB = () => {
         .table th.col-maCN {
           width: 120px;
         }
-        .table th.col-sxkd-01012025,
-        .table th.col-mocao-2025,
-        .table th.col-sxkd-thanhlytc,
-        .table th.col-sxkd-thanhlygdp,
-        .table th.col-sxkd-31122025,
-        .table th.col-ktcb-01012025,
-        .table th.col-ktcb-mocao-2025,
-        .table th.col-ktcb-thanhlygdp,
-        .table th.col-ktcb-31122025,
-        .table th.col-kh-tctm-2025,
-        .table th.col-luancanh-2021,
-        .table th.col-luancanh-2022,
-        .table th.col-luancanh-2023,
-        .table th.col-tong-luancanh,
-        .table th.col-fsc,
-        .table th.col-vg-vn,
-        .table th.col-cho-gdp,
-        .table th.col-dt-chuyentc,
-        .table th.col-thanhly-goivu,
-        .table th.col-tong-dt-vuon {
-          width: 120px;
-        }
+
         .table tr.table-active {
           font-weight: bold;
           background-color: #f1f1f1;
