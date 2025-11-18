@@ -162,12 +162,14 @@ const DanhSachLoKTCB = () => {
                     <tr>
                       <th className="text-wrap">STT</th>
                       <th className="text-wrap">Đội</th>
+                      <th className="text-wrap">ID lô</th>
                       <th className="text-center">Tên lô</th>
                       <th className="text-center">Năm trồng</th>
                       <th className="text-center">Năm KTCB</th>
                       <th className="text-wrap">Hạng đất</th>
                       <th className="text-wrap">Giống</th>
                       <th className="text-wrap">Diện tích KK</th>
+                      <th className="text-wrap">Người KT</th>
                       <th className="text-wrap">Trạng thái</th>
                       <th className="text-wrap">Status</th>
                     </tr>
@@ -178,21 +180,26 @@ const DanhSachLoKTCB = () => {
                         <tr key={index}>
                           <td>{index + 1}</td>
                           <td>{item.nongTruong}</td>
+                          <td>{item.idLo}</td>
                           <td>{item.tenLo}</td>
                           <td>{item.namTrong}</td>
                           <td>{item.namKTCB}</td>
                           <td>{item.hangDat}</td>
                           <td>{item.giongCay}</td>
                           <td>{item.dienTich}</td>
+                          <td>{item.kiemTraVien}</td>
                           <td>
-                            <p
-                              className={
+                            <Button
+                              type="button"
+                              variant={
                                 item.TrangThai === 1
-                                  ? "text-success"
-                                  : "text-danger"
-                              }>
+                                  ? "success-ghost"
+                                  : "danger-ghost"
+                              }
+                              size="sm"
+                              className="btn btn-wawe">
                               {item.TrangThai === 1 ? "Đã gửi" : "Chưa gửi"}
-                            </p>
+                            </Button>
                           </td>
                           <td>
                             <div className="fs-15">
@@ -200,7 +207,7 @@ const DanhSachLoKTCB = () => {
                                 onClick={() => {
                                   handlePrinter(item.idPhieu);
                                 }}
-                                className="btn btn-icon btn-sm btn-primary-transparent rounded-pill">
+                                className="btn btn-icon btn-xl btn-primary-transparent rounded-pill">
                                 <i className="ri-printer-line"></i>
                               </Link>
                             </div>
