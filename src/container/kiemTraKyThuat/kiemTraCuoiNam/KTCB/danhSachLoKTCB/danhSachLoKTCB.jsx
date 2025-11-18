@@ -169,6 +169,7 @@ const DanhSachLoKTCB = () => {
                       <th className="text-wrap">Hạng đất</th>
                       <th className="text-wrap">Giống</th>
                       <th className="text-wrap">Diện tích KK</th>
+                      <th className="text-wrap">Ngày KT</th>
                       <th className="text-wrap">Người KT</th>
                       <th className="text-wrap">Trạng thái</th>
                       <th className="text-wrap">Status</th>
@@ -187,6 +188,21 @@ const DanhSachLoKTCB = () => {
                           <td>{item.hangDat}</td>
                           <td>{item.giongCay}</td>
                           <td>{item.dienTich}</td>
+                          <td>
+                            {item.ngayKiemTra
+                              ? new Date(item.ngayKiemTra).toLocaleString(
+                                  "vi-VN",
+                                  {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: false,
+                                  }
+                                )
+                              : ""}
+                          </td>
                           <td>{item.kiemTraVien}</td>
                           <td>
                             <Button
