@@ -200,12 +200,6 @@ import KetQuaTheoDiem_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/
 import KetQuaXetThuong_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaXetThuong_TCTM/ketQuaXetThuong_TCTM.jsx";
 import DanhSachLoTCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/danhSachLoTCTM/danhSachLoTCTM.jsx";
 import DinhMuc_TCTM from "./container/kiemTraKyThuat/kiemTraCuoiNam/TCTM/dinhMuc_TCTM/dinhMuc_TCTM.jsx";
-import PhieuDaNgoai_KTCB2 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB2/phieuDaNgoai_KTCB2.jsx";
-import PhieuDaNgoai_KTCB3 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB3/phieuDaNgoai_KTCB3.jsx";
-import PhieuDaNgoai_KTCB4 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB4/phieuDaNgoai_KTCB4.jsx";
-import PhieuDaNgoai_KTCB5 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB5/phieuDaNgoai_KTCB5.jsx";
-import PhieuDaNgoai_KTCB6 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB6/phieuDaNgoai_KTCB6.jsx";
-import PhieuDaNgoai_KTCB7 from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB7/phieuDaNgoai_KTCB7.jsx";
 import PhieuKyThuat from "./container/kiemTraKyThuat/kiemTraCuoiNam/SXKD/phieuKyThuat/phieuKyThuat.jsx";
 import DanhSachLoKTCB from "./container/kiemTraKyThuat/kiemTraCuoiNam/KTCB/danhSachLoKTCB/danhSachLoKTCB.jsx";
 
@@ -355,48 +349,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               {/* ---------------TCTM END------ */}
 
               {/* ------------------KTCB----------------- */}
-
-              <Route
-                path={`${
-                  import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB2`}
-                element={<PhieuDaNgoai_KTCB2 />}
-              />
-
-              <Route
-                path={`${
-                  import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB3`}
-                element={<PhieuDaNgoai_KTCB3 />}
-              />
-
-              <Route
-                path={`${
-                  import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB4`}
-                element={<PhieuDaNgoai_KTCB4 />}
-              />
-
-              <Route
-                path={`${
-                  import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB5`}
-                element={<PhieuDaNgoai_KTCB5 />}
-              />
-
-              <Route
-                path={`${
-                  import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB6`}
-                element={<PhieuDaNgoai_KTCB6 />}
-              />
-
-              <Route
-                path={`${
-                  import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB7`}
-                element={<PhieuDaNgoai_KTCB7 />}
-              />
 
               <Route
                 path={`${

@@ -765,60 +765,6 @@ export const MENUITEMS = [
               {
                 path: `${
                   import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB2`,
-                title: "Phiếu N2",
-                type: "link",
-                active: false,
-                selected: false,
-              },
-              {
-                path: `${
-                  import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB3`,
-                title: "Phiếu N3",
-                type: "link",
-                active: false,
-                selected: false,
-              },
-              {
-                path: `${
-                  import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB4`,
-                title: "Phiếu N4",
-                type: "link",
-                active: false,
-                selected: false,
-              },
-              {
-                path: `${
-                  import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB5`,
-                title: "Phiếu N5",
-                type: "link",
-                active: false,
-                selected: false,
-              },
-              {
-                path: `${
-                  import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB6`,
-                title: "Phiếu N6",
-                type: "link",
-                active: false,
-                selected: false,
-              },
-              {
-                path: `${
-                  import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/KTCB/phieuDaNgoai_KTCB7`,
-                title: "Phiếu N7",
-                type: "link",
-                active: false,
-                selected: false,
-              },
-              {
-                path: `${
-                  import.meta.env.BASE_URL
                 }kiemTraKyThuat/kiemTraCuoiNam/KTCB/danhSachLo_KTCB`,
                 title: "Danh sách lô",
                 type: "link",
