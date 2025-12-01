@@ -736,15 +736,7 @@ export const MENUITEMS = [
                 active: false,
                 selected: false,
               },
-              {
-                path: `${
-                  import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/ketQuaTheoDiem_TCTM`,
-                title: "Danh sách lô",
-                type: "link",
-                active: false,
-                selected: false,
-              },
+
               {
                 path: `${
                   import.meta.env.BASE_URL

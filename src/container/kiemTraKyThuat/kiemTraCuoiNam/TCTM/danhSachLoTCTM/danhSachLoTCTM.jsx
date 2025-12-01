@@ -190,8 +190,8 @@ const DanhSachLoTCTM = () => {
                           <td>{item.hangDat}</td>
                           <td>{item.giongCay}</td>
                           <td>{item.dienTich}</td>
-                          <td>{item.ngayBatDau}</td>
-                          <td>{item.ngayKetThuc}</td>
+                          <td>{item.ngayBatDau ? new Date(item.ngayBatDau).toLocaleDateString("vi-VN") : ""}</td>
+                          <td>{item.ngayKetThuc ? new Date(item.ngayKetThuc).toLocaleDateString("vi-VN") : ""}</td>
                           <td>
                             {item.ngayKiemTra
                               ? new Date(item.ngayKiemTra).toLocaleString(
