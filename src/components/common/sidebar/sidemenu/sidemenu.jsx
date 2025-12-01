@@ -693,8 +693,8 @@ export const MENUITEMS = [
               {
                 path: `${
                   import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/phieuDaNgoai_TCTM`,
-                title: "Phiếu dã ngoại",
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/danhSachLoTCTM`,
+                title: "Danh sách lô",
                 type: "link",
                 active: false,
                 selected: false,

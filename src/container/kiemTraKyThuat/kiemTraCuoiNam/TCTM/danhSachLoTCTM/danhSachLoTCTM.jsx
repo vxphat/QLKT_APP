@@ -1,4 +1,5 @@
 import { FC, Fragment, useEffect, useState } from "react";
+import axios from "axios";
 import {
   Button,
   Card,
@@ -9,115 +10,249 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
-import Pageheader from "../../../../../components/pageheader/pageheader";
-// import { danhMucCN } from "../danhSachCN/danhSachCNdata";
+import { Link } from "react-router-dom";
 
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbxgIjtPLhCcv8nNWavOsMcTCObTUaQdMT_AvBVjHtB5e1FwEKCShO5EL3IWKW_ydBWo/exec";
-const TOKEN = "vxphat1994@";
+const apiService = {
+  getDanhSachLo: async (maDonVi, query = "") => {
+    try {
+      const url = new URL(
+        `${import.meta.env.VITE_API_URL}kiem-tra-quy-iv/danh-sach-lo?type=TCTM`
+      );
+
+      if (maDonVi) {
+        url.searchParams.append("nongTruong", maDonVi);
+      }
+
+      const response = await axios.get(url.toString());
+
+      if (response.status === 200 && response.data) {
+        return {
+          success: true,
+          data: response.data.data || [],
+          message: "Lấy dữ liệu thành công",
+        };
+      }
+
+      return {
+        success: false,
+        data: [],
+        message: "Không lấy được dữ liệu",
+      };
+    } catch (error) {
+      return {
+        success: false,
+        data: [],
+        message: error.message || "Có lỗi xảy ra",
+      };
+    }
+  },
+  getPhieuIn: async (id) => {
+    try {
+      const url = new URL(
+        `${import.meta.env.VITE_API_URL}kiem-tra-quy-iv/phieu-in/${id}`
+      );
+
+      const response = await axios.get(url.toString());
+      return response;
+    } catch (error) {
+      return null;
+    }
+  },
+};
 
 const DanhSachLoTCTM = () => {
   const [dataLo, setDataLo] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
+  const [donViSelect, setDonViSelect] = useState(null);
 
-  async function loadDataLo(query = "") {
+  const loadDataLo = async (query = "") => {
     setLoading(true);
     try {
-      const url = new URL(API_URL);
-      url.searchParams.set("token", TOKEN);
-      if (query) url.searchParams.set("q", query);
-      console.log("Fetching:", url.toString());
-      const res = await fetch(url.toString(), { method: "GET" });
-      const json = await res.json();
-      setDataLo(json.data ?? []);
+      const result = await apiService.getDanhSachLo(query);
+      if (result) {
+        setDataLo(result.data ?? []);
+      }
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     loadDataLo();
   }, []);
 
+  const handlePrinter = async (id) => {
+    const printWindow = window.open("", "_blank", "width=1908,height=1000");
+    if (!printWindow) {
+      alert("Trình duyệt đang chặn cửa sổ in, vui lòng bật pop-up!");
+      return;
+    }
+    try {
+      const result = await apiService.getPhieuIn(id);
+      // console.log(result);return
+      const html = result.data;
+
+      printWindow.document.open();
+      printWindow.document.write(html);
+      printWindow.document.close();
+
+      printWindow.onload = () => {
+        printWindow.focus();
+        printWindow.print();
+        printWindow.onafterprint = () => printWindow.close();
+      };
+    } catch (error) {
+      alert("Không có dữ liệu đê in!");
+    }
+  };
+
   return (
     <Fragment>
-      <Pageheader
-        title="Kết Quả Theo Đơn Vị"
-        heading="Tables"
-        active="Tables"
-      />
-      <Row>
+      <Row className="mt-3">
         <Col xl={12}>
           <Card className="custom-card">
             <Card.Header className="card-header justify-content-between">
-              <Card.Title>
-                CHI TIẾT XÉT THƯỞNG VƯỜN CÂY MỞ CẠO NĂM 2025
-              </Card.Title>
+              <Card.Title>DANH SÁCH LÔ KIỂM TRA TCTM</Card.Title>
             </Card.Header>
             <Card.Body>
               <Row className="mb-3">
-                <Col xl={4} lg={6} md={6} sm={12}>
-                  <Row>
-                    <Col xl={6}>
-                      <Form.Control
-                        type="search"
-                        id="input-search"
-                        placeholder="Tìm tên công nhân"
-                        value={keyword}
-                        onChange={(e) => setKeyword(e.target.value)}
-                      />
-                    </Col>
-                    <Col xl={6} lg={6} md={6} sm={12}>
-                      <Button
-                        className="btn btn-primary label-btn"
-                        onClick={() => loadDataLo(keyword)}
-                        disabled={loading}>
-                        <i className="bi bi-search label-btn-icon me-2"></i>
-                        {loading ? "Đang tải..." : "Tìm kiếm"}
+                <Row>
+                  <Col xl={2}>
+                    <Form.Select
+                      aria-label="Chọn đơn vị"
+                      value={donViSelect}
+                      disabled={""}
+                      onChange={(e) => {
+                        setDonViSelect(e.target.value);
+                      }}>
+                      <option value="">Chọn đơn vị</option>
+                      <option value={"AL"}>An Lộc</option>
+                      <option value={"BL"}>Bình Lộc</option>
+                      <option value={"CĐ"}>Cẩm Đường</option>
+                      <option value={"CM"}>Cẩm Mỹ</option>
+                      <option value={"OQ"}>Ông Quế</option>
+                      <option value={"LT"}>Long Thành</option>
+                    </Form.Select>
+                  </Col>
+                  <Col xl={4} lg={6} md={6} sm={12} className="d-flex gap-3">
+                    <Button
+                      className="btn btn-primary label-btn "
+                      onClick={() => loadDataLo(donViSelect)}
+                      disabled={loading}>
+                      <i className="bi bi-search label-btn-icon me-2"></i>
+                      {loading ? "Đang tải..." : "Tải dữ liệu"}
+                    </Button>
+                    <Link
+                      to={`/kiemTraKyThuat/kiemTraQuyIII/danhMuc/danhSachLo/import`}>
+                      <Button className="btn btn-secondary label-btn ms-auto">
+                        <i className="bi bi-plus-lg label-btn-icon me-2"></i>
+                        Import dữ liệu
                       </Button>
-                    </Col>
-                  </Row>
-                </Col>
-
-                <Col xl={4} lg={6} md={6} sm={12}></Col>
-                <Col xl={4} lg={6} md={6} sm={12} className="d-flex">
-                  <Button className="btn btn-secondary label-btn ms-auto">
-                    <i className="bi bi-plus-lg label-btn-icon me-2"></i>
-                    Thêm CN
-                  </Button>
-                </Col>
+                    </Link>
+                  </Col>
+                </Row>
               </Row>
 
               <div className="table-responsive">
                 <Table className="table text-nowrap" id="bangNhap">
                   <thead className="sticky-header">
                     <tr>
-                      <th className="text-wrap ">STT</th>
-                      <th className="text-wrap ">Đội</th>
+                      <th className="text-wrap">STT</th>
+                      <th className="text-wrap">Đội</th>
+                      <th className="text-wrap">ID lô</th>
                       <th className="text-center">Tên lô</th>
-                      <th className="text-center ">Năm trồng</th>
-                      <th className="text-wrap ">Hạng đất</th>
-                      <th className="text-wrap ">Giống</th>
-                      <th className="text-wrap ">Diện tích KK</th>
-                      <th className="text-wrap ">Diện tích MC</th>
+                      <th className="text-center">Năm trồng</th>
+                      <th className="text-center">PP trồng</th>
+                      <th className="text-wrap">Hạng đất</th>
+                      <th className="text-wrap">Giống</th>
+                      <th className="text-wrap">Diện tích</th>
+                      <th className="text-wrap">Ngày trồng</th>
+                      <th className="text-wrap">Ngày KT trồng</th>
+                      <th className="text-wrap">Ngày KT</th>
+                      <th className="text-wrap">Người KT</th>
+                      <th className="text-wrap">Trạng thái</th>
+                      <th className="text-wrap">Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {dataLo.map((cn, idx) => (
-                      <tr key={idx}>
-                        <td>{cn.stt}</td>
-                        <td>{cn.doi}</td>
-                        <td>{cn.tenLo}</td>
-                        <td>{cn.namTrong}</td>
-                        <td>{cn.hangDat}</td>
-                        <td>{cn.giong}</td>
-                        <td>{cn.dienTichKK}</td>
-                        <td>{cn.dienTichMC}</td>
+                    {dataLo && dataLo.length > 0 ? (
+                      dataLo.map((item, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>{item.nongTruong}</td>
+                          <td>{item.idLo}</td>
+                          <td>{item.tenLo}</td>
+                          <td>{item.namTrong}</td>
+                          <td>{item.pPTrong}</td>
+                          <td>{item.hangDat}</td>
+                          <td>{item.giongCay}</td>
+                          <td>{item.dienTich}</td>
+                          <td>{item.ngayBatDau}</td>
+                          <td>{item.ngayKetThuc}</td>
+                          <td>
+                            {item.ngayKiemTra
+                              ? new Date(item.ngayKiemTra).toLocaleString(
+                                  "vi-VN",
+                                  {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: false,
+                                  }
+                                )
+                              : ""}
+                          </td>
+                          <td>{item.kiemTraVien}</td>
+                          <td>
+                            <Button
+                              type="button"
+                              variant={
+                                item.TrangThai === 1
+                                  ? "success-ghost"
+                                  : "danger-ghost"
+                              }
+                              size="sm"
+                              className="btn btn-wawe">
+                              {item.TrangThai === 1 ? "Đã gửi" : "Chưa gửi"}
+                            </Button>
+                          </td>
+                          <td>
+                            <div className="fs-15">
+                              <Link
+                                onClick={() => {
+                                  handlePrinter(item.idPhieu);
+                                }}
+                                className="btn btn-icon btn-xl btn-primary-transparent rounded-pill">
+                                <i className="ri-printer-line"></i>
+                              </Link>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="8" className="text-center">
+                          {loading ? (
+                            <div className="d-flex justify-content-center">
+                              <div
+                                className="spinner-border text-primary"
+                                role="status">
+                                <span className="visually-hidden">
+                                  Đang tải...
+                                </span>
+                              </div>
+                            </div>
+                          ) : (
+                            "Không có dữ liệu"
+                          )}
+                        </td>
                       </tr>
-                    ))}
+                    )}
                   </tbody>
                 </Table>
               </div>
@@ -131,7 +266,7 @@ const DanhSachLoTCTM = () => {
         .table-responsive {
           overflow-x: auto;
           -webkit-overflow-scrolling: touch;
-          max-height: 660px;
+          max-height: 970px;
           overflow-y: auto;
         }
 
@@ -158,28 +293,7 @@ const DanhSachLoTCTM = () => {
         .table th.col-maCN {
           width: 120px;
         }
-        .table th.col-sxkd-01012025,
-        .table th.col-mocao-2025,
-        .table th.col-sxkd-thanhlytc,
-        .table th.col-sxkd-thanhlygdp,
-        .table th.col-sxkd-31122025,
-        .table th.col-ktcb-01012025,
-        .table th.col-ktcb-mocao-2025,
-        .table th.col-ktcb-thanhlygdp,
-        .table th.col-ktcb-31122025,
-        .table th.col-kh-tctm-2025,
-        .table th.col-luancanh-2021,
-        .table th.col-luancanh-2022,
-        .table th.col-luancanh-2023,
-        .table th.col-tong-luancanh,
-        .table th.col-fsc,
-        .table th.col-vg-vn,
-        .table th.col-cho-gdp,
-        .table th.col-dt-chuyentc,
-        .table th.col-thanhly-goivu,
-        .table th.col-tong-dt-vuon {
-          width: 120px;
-        }
+
         .table tr.table-active {
           font-weight: bold;
           background-color: #f1f1f1;

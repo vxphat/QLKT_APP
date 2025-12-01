@@ -300,8 +300,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route
                 path={`${
                   import.meta.env.BASE_URL
-                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/phieuDaNgoai_TCTM`}
-                element={<PhieuDaNgoai_TCTM />}
+                }kiemTraKyThuat/kiemTraCuoiNam/TCTM/danhSachLoTCTM`}
+                element={<DanhSachLoTCTM />}
               />
 
               <Route
