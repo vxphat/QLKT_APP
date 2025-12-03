@@ -137,7 +137,7 @@ const DanhSachLoTCTM = () => {
                       <option value={"LT"}>Long Thành</option>
                     </Form.Select>
                   </Col>
-                  <Col xl={4} lg={6} md={6} sm={12} className="d-flex gap-3">
+                  <Col xl={6} lg={6} md={6} sm={12} className="d-flex gap-3">
                     <Button
                       className="btn btn-primary label-btn "
                       onClick={() => loadDataLo(donViSelect)}
@@ -152,6 +152,20 @@ const DanhSachLoTCTM = () => {
                         Import dữ liệu
                       </Button>
                     </Link>
+                    <Link
+                      to={`http://api.donaruco.vn/public/kiem-tra-quy-4/export-all`}>
+                      <Button className="btn btn-success label-btn ms-auto">
+                        <i className="bi bi-plus-lg label-btn-icon me-2"></i>
+                        Export phiếu
+                      </Button>
+                    </Link>
+                    <Link
+                      to={`http://api.donaruco.vn/public/kiem-tra-quy-4/export-all`}>
+                      <Button className="btn btn-warning label-btn ms-auto">
+                        <i className="bi bi-plus-lg label-btn-icon me-2"></i>
+                        Export cây
+                      </Button>
+                    </Link>
                   </Col>
                 </Row>
               </Row>
@@ -164,7 +178,7 @@ const DanhSachLoTCTM = () => {
                       <th className="text-wrap">Đội</th>
                       <th className="text-wrap">ID lô</th>
                       <th className="text-center">Tên lô</th>
-                      <th className="text-center">Năm trồng</th>
+
                       <th className="text-center">PP trồng</th>
                       <th className="text-wrap">Hạng đất</th>
                       <th className="text-wrap">Giống</th>
@@ -174,7 +188,7 @@ const DanhSachLoTCTM = () => {
                       <th className="text-wrap">Ngày KT</th>
                       <th className="text-wrap">Người KT</th>
                       <th className="text-wrap">Trạng thái</th>
-                      <th className="text-wrap">Status</th>
+                      <th className="text-wrap">In phiếu</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -185,7 +199,7 @@ const DanhSachLoTCTM = () => {
                           <td>{item.nongTruong}</td>
                           <td>{item.idLo}</td>
                           <td>{item.tenLo}</td>
-                          <td>{item.namTrong}</td>
+
                           <td>{item.pPTrong}</td>
                           <td>{item.hangDat}</td>
                           <td>{item.giongCay}</td>
