@@ -215,7 +215,6 @@ const DanhSachLoTCTM = () => {
                       <th className="text-wrap">Đội</th>
                       <th className="text-wrap">ID lô</th>
                       <th className="text-center">Tên lô</th>
-
                       <th className="text-center">PP trồng</th>
                       <th className="text-wrap">Hạng đất</th>
                       <th className="text-wrap">Giống</th>
@@ -236,7 +235,6 @@ const DanhSachLoTCTM = () => {
                           <td>{item.nongTruong}</td>
                           <td>{item.idLo}</td>
                           <td>{item.tenLo}</td>
-
                           <td>{item.pPTrong}</td>
                           <td>{item.hangDat}</td>
                           <td>{item.giongCay}</td>
