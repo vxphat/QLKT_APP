@@ -11,6 +11,7 @@ import {
   Table,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useToast } from "../../../../../contexts/ToastContext";
 
 const apiService = {
   getDanhSachLo: async (maDonVi, query = "") => {
@@ -65,6 +66,7 @@ const DanhSachLoKTCB = () => {
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [donViSelect, setDonViSelect] = useState(null);
+  const { showToast } = useToast();
 
   const loadDataLo = async (query = "") => {
     setLoading(true);
@@ -85,19 +87,54 @@ const DanhSachLoKTCB = () => {
   }, []);
 
   const handlePrinter = async (id) => {
-    const printWindow = window.open("", "_blank", "width=1908,height=1000");
+    // Tính toán vị trí giữa màn hình
+    const screenLeft =
+      window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+    const screenTop =
+      window.screenTop !== undefined ? window.screenTop : window.screenY;
+    const width = window.innerWidth
+      ? window.innerWidth
+      : document.documentElement.clientWidth
+      ? document.documentElement.clientWidth
+      : screen.width;
+    const height = window.innerHeight
+      ? window.innerHeight
+      : document.documentElement.clientHeight
+      ? document.documentElement.clientHeight
+      : screen.height;
+
+    const systemZoom = width / window.screen.availWidth;
+    const left = (width - 1200) / 2 / systemZoom + screenLeft;
+    const top = (height - 1500) / 2 / systemZoom + screenTop;
+
+    const printWindow = window.open(
+      "",
+      "_blank",
+      `width=1200,height=1500,left=${left},top=${top}`
+    );
     if (!printWindow) {
       alert("Trình duyệt đang chặn cửa sổ in, vui lòng bật pop-up!");
       return;
     }
     try {
       const result = await apiService.getPhieuIn(id);
+
+      if (!result || !result.data) {
+        showToast({
+          title: "Thông báo",
+          message: "Không có dữ liệu để in!",
+          variant: "warning",
+        });
+        printWindow.close();
+        return;
+      }
+
       // console.log(result);return
       const html = result.data;
 
-      printWindow.document.open();
+      // printWindow.document.open();
       printWindow.document.write(html);
-      printWindow.document.close();
+      // printWindow.document.close();
 
       printWindow.onload = () => {
         printWindow.focus();
@@ -105,7 +142,7 @@ const DanhSachLoKTCB = () => {
         printWindow.onafterprint = () => printWindow.close();
       };
     } catch (error) {
-      alert("Không có dữ liệu đê in!");
+      ("");
     }
   };
 

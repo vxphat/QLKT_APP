@@ -11,6 +11,7 @@ import {
   Table,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useToast } from "../../../../../contexts/ToastContext";
 
 const apiService = {
   getDanhSachLo: async (maDonVi, query = "") => {
@@ -65,6 +66,7 @@ const DanhSachLoTCTM = () => {
   const [loading, setLoading] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [donViSelect, setDonViSelect] = useState(null);
+  const { showToast } = useToast();
 
   const loadDataLo = async (query = "") => {
     setLoading(true);
@@ -85,19 +87,54 @@ const DanhSachLoTCTM = () => {
   }, []);
 
   const handlePrinter = async (id) => {
-    const printWindow = window.open("", "_blank", "width=1908,height=1000");
-    if (!printWindow) {
-      alert("Trình duyệt đang chặn cửa sổ in, vui lòng bật pop-up!");
-      return;
-    }
     try {
       const result = await apiService.getPhieuIn(id);
-      // console.log(result);return
+
+      // Kiểm tra nếu không có dữ liệu
+      if (!result || !result.data) {
+        showToast({
+          title: "Thông báo",
+          message: "Không tìm thấy dữ liệu để in!",
+          variant: "success",
+        });
+        return;
+      }
+
+      // Tính toán vị trí giữa màn hình
+      const screenLeft =
+        window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+      const screenTop =
+        window.screenTop !== undefined ? window.screenTop : window.screenY;
+      const width = window.innerWidth
+        ? window.innerWidth
+        : document.documentElement.clientWidth
+        ? document.documentElement.clientWidth
+        : screen.width;
+      const height = window.innerHeight
+        ? window.innerHeight
+        : document.documentElement.clientHeight
+        ? document.documentElement.clientHeight
+        : screen.height;
+
+      const systemZoom = width / window.screen.availWidth;
+      const left = (width - 1200) / 2 / systemZoom + screenLeft;
+      const top = (height - 1500) / 2 / systemZoom + screenTop;
+
+      const printWindow = window.open(
+        "",
+        "_blank",
+        `width=1200,height=1500,left=${left},top=${top}`
+      );
+      if (!printWindow) {
+        alert("Trình duyệt đang chặn cửa sổ in, vui lòng bật pop-up!");
+        return;
+      }
+
       const html = result.data;
 
-      printWindow.document.open();
       printWindow.document.write(html);
-      printWindow.document.close();
+
+      // printWindow.document.close();
 
       printWindow.onload = () => {
         printWindow.focus();
@@ -105,7 +142,7 @@ const DanhSachLoTCTM = () => {
         printWindow.onafterprint = () => printWindow.close();
       };
     } catch (error) {
-      alert("Không có dữ liệu đê in!");
+      ("");
     }
   };
 
@@ -204,8 +241,20 @@ const DanhSachLoTCTM = () => {
                           <td>{item.hangDat}</td>
                           <td>{item.giongCay}</td>
                           <td>{item.dienTich}</td>
-                          <td>{item.ngayBatDau}</td>
-                          <td>{item.ngayKetThuc}</td>
+                          <td>
+                            {item.ngayBatDau
+                              ? new Date(item.ngayBatDau).toLocaleDateString(
+                                  "vi-VN"
+                                )
+                              : ""}
+                          </td>
+                          <td>
+                            {item.ngayKetThuc
+                              ? new Date(item.ngayKetThuc).toLocaleDateString(
+                                  "vi-VN"
+                                )
+                              : ""}
+                          </td>
                           <td>
                             {item.ngayKiemTra
                               ? new Date(item.ngayKiemTra).toLocaleString(
