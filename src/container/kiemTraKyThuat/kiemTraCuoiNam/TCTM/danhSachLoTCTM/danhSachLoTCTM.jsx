@@ -197,7 +197,7 @@ const DanhSachLoTCTM = () => {
                       </Button>
                     </Link>
                     <Link
-                      to={`http://api.donaruco.vn/public/kiem-tra-quy-4/export-all`}>
+                      to={`https://api.donaruco.vn/api/kiem-tra-quy-4/export-tctm`}>
                       <Button className="btn btn-warning label-btn ms-auto">
                         <i className="bi bi-plus-lg label-btn-icon me-2"></i>
                         Export cây

@@ -174,7 +174,7 @@ const DanhSachLoKTCB = () => {
                       <option value={"LT"}>Long Thành</option>
                     </Form.Select>
                   </Col>
-                  <Col xl={4} lg={6} md={6} sm={12} className="d-flex gap-3">
+                  <Col xl={6} lg={6} md={6} sm={12} className="d-flex gap-3">
                     <Button
                       className="btn btn-primary label-btn "
                       onClick={() => loadDataLo(donViSelect)}
@@ -187,6 +187,20 @@ const DanhSachLoKTCB = () => {
                       <Button className="btn btn-secondary label-btn ms-auto">
                         <i className="bi bi-plus-lg label-btn-icon me-2"></i>
                         Import dữ liệu
+                      </Button>
+                    </Link>
+                    <Link
+                      to={`http://api.donaruco.vn/public/kiem-tra-quy-4/export-all`}>
+                      <Button className="btn btn-success label-btn ms-auto">
+                        <i className="bi bi-plus-lg label-btn-icon me-2"></i>
+                        Export phiếu
+                      </Button>
+                    </Link>
+                    <Link
+                      to={`https://api.donaruco.vn/api/kiem-tra-quy-4/export-ktcb`}>
+                      <Button className="btn btn-warning label-btn ms-auto">
+                        <i className="bi bi-plus-lg label-btn-icon me-2"></i>
+                        Export cây
                       </Button>
                     </Link>
                   </Col>
