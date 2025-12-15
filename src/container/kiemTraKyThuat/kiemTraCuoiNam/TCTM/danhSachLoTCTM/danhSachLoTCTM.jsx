@@ -212,6 +212,7 @@ const DanhSachLoTCTM = () => {
                   <thead className="sticky-header">
                     <tr>
                       <th className="text-wrap">STT</th>
+                      <th className="text-wrap">ID phiếu</th>
                       <th className="text-wrap">Đội</th>
                       <th className="text-wrap">ID lô</th>
                       <th className="text-center">Tên lô</th>
@@ -232,6 +233,7 @@ const DanhSachLoTCTM = () => {
                       dataLo.map((item, index) => (
                         <tr key={index}>
                           <td>{index + 1}</td>
+                          <td>{item.idPhieu}</td>
                           <td>{item.nongTruong}</td>
                           <td>{item.idLo}</td>
                           <td>{item.tenLo}</td>

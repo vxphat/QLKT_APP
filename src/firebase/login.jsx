@@ -68,6 +68,12 @@ const Login = ({ ThemeChanger }) => {
     LocalStorageBackup(ThemeChanger);
   }, []);
 
+  // Thêm hàm xử lý submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    Login1();
+  };
+
   return (
     <Fragment>
       <div className="container">
@@ -90,89 +96,92 @@ const Login = ({ ThemeChanger }) => {
                       <p className="mb-4 text-muted op-7 fw-normal text-center">
                         Welcome back Admin!
                       </p>
-                      <div className="row gy-3">
-                        {err && <Alert variant="danger">{err}</Alert>}
-                        <Col xl={12}>
-                          <Form.Label
-                            htmlFor="signin-username"
-                            className="form-label text-default">
-                            Email
-                          </Form.Label>
-                          <Form.Control
-                            size="lg"
-                            className=""
-                            placeholder="Enter your email"
-                            name="email"
-                            type="text"
-                            value={email}
-                            onChange={changeHandler}
-                            required
-                            tabIndex={1}
-                          />
-                        </Col>
-                        <Col xl={12} className="mb-2">
-                          <Form.Label
-                            htmlFor="signin-password"
-                            className="form-label text-default d-block">
-                            Password
-                            <Link to="#" className="float-end text-danger">
-                              Forget password ?
-                            </Link>
-                          </Form.Label>
-                          <InputGroup>
+                      <form onSubmit={handleSubmit}>
+                        <div className="row gy-3">
+                          {err && <Alert variant="danger">{err}</Alert>}
+                          <Col xl={12}>
+                            <Form.Label
+                              htmlFor="signin-username"
+                              className="form-label text-default">
+                              Email
+                            </Form.Label>
                             <Form.Control
                               size="lg"
-                              className="form-control"
-                              placeholder="Enter your password"
-                              name="password"
-                              type={passwordshow1 ? "text" : "password"}
-                              value={password}
+                              className=""
+                              placeholder="Enter your email"
+                              name="email"
+                              type="text"
+                              value={email}
                               onChange={changeHandler}
                               required
-                              tabIndex={2}
+                              tabIndex={1}
                             />
-                            <Button
-                              variant="light"
-                              className="btn btn-light"
-                              type="button"
-                              onClick={() => setpasswordshow1(!passwordshow1)}
-                              id="button-addon2"
-                              tabIndex={3}>
-                              <i
-                                className={`${
-                                  passwordshow1
-                                    ? "ri-eye-line"
-                                    : "ri-eye-off-line"
-                                } align-middle`}
-                                aria-hidden="true"></i>
-                            </Button>
-                          </InputGroup>
-                          <div className="mt-2">
-                            <div className="form-check">
-                              <Form.Check
-                                className=""
-                                type="checkbox"
-                                value=""
-                                id="defaultCheck1"
+                          </Col>
+                          <Col xl={12} className="mb-2">
+                            <Form.Label
+                              htmlFor="signin-password"
+                              className="form-label text-default d-block">
+                              Password
+                              <Link to="#" className="float-end text-danger">
+                                Forget password ?
+                              </Link>
+                            </Form.Label>
+                            <InputGroup>
+                              <Form.Control
+                                size="lg"
+                                className="form-control"
+                                placeholder="Enter your password"
+                                name="password"
+                                type={passwordshow1 ? "text" : "password"}
+                                value={password}
+                                onChange={changeHandler}
+                                required
+                                tabIndex={2}
                               />
-                              <Form.Label
-                                className=" text-muted fw-normal"
-                                htmlFor="defaultCheck1">
-                                Remember password ?
-                              </Form.Label>
+                              <Button
+                                variant="light"
+                                className="btn btn-light"
+                                type="button"
+                                onClick={() => setpasswordshow1(!passwordshow1)}
+                                id="button-addon2"
+                                tabIndex={3}>
+                                <i
+                                  className={`${
+                                    passwordshow1
+                                      ? "ri-eye-line"
+                                      : "ri-eye-off-line"
+                                  } align-middle`}
+                                  aria-hidden="true"></i>
+                              </Button>
+                            </InputGroup>
+                            <div className="mt-2">
+                              <div className="form-check">
+                                <Form.Check
+                                  className=""
+                                  type="checkbox"
+                                  value=""
+                                  id="defaultCheck1"
+                                />
+                                <Form.Label
+                                  className=" text-muted fw-normal"
+                                  htmlFor="defaultCheck1">
+                                  Remember password ?
+                                </Form.Label>
+                              </div>
                             </div>
-                          </div>
-                        </Col>
-                        <Col xl={12} className="d-grid mt-2">
-                          <Button
-                            variant="primary"
-                            onClick={Login1}
-                            size="lg"
-                            className="btn">
-                            Sign In
-                          </Button>
-                        </Col>
-                      </div>
+                          </Col>
+                          <Col xl={12} className="d-grid mt-2">
+                            <Button
+                              variant="primary"
+                              type="submit"
+                              onClick={Login1}
+                              size="lg"
+                              className="btn">
+                              Sign In
+                            </Button>
+                          </Col>
+                        </div>
+                      </form>
                     </div>
                   </Tab.Pane>
                   <Tab.Pane eventKey="firebase" className="border-0 pb-2">
