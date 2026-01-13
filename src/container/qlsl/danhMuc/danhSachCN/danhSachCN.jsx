@@ -9,8 +9,7 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
-import Pageheader from "../../../components/pageheader/pageheader";
-import { danhMucCN } from "../danhSachCN/danhSachCNdata";
+import Pageheader from "../../../../components/pageheader/pageheader";
 
 const API_URL =
   "https://script.google.com/macros/s/AKfycbxFOlMtnfIJBHmQalX1szMymurvXoO1u-3kvgBH4kS1zdZc1UdDfWBe-0R_a5uTjXNy/exec"; // URL web app của bạn

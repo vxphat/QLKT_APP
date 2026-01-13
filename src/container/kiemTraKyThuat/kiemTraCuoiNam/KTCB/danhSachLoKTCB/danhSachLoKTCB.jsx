@@ -224,7 +224,7 @@ const DanhSachLoKTCB = () => {
                       <th className="text-wrap">Ngày KT</th>
                       <th className="text-wrap">Người KT</th>
                       <th className="text-wrap">Trạng thái</th>
-                      <th className="text-wrap">Status</th>
+                      <th className="text-wrap">In phiếu</th>
                     </tr>
                   </thead>
                   <tbody>
